@@ -28,7 +28,10 @@ class DeltaPrinter implements IResourceDeltaVisitor {
              System.out.print(res.getFullPath());
              System.out.println(" has changed.");
              if (res.getFileExtension() != null && res.getFileExtension().equals("java")) {
-            	 
+            	 IMarkerDelta[] markerDeltas = delta.getMarkerDeltas();
+            	 for (IMarkerDelta iMarkerDelta : markerDeltas) {
+					System.out.println("markers: " + iMarkerDelta);
+				}
             		 System.out.println("get java content");
             	 
              }

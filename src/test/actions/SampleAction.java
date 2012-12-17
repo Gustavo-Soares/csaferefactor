@@ -10,6 +10,16 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
@@ -28,6 +38,7 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -76,6 +87,16 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 	public SampleAction() {
 	}
 
+	
+	public static CompilationUnit getCompilationUnit(ICompilationUnit icu,
+	        IProgressMonitor monitor) {
+	    final ASTParser parser = ASTParser.newParser(AST.JLS3);
+	    parser.setSource(icu);
+	    parser.setResolveBindings(true);
+	    final CompilationUnit ret = (CompilationUnit) parser.createAST(monitor);
+	    return ret;
+	}
+	
 	/**
 	 * The action has been activated. The argument of the method represents the
 	 * 'real' action sitting in the workbench UI.
@@ -106,9 +127,31 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 		ITextEditor editor = (ITextEditor) editorPart
 				.getAdapter(ITextEditor.class);
 
+		IJavaElement javaElement = JavaUI.getEditorInputJavaElement(editorPart
+				.getEditorInput());
+		
+		CompilationUnit compilationUnit = getCompilationUnit((ICompilationUnit) javaElement, new NullProgressMonitor());
+		int offset = compilationUnit.getStartPosition();
+		int length = compilationUnit.getLength();
+
+//		ISelectionProvider selectionProvider = ((ITextEditor) editor)
+//				.getSelectionProvider();
+//		ISelection selection = selectionProvider.getSelection();
+//		if (selection instanceof ITextSelection) {
+//			ITextSelection textSelection = (ITextSelection) selection;
+//			int offset = textSelection.getOffset(); // etc.
+//			try {
+//				IJavaElement elementAt = root.getElementAt(offset);
+//				
+//			} catch (JavaModelException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+
 		IFile file = (IFile) editor.getEditorInput().getAdapter(IFile.class);
 		try {
-			createMarkerForResource(file);
+			createMarkerForResource(file,offset,length);
 			System.out.println("marker criada");
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
@@ -139,10 +182,10 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 		// }
 	}
 
-	public void createMarkerForResource(IResource file) throws CoreException {
+	public void createMarkerForResource(IResource file, int offset, int length) throws CoreException {
 		IMarker marker = file.createMarker("test.slicemarker");
-		marker.setAttribute(IMarker.CHAR_START, 0);
-		marker.setAttribute(IMarker.CHAR_END, 10);
+		marker.setAttribute(IMarker.CHAR_START, offset);
+		marker.setAttribute(IMarker.CHAR_END, length);
 
 	}
 
