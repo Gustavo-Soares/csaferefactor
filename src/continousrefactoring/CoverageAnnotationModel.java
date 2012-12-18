@@ -1,3 +1,4 @@
+package continousrefactoring;
 ///*******************************************************************************
 // * Copyright (c) 2006, 2012 Mountainminds GmbH & Co. KG and Contributors
 // * All rights reserved. This program and the accompanying materials

@@ -1,4 +1,4 @@
-package test;
+package continousrefactoring;
 
 public class Version {
 	

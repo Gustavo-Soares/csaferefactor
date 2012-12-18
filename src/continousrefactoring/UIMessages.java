@@ -9,7 +9,7 @@
  *    Marc R. Hoffmann - initial API and implementation
  *    
  ******************************************************************************/
-package test;
+package continousrefactoring;
 
 import org.eclipse.osgi.util.NLS;
 

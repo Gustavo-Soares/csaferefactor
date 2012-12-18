@@ -18,7 +18,7 @@
          <action
                label="&amp;Sample Action"
                icon="icons/sample.gif"
-               class="test.actions.SampleAction"
+               class="continousrefactoring.actions.SampleAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
@@ -29,7 +29,7 @@
    
    
 <extension
-    id="test.slicemarker"
+    id="continousrefactoring.slicemarker"
     name="GTASM Slice"
     point="org.eclipse.core.resources.markers">
   <super
@@ -40,29 +40,29 @@
 <extension
       point="org.eclipse.ui.editors.annotationTypes">
    <type
-         markerType="test.slicemarker"
-         name="test.slicemarker">
+         markerType="continousrefactoring.slicemarker"
+         name="continousrefactoring.slicemarker">
    </type>
 </extension>
 
 <extension
       point="org.eclipse.ui.editors.markerAnnotationSpecification">
    <specification
-         annotationType="test.slicemarker"
-         colorPreferenceKey="test.slice.color"
+         annotationType="continousrefactoring.slicemarker"
+         colorPreferenceKey="continousrefactoring.slice.color"
          colorPreferenceValue="192,255,192"
          contributesToHeader="false"
-         highlightPreferenceKey="test.slice.highlight"
+         highlightPreferenceKey="continousrefactoring.slice.highlight"
          highlightPreferenceValue="true"
          includeOnPreferencePage="true"
          label="GTASM Slice Marker"
-         overviewRulerPreferenceKey="test.slice.overview"
+         overviewRulerPreferenceKey="continousrefactoring.slice.overview"
          overviewRulerPreferenceValue="true"
          presentationLayer="0"
-         textPreferenceKey="test.slice.text"
+         textPreferenceKey="continousrefactoring.slice.text"
          textPreferenceValue="true"
          textStylePreferenceValue="BOX"
-         verticalRulerPreferenceKey="test.slice.ruler"
+         verticalRulerPreferenceKey="continousrefactoring.slice.ruler"
          verticalRulerPreferenceValue="true">
    </specification>
 </extension>

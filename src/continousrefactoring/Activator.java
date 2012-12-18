@@ -1,4 +1,4 @@
-package test;
+package continousrefactoring;
 
 import java.io.IOException;
 import java.net.URL;

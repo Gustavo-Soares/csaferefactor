@@ -1,15 +1,22 @@
-package test;
+package continousrefactoring;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ITrackedNodePosition;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
@@ -30,10 +37,19 @@ public class SafeRefactorChangeListener implements IResourceChangeListener,
 	private int counter = 0;
 	private ProjectLogger logger;
 	private List<String> versions;
-//	private List<String> versions2;
-	
 
-	public SafeRefactorChangeListener() throws IOException {
+	// private List<String> versions2;
+	private final IFile file;
+	private final List<ITrackedNodePosition> tracks;
+	private final ASTRewrite rewriter;
+	private final IDocument document;
+
+	public SafeRefactorChangeListener(IDocument document, ASTRewrite rewrite, IFile file,
+			List<ITrackedNodePosition> tracks) throws IOException {
+		this.document = document;
+		this.rewriter = rewrite;
+		this.file = file;
+		this.tracks = tracks;
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject("test");
 		logger = new ProjectLogger(project);
@@ -41,6 +57,8 @@ public class SafeRefactorChangeListener implements IResourceChangeListener,
 
 		String path = logger.log();
 		versions.add(path);
+		
+
 	}
 
 	@Override
@@ -48,54 +66,49 @@ public class SafeRefactorChangeListener implements IResourceChangeListener,
 
 		IResource res = event.getResource();
 		switch (event.getType()) {
-		case IResourceChangeEvent.POST_CHANGE:
-			// System.out.println("Resources have changed.");
-			// System.out.println(res.getFullPath());
-			// event.getDelta().accept(new DeltaPrinter());
-			break;
-		case IResourceChangeEvent.PRE_BUILD:
-			// System.out.println("Build about to run.");
-			// System.out.println(res.getName());
-			// event.getDelta().accept(new DeltaPrinter());
-			break;
 		case IResourceChangeEvent.POST_BUILD:
 			// System.out.println("Build complete.");
 			// System.out.println(res.getName());
+			 
 
-			try {
-				event.getDelta().accept(new DeltaPrinter());
 
-				String path = logger.log();
-				versions.add(path);
-				SafeRefactorJob srJob1 = new SafeRefactorJob("saferefactor", versions.size() - 1,versions.size(),versions);
-				srJob1.schedule();
-//				runSafeRefactor(versions.size() - 1,versions.size());
-				
-				//run saferefactor between the last and the first
-				if (versions.size() > 2) {
-//					runSafeRefactor(1,versions.size());
-					SafeRefactorJob srJob2 = new SafeRefactorJob("saferefactor", 1,versions.size(),versions);
-					srJob2.schedule();
+				try {
+					event.getDelta().accept(new DeltaPrinter(file,rewriter, document,tracks));
+					
+					
+
+
+
+					// String path = logger.log();
+					// versions.add(path);
+					// SafeRefactorJob srJob1 = new
+					// SafeRefactorJob("saferefactor",
+					// versions.size() - 1, versions.size(), versions);
+					// srJob1.schedule();
+					// // runSafeRefactor(versions.size() - 1,versions.size());
+					//
+					// // run saferefactor between the last and the first
+					// if (versions.size() > 2) {
+					// // runSafeRefactor(1,versions.size());
+					// SafeRefactorJob srJob2 = new SafeRefactorJob(
+					// "saferefactor", 1, versions.size(), versions);
+					// srJob2.schedule();
+					// }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
-				
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 			break;
 		}
 
 	}
 
+
+
 	private void runSafeRefactor(int input, int output) throws Exception {
-		
-		
+
 		System.out.println("run saferefactor");
 		Project targetP = new Project();
 		File targetFolder = new File(versions.get(output - 1));
@@ -114,13 +127,12 @@ public class SafeRefactorChangeListener implements IResourceChangeListener,
 
 		File saferefactorJar = new File(Activator.getDefault()
 				.getPluginFolder() + "/" + "lib/saferefactor-beta.jar");
-		System.setProperty("extra.jars",
-				saferefactorJar.getAbsolutePath());
+		System.setProperty("extra.jars", saferefactorJar.getAbsolutePath());
 
 		System.out.println(sourceP.getBuildFolder());
 		System.out.println(targetP.getBuildFolder());
-		SafeRefactor saferefactor = new SafeRefactorImp(sourceP,
-				targetP, parameters);
+		SafeRefactor saferefactor = new SafeRefactorImp(sourceP, targetP,
+				parameters);
 
 		saferefactor.checkTransformation();
 		Report report = saferefactor.getReport();
@@ -129,7 +141,8 @@ public class SafeRefactorChangeListener implements IResourceChangeListener,
 
 		MessageConsole console = findConsole("saferefactor");
 		MessageConsoleStream out = console.newMessageStream();
-		out.println("v" + input + "-> v" + output + " is refactoring? " + report.isRefactoring());
+		out.println("v" + input + "-> v" + output + " is refactoring? "
+				+ report.isRefactoring());
 	}
 
 	private MessageConsole findConsole(String name) {

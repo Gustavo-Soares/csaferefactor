@@ -1,10 +1,10 @@
-package test.actions;
+package continousrefactoring.actions;
 
 import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFileState;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -12,14 +12,23 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+
+import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.ITypeRoot;
-import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.rewrite.ITrackedNodePosition;
+import org.eclipse.jdt.internal.ui.text.SingleTokenJavaScanner;
+
 import org.eclipse.jdt.ui.JavaUI;
+import org.eclipse.jdt.ui.SharedASTProvider;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
@@ -27,36 +36,29 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextAttribute;
-import org.eclipse.jface.text.reconciler.MonoReconciler;
 import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
-import org.eclipse.jface.text.rules.IRule;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.ITokenScanner;
-import org.eclipse.jface.text.rules.RuleBasedScanner;
-import org.eclipse.jface.text.rules.SingleLineRule;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.rules.WhitespaceRule;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.editors.text.TextEditor;
-import org.eclipse.ui.part.EditorActionBarContributor;
-import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.SimpleMarkerAnnotation;
-import org.eclipse.jface.dialogs.MessageDialog;
 
-import test.EditorListener;
-import test.ProjectLogger;
-import test.SafeRefactorChangeListener;
+import continousrefactoring.BufferListener;
+import continousrefactoring.MyJavaElementChangeReporter;
+import continousrefactoring.SafeRefactorChangeListener;
+import continousrefactoring.SingleTokeScanner;
+import continousrefactoring.Visitor;
+
 
 /**
  * Our sample action implements workbench action delegate. The action proxy will
@@ -81,22 +83,40 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 	public static final String OBJ_MARKERNO = "icons/full/obj16/markerno.gif"; //$NON-NLS-1$
 	public static final String OBJ_MARKERPARTIAL = "icons/full/obj16/markerpartial.gif"; //$NON-NLS-1$
 
+	private ITrackedNodePosition track;
+
 	/**
 	 * The constructor.
 	 */
 	public SampleAction() {
 	}
 
-	
 	public static CompilationUnit getCompilationUnit(ICompilationUnit icu,
-	        IProgressMonitor monitor) {
-	    final ASTParser parser = ASTParser.newParser(AST.JLS3);
-	    parser.setSource(icu);
-	    parser.setResolveBindings(true);
-	    final CompilationUnit ret = (CompilationUnit) parser.createAST(monitor);
-	    return ret;
+			IProgressMonitor monitor) {
+		final ASTParser parser = ASTParser.newParser(AST.JLS3);
+		parser.setSource(icu);
+		parser.setResolveBindings(true);
+		parser.setStatementsRecovery(true);
+		parser.setBindingsRecovery(true);
+//		parser.setIgnoreMethodBodies(true);
+//		if (getCurrentInputKind() == ASTInputKindAction.USE_FOCAL) {
+//			parser.setFocalPosition(offset);
+//		}
+		final CompilationUnit ret = (CompilationUnit) parser.createAST(monitor);
+		return ret;
 	}
 	
+	public void createMarkerForResource(IResource file, int offset, int length)
+			throws CoreException {
+		IMarker marker = file.createMarker("continousrefactoring.slicemarker");
+		System.out.println(offset);
+		System.out.println(length);
+		marker.setAttribute(IMarker.CHAR_START, offset);
+		marker.setAttribute(IMarker.CHAR_END, offset+length);
+		
+
+	}
+
 	/**
 	 * The action has been activated. The argument of the method represents the
 	 * 'real' action sitting in the workbench UI.
@@ -104,19 +124,6 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 	 * @see IWorkbenchWindowActionDelegate#run
 	 */
 	public void run(IAction action) {
-
-		// IResourceChangeListener listener;
-		// try {
-		// listener = new SafeRefactorChangeListener();
-		// ResourcesPlugin.getWorkspace().addResourceChangeListener(
-		// listener,
-		// IResourceChangeEvent.PRE_BUILD
-		// | IResourceChangeEvent.POST_BUILD
-		// | IResourceChangeEvent.POST_CHANGE);
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 
 		IWorkbenchPage page = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
@@ -127,36 +134,76 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 		ITextEditor editor = (ITextEditor) editorPart
 				.getAdapter(ITextEditor.class);
 
-		IJavaElement javaElement = JavaUI.getEditorInputJavaElement(editorPart
-				.getEditorInput());
+//		IJavaElement javaElement = JavaUI.getEditorInputJavaElement(editorPart
+//				.getEditorInput());
+//		
+//		ICompilationUnit icompilationunit = (ICompilationUnit) javaElement;
+//
+//		
 		
-		CompilationUnit compilationUnit = getCompilationUnit((ICompilationUnit) javaElement, new NullProgressMonitor());
-		int offset = compilationUnit.getStartPosition();
-		int length = compilationUnit.getLength();
+		IFile file = (IFile) editor.getEditorInput().getAdapter(IFile.class);
+		
+		ICompilationUnit icu = JavaCore.createCompilationUnitFrom(file);
+		
+		CompilationUnit compilationUnit;
+		
+		compilationUnit = getCompilationUnit(icu,
+				new NullProgressMonitor());
+//		compilationUnit = SharedASTProvider.getAST(icu, SharedASTProvider.WAIT_NO, null);
+		
+				
+//		TypeDeclaration type = (TypeDeclaration) compilationUnit.types().get(0);
+//		MethodDeclaration method = (MethodDeclaration) type.bodyDeclarations().get(1);
+//		
+//		try {
+//			createMarkerForResource(file, method.getStartPosition(), method.getLength());
+//		} catch (CoreException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		
 
-//		ISelectionProvider selectionProvider = ((ITextEditor) editor)
-//				.getSelectionProvider();
-//		ISelection selection = selectionProvider.getSelection();
-//		if (selection instanceof ITextSelection) {
-//			ITextSelection textSelection = (ITextSelection) selection;
-//			int offset = textSelection.getOffset(); // etc.
-//			try {
-//				IJavaElement elementAt = root.getElementAt(offset);
-//				
-//			} catch (JavaModelException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
+//
+		ASTRewrite rewrite = ASTRewrite.create(compilationUnit.getAST());		
+		Visitor visitor = new Visitor(rewrite);
+		compilationUnit.accept(visitor);
+		JavaCore.addElementChangedListener(new MyJavaElementChangeReporter(file,compilationUnit,visitor.getTracks()), ElementChangedEvent.POST_RECONCILE);
+//
+		
+//
+//		IDocumentProvider provider = editor.getDocumentProvider();
+//		IDocument document = provider.getDocument(editor.getEditorInput());
+
+//		IResourceChangeListener listener;
+//		try {
+//			listener = new SafeRefactorChangeListener(document, rewrite, file,
+//					visitor.getTracks());
+//			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
+//			// IResourceChangeEvent.PRE_BUILD
+//					IResourceChangeEvent.POST_BUILD);
+//			// | IResourceChangeEvent.POST_CHANGE);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
 
-		IFile file = (IFile) editor.getEditorInput().getAdapter(IFile.class);
-		try {
-			createMarkerForResource(file,offset,length);
-			System.out.println("marker criada");
-		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// ISelectionProvider selectionProvider = ((ITextEditor) editor)
+		// .getSelectionProvider();
+		// ISelection selection = selectionProvider.getSelection();
+		// if (selection instanceof ITextSelection) {
+		// ITextSelection textSelection = (ITextSelection) selection;
+		// int offset = textSelection.getOffset(); // etc.
+		// try {
+		// IJavaElement elementAt = root.getElementAt(offset);
+		//
+		// } catch (JavaModelException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+
 		//
 		// IDocumentProvider provider = editor.getDocumentProvider();
 		// IDocument document = provider.getDocument(editor.getEditorInput());
@@ -180,13 +227,6 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 		// }
 		// });
 		// }
-	}
-
-	public void createMarkerForResource(IResource file, int offset, int length) throws CoreException {
-		IMarker marker = file.createMarker("test.slicemarker");
-		marker.setAttribute(IMarker.CHAR_START, offset);
-		marker.setAttribute(IMarker.CHAR_END, length);
-
 	}
 
 	private IToken createToken(Color color) {

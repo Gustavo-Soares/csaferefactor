@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Test
-Bundle-SymbolicName: test; singleton:=true
+Bundle-Name: ContinousRefactoring
+Bundle-SymbolicName: continousrefactoring;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: test.Activator
+Bundle-Activator: continousrefactoring.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jface.text;bundle-version="3.7.2",
