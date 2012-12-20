@@ -2,62 +2,21 @@ package csaferfactor.actions;
 
 import java.io.IOException;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-
-import org.eclipse.jdt.core.ElementChangedEvent;
-import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ITrackedNodePosition;
-import org.eclipse.jdt.internal.ui.text.SingleTokenJavaScanner;
-
-import org.eclipse.jdt.ui.JavaUI;
-import org.eclipse.jdt.ui.SharedASTProvider;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.text.DocumentEvent;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentListener;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.TextAttribute;
-import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
 import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.ITokenScanner;
 import org.eclipse.jface.text.rules.Token;
-import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.texteditor.SimpleMarkerAnnotation;
 
-import csaferefactor.BufferListener;
-import csaferefactor.MyJavaElementChangeReporter;
-import csaferefactor.SafeRefactorChangeListener;
-import csaferefactor.SingleTokeScanner;
-import csaferefactor.Visitor;
+import csaferefactor.BuildListener;
+
 
 /**
  * Our sample action implements workbench action delegate. The action proxy will
@@ -67,7 +26,7 @@ import csaferefactor.Visitor;
  * 
  * @see IWorkbenchWindowActionDelegate
  */
-public class StartContinuousSafeRefactorAction implements IWorkbenchWindowActionDelegate {
+public class StartAction implements IWorkbenchWindowActionDelegate {
 
 	private IWorkbenchWindow window;
 
@@ -87,7 +46,7 @@ public class StartContinuousSafeRefactorAction implements IWorkbenchWindowAction
 	/**
 	 * The constructor.
 	 */
-	public StartContinuousSafeRefactorAction() {
+	public StartAction() {
 	}
 	/**
 	 * The action has been activated. The argument of the method represents the
@@ -111,7 +70,7 @@ public class StartContinuousSafeRefactorAction implements IWorkbenchWindowAction
 //		// IDocument document = provider.getDocument(editor.getEditorInput());
 
 		try {
-			IResourceChangeListener listener = new SafeRefactorChangeListener();
+			IResourceChangeListener listener = new BuildListener();
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
 			// IResourceChangeEvent.PRE_BUILD
 					IResourceChangeEvent.POST_BUILD);

@@ -18,7 +18,7 @@
          <action
                label="&amp;Sample Action"
                icon="icons/sample.gif"
-               class="csaferfactor.actions.StartContinuousSafeRefactorAction"
+               class="csaferfactor.actions.StartAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
