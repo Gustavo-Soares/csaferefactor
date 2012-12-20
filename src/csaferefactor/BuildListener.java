@@ -10,6 +10,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -20,11 +21,10 @@ public class BuildListener implements IResourceChangeListener,
 	private ProjectLogger logger;
 	private List<String> versions;
 
-	public BuildListener() throws IOException {
+	public BuildListener(IJavaProject javaProject) throws IOException {
 
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
-				.getProject("project1");
-		logger = new ProjectLogger(project);
+		
+		logger = new ProjectLogger(javaProject.getProject());
 		versions = new ArrayList<String>();
 
 		String path = logger.log();

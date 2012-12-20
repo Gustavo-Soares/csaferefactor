@@ -32,6 +32,7 @@ import saferefactor.core.util.ast.Method;
 
 public class SafeRefactorJob extends Job {
 
+	private static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 	private final int output;
 	private final int input;
 	private final List<String> versions;
@@ -48,33 +49,22 @@ public class SafeRefactorJob extends Job {
 
 	}
 
-//	public SafeRefactorJob(String name, int input, int output,
-//			List<String> versions, IJavaElement element) {
-//		super(name);
-//		this.input = input;
-//		this.output = output;
-//		this.versions = versions;
-//		this.element = element;
-//
-//	}
-
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 
-		//remove saferefactor old markers
-		
+		//remove saferefactor old markers		
 		try {
-			IMarker[] findMarkers = res.findMarkers("continousrefactoring.saferefactorproblem", true, 1);
+			IMarker[] findMarkers = res.findMarkers(SAFEREFACTOR_MARKER, true, 1);
 			for (IMarker iMarker : findMarkers) {
 				iMarker.delete();
+				System.out.println("marker removed");
 			}
 		} catch (CoreException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("run saferefactor");
 		
-		
+		//run saferefactor	
 		Project targetP = new Project();
 		File targetFolder = new File(versions.get(output - 1));
 		targetP.setProjectFolder(targetFolder);
@@ -110,13 +100,7 @@ public class SafeRefactorJob extends Job {
 					createMarkerForResource(res, method);
 				}
 			}
-			// System.out.println("Preserve behavior? : "
-			// + report.isRefactoring());
 
-			// MessageConsole console = findConsole("saferefactor");
-			// MessageConsoleStream out = console.newMessageStream();
-			// out.println("v" + input + "-> v" + output + " is refactoring? " +
-			// report.isRefactoring());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -135,7 +119,7 @@ public class SafeRefactorJob extends Job {
 				.getMethod();
 
 		IMarker marker = res
-				.createMarker("continousrefactoring.saferefactorproblem");
+				.createMarker(SAFEREFACTOR_MARKER);
 		
 //		 marker.setAttribute(IMarker.CHAR_START,
 //		 changedMethod.getStartPosition());
@@ -167,27 +151,18 @@ public class SafeRefactorJob extends Job {
 		return ret;
 	}
 
-	private MessageConsole findConsole(String name) {
-		ConsolePlugin plugin = ConsolePlugin.getDefault();
-		IConsoleManager conMan = plugin.getConsoleManager();
-		IConsole[] existing = conMan.getConsoles();
-		for (int i = 0; i < existing.length; i++)
-			if (name.equals(existing[i].getName()))
-				return (MessageConsole) existing[i];
-		// no console found, so create a new one
-		MessageConsole myConsole = new MessageConsole(name, null);
-		conMan.addConsoles(new IConsole[] { myConsole });
-		return myConsole;
-	}
-
-	public void createMarkerForResource(IResource file, int offset, int length)
-			throws CoreException {
-		System.out.println(offset);
-		System.out.println(length);
-		IMarker marker = file.createMarker("continousrefactoring.slicemarker");
-		marker.setAttribute(IMarker.CHAR_START, offset);
-		marker.setAttribute(IMarker.CHAR_END, offset + length);
-
-	}
+//	private MessageConsole findConsole(String name) {
+//		ConsolePlugin plugin = ConsolePlugin.getDefault();
+//		IConsoleManager conMan = plugin.getConsoleManager();
+//		IConsole[] existing = conMan.getConsoles();
+//		for (int i = 0; i < existing.length; i++)
+//			if (name.equals(existing[i].getName()))
+//				return (MessageConsole) existing[i];
+//		// no console found, so create a new one
+//		MessageConsole myConsole = new MessageConsole(name, null);
+//		conMan.addConsoles(new IConsole[] { myConsole });
+//		return myConsole;
+//	}
+//
 
 }

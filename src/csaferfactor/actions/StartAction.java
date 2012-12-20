@@ -5,15 +5,21 @@ import java.io.IOException;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.dom.rewrite.ITrackedNodePosition;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.text.TextAttribute;
 import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
 
 import csaferefactor.BuildListener;
 
@@ -56,21 +62,25 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 	 */
 	public void run(IAction action) {
 
-//		 IWorkbenchPage page = PlatformUI.getWorkbench()
-//		 .getActiveWorkbenchWindow().getActivePage();
-//		
-//		 if (page == null)
-//		 return;
-//		 IEditorPart editorPart = page.getActiveEditor();
-//		//
-//		// ITextEditor editor = (ITextEditor) editorPart
-//		// .getAdapter(ITextEditor.class);
+		 IWorkbenchPage page = PlatformUI.getWorkbench()
+		 .getActiveWorkbenchWindow().getActivePage();
+		
+		 if (page == null)
+		 return;
+		 IEditorPart editorPart = page.getActiveEditor();
+		//
+		// ITextEditor editor = (ITextEditor) editorPart
+		// .getAdapter(ITextEditor.class);
 //
 //		// IDocumentProvider provider = editor.getDocumentProvider();
 //		// IDocument document = provider.getDocument(editor.getEditorInput());
 
+		IJavaElement javaElement =
+				 JavaUI.getEditorInputJavaElement(editorPart
+				 .getEditorInput());
+		IJavaProject javaProject = javaElement.getJavaProject();
 		try {
-			IResourceChangeListener listener = new BuildListener();
+			IResourceChangeListener listener = new BuildListener(javaProject);
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
 			// IResourceChangeEvent.PRE_BUILD
 					IResourceChangeEvent.POST_BUILD);
@@ -80,9 +90,7 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 			e.printStackTrace();
 		}
 
-//		 IJavaElement javaElement =
-//		 JavaUI.getEditorInputJavaElement(editorPart
-//		 .getEditorInput());
+		 
 //		 JavaCore.addElementChangedListener(new MyJavaElementChangeReporter(), ElementChangedEvent.POST_CHANGE);
 		//
 		// ICompilationUnit icompilationunit = (ICompilationUnit) javaElement;
