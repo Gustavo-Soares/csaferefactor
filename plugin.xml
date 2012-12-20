@@ -18,7 +18,7 @@
          <action
                label="&amp;Sample Action"
                icon="icons/sample.gif"
-               class="continousrefactoring.actions.SampleAction"
+               class="csaferfactor.actions.StartContinuousSafeRefactorAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
@@ -28,7 +28,13 @@
    </extension>
    
    
-<extension
+<extension id="saferefactormarker" point="org.eclipse.core.resources.markers"/>
+<extension id="saferefactorproblem" point="org.eclipse.core.resources.markers">
+   <super type="org.eclipse.core.resources.problemmarker"/>
+   <super type="csaferefactor.saferefactormarker"/>
+</extension>
+   
+<!--<extension
     id="continousrefactoring.slicemarker"
     name="GTASM Slice"
     point="org.eclipse.core.resources.markers">
@@ -67,7 +73,7 @@
    </specification>
 </extension>
 
-<!--<extension
+<extension
       id="test.vtclparsermarker"
       name="VTCL Parsing Problems"
       point="org.eclipse.core.resources.markers">
