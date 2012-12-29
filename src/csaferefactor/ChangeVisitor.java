@@ -91,7 +91,7 @@ class ChangeVisitor implements IResourceDeltaVisitor {
 							.lookup(SafeRefactorPlugin.SAFEREFACTOR_SERVER);
 					
 					saferefactor.core.Report saferefactoReport = generatorServer
-							.executeTask(new CheckBehaviorChange(sourceP,targetP));
+							.executeTask(new CheckBehaviorChange(sourceP,targetP, Activator.getDefault().getBinPath(), Activator.getDefault().getSafeRefactorJarPath(), Activator.getDefault().getSecurityPolicyPath()));
 
 					if (!saferefactoReport.isRefactoring()) {
 						System.out.println("Behavioral change found!!");
