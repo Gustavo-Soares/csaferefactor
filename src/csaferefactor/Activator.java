@@ -1,11 +1,17 @@
 package csaferefactor;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
@@ -16,6 +22,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -56,9 +63,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		Job.getJobManager().cancel("saferefactor_initializer");
-		
+
 		plugin = null;
-		
+
 		super.stop(context);
 	}
 
@@ -96,4 +103,30 @@ public class Activator extends AbstractUIPlugin {
 		}
 		return url.getPath();
 	}
+
+	public String getSafeRefactorJarPath() throws URISyntaxException,
+			IOException {
+		return getPath("lib/saferefactor-beta.jar");
+	}
+
+	public String getSecurityPolicyPath() throws URISyntaxException,
+			IOException {
+		return getPath("/security.policy");
+	}
+
+	public String getBinPath() throws URISyntaxException, IOException {
+		return getPath("/bin/");
+	}
+
+	private String getPath(String relativePath) throws URISyntaxException,
+			IOException {
+		IPath pathToSafeRefactorJar = new Path(relativePath);
+		URL SafeRefactorJarUrl = FileLocator.find(getBundle(),
+				pathToSafeRefactorJar, Collections.EMPTY_MAP);
+		File saferefactorJarFile = new File(FileLocator.toFileURL(
+				SafeRefactorJarUrl).toURI());
+		String saferefactorJar = saferefactorJarFile.getAbsolutePath();
+		return saferefactorJar;
+	}
+
 }
