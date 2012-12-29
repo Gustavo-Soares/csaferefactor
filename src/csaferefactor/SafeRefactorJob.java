@@ -23,6 +23,8 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 
+import csaferefactor.util.ProjectLogger;
+
 import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.SafeRefactor;
@@ -35,16 +37,15 @@ public class SafeRefactorJob extends Job {
 	private static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 	private final int output;
 	private final int input;
-	private final List<String> versions;
 	private IResource res = null;
 //	private IJavaElement element = null;
 
-	public SafeRefactorJob(String name, int input, int output,
-			List<String> versions, IResource res) {
+	public SafeRefactorJob(String name, int input, int output
+			, IResource res) {
 		super(name);
 		this.input = input;
 		this.output = output;
-		this.versions = versions;
+		
 		this.res = res;
 
 	}
@@ -66,13 +67,13 @@ public class SafeRefactorJob extends Job {
 		
 		//run saferefactor	
 		Project targetP = new Project();
-		File targetFolder = new File(versions.get(output - 1));
+		File targetFolder = new File(ProjectLogger.getInstance().getVersions().get(output - 1));
 		targetP.setProjectFolder(targetFolder);
 		targetP.setBuildFolder(targetFolder);
 		targetP.setSrcFolder(targetFolder);
 		Project sourceP = new Project();
 
-		File sourceFolder = new File(versions.get(input - 1));
+		File sourceFolder = new File(ProjectLogger.getInstance().getVersions().get(input - 1));
 		sourceP.setProjectFolder(sourceFolder);
 		sourceP.setBuildFolder(sourceFolder);
 		sourceP.setSrcFolder(sourceFolder);

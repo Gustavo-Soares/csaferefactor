@@ -2,26 +2,12 @@ package csaferfactor.actions;
 
 import java.io.IOException;
 
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.dom.rewrite.ITrackedNodePosition;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.text.TextAttribute;
-import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.BuildListener;
+import csaferefactor.SafeRefactorPlugin;
 
 
 /**
@@ -47,7 +33,7 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 	public static final String OBJ_MARKERNO = "icons/full/obj16/markerno.gif"; //$NON-NLS-1$
 	public static final String OBJ_MARKERPARTIAL = "icons/full/obj16/markerpartial.gif"; //$NON-NLS-1$
 
-	private ITrackedNodePosition track;
+
 
 	/**
 	 * The constructor.
@@ -62,34 +48,14 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 	 */
 	public void run(IAction action) {
 
-		 IWorkbenchPage page = PlatformUI.getWorkbench()
-		 .getActiveWorkbenchWindow().getActivePage();
-		
-		 if (page == null)
-		 return;
-		 IEditorPart editorPart = page.getActiveEditor();
-		//
-		// ITextEditor editor = (ITextEditor) editorPart
-		// .getAdapter(ITextEditor.class);
-//
-//		// IDocumentProvider provider = editor.getDocumentProvider();
-//		// IDocument document = provider.getDocument(editor.getEditorInput());
 
-		IJavaElement javaElement =
-				 JavaUI.getEditorInputJavaElement(editorPart
-				 .getEditorInput());
-		IJavaProject javaProject = javaElement.getJavaProject();
+		SafeRefactorPlugin saferefactor = new SafeRefactorPlugin();
 		try {
-			IResourceChangeListener listener = new BuildListener(javaProject);
-			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
-			// IResourceChangeEvent.PRE_BUILD
-					IResourceChangeEvent.POST_BUILD);
-			// | IResourceChangeEvent.POST_CHANGE);
+			saferefactor.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		 
 //		 JavaCore.addElementChangedListener(new MyJavaElementChangeReporter(), ElementChangedEvent.POST_CHANGE);
 		//
@@ -186,10 +152,7 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 		// }
 	}
 
-	private IToken createToken(Color color) {
-		TextAttribute textAttribute = new TextAttribute(color);
-		return new Token(textAttribute);
-	}
+	
 
 	/**
 	 * Selection in the workbench has been changed. We can change the state of

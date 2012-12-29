@@ -9,14 +9,14 @@
             visible="true"
             id="test.actionSet">
          <menu
-               label="Sample &amp;Menu"
+               label="CSafeRefactor"
                id="sampleMenu">
             <separator
                   name="sampleGroup">
             </separator>
          </menu>
          <action
-               label="&amp;Sample Action"
+               label="Start"
                icon="icons/sample.gif"
                class="csaferfactor.actions.StartAction"
                tooltip="Hello, Eclipse world"

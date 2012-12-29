@@ -14,21 +14,12 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import csaferefactor.util.ProjectLogger;
+
 public class BuildListener implements IResourceChangeListener,
 		IPropertyListener {
 
-	private int counter = 0;
-	private ProjectLogger logger;
-	private List<String> versions;
-
-	public BuildListener(IJavaProject javaProject) throws IOException {
-
-		
-		logger = new ProjectLogger(javaProject.getProject());
-		versions = new ArrayList<String>();
-
-		String path = logger.log();
-		versions.add(path);
+	public BuildListener(IJavaProject javaProject) {
 
 	}
 
@@ -39,9 +30,8 @@ public class BuildListener implements IResourceChangeListener,
 		case IResourceChangeEvent.POST_BUILD:
 
 			try {
-				event.getDelta().accept(new ChangeVisitor(logger, versions));
+				event.getDelta().accept(new ChangeVisitor());
 			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -55,21 +45,7 @@ public class BuildListener implements IResourceChangeListener,
 
 		switch (propId) {
 		case ITextEditor.PROP_DIRTY:
-			String path;
-			try {
-
-				path = logger.log();
-				versions.add(path);
-				System.out.println("logged version to: " + path);
-				counter++;
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 			break;
 

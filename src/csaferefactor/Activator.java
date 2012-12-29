@@ -3,8 +3,18 @@ package csaferefactor;
 import java.io.IOException;
 import java.net.URL;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -18,7 +28,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
-	
+
 	/**
 	 * The constructor
 	 */
@@ -27,7 +37,10 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -36,16 +49,22 @@ public class Activator extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
+		Job.getJobManager().cancel("saferefactor_initializer");
+		
 		plugin = null;
+		
 		super.stop(context);
 	}
 
 	/**
 	 * Returns the shared instance
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -53,27 +72,28 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path
+	 * 
+	 * @param path
+	 *            the path
 	 * @return the image descriptor
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
-	
+
 	/**
 	 * @return The File Location of this plugin
 	 */
-	 public String getPluginFolder()  {
-		 URL url = getBundle().getEntry("/"); 
-	     try {
+	public String getPluginFolder() {
+		URL url = getBundle().getEntry("/");
+		try {
 			url = Platform.asLocalURL(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	     return url.getPath();
-	 }
+		return url.getPath();
+	}
 }
