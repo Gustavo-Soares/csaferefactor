@@ -99,9 +99,9 @@ class ChangeVisitor implements IResourceDeltaVisitor {
 
 					double stop = System.currentTimeMillis();
 					double total = (stop - start) / 1000;
-					System.out.println("Tempo total (s): " + total);
+					System.out.println("Total time (s): " + total);
 
-					// output the feedback
+					//TODO output the feedback
 
 				} catch (Exception e) {
 

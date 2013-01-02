@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -44,9 +45,10 @@ public class VMInitializerJob extends Job {
 
 		// run rmiregistry
 		try {
-			Registry registry = LocateRegistry.getRegistry("localhost");
-			if (registry == null)
-				registry = LocateRegistry.createRegistry(1099);
+			// Registry registry = LocateRegistry.getRegistry("localhost");
+			// if (registry == null)
+			Registry registry = LocateRegistry.createRegistry(1099);
+			System.setSecurityManager(new RMISecurityManager());
 
 			String saferefactorJar = Activator.getDefault()
 					.getSafeRefactorJarPath();
@@ -54,17 +56,17 @@ public class VMInitializerJob extends Job {
 
 			String securityPolicyPath = Activator.getDefault()
 					.getSecurityPolicyPath();
-			
-			Process p = Runtime.getRuntime().exec(
-					new String[] {
+
+			Process p = Runtime
+					.getRuntime()
+					.exec(new String[] {
 							"java",
 							"-cp",
 							saferefactorJar + ":" + classpath,
-							"-Djava.rmi.server.codebase=file:" + binPath + " file:"
-									+ saferefactorJar + " file:" + classpath
-									+ "/",
-							"-Djava.security.policy=file:"
-									+ securityPolicyPath,
+							"-Djava.rmi.server.codebase=file:" + binPath
+									+ " file:" + saferefactorJar + " file:"
+									+ classpath + "/",
+							"-Djava.security.policy=file:" + securityPolicyPath,
 							"saferefactor.rmi.server.RemoteExecutorImpl",
 							serverName });
 
