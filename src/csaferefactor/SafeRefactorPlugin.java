@@ -1,13 +1,18 @@
 package csaferefactor;
 
 import java.io.IOException;
+import java.rmi.RMISecurityManager;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -18,9 +23,14 @@ import csaferefactor.util.VMInitializerJob;
 
 public class SafeRefactorPlugin {
 
-	public static final String SAFEREFACTOR_SERVER = "saferefactor";
-	
+	// public static final String SAFEREFACTOR_SERVER = "saferefactor";
 
+	public static final String MY_FAMILY = "saferefactorJobFamily";
+
+	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
+
+	
+	
 	private IWorkbenchPage page;
 
 	public SafeRefactorPlugin() {
@@ -29,7 +39,9 @@ public class SafeRefactorPlugin {
 	}
 
 	public void start() throws IOException {
-
+	
+//		System.setSecurityManager(new RMISecurityManager());
+		
 		if (page == null)
 			return;
 
@@ -38,26 +50,15 @@ public class SafeRefactorPlugin {
 		if (editorPart == null)
 			return;
 
-		IJavaElement javaElement = JavaUI.getEditorInputJavaElement(editorPart
-				.getEditorInput());
-
-		IJavaProject javaProject = javaElement.getJavaProject();
-
 		// log current project
 		ProjectLogger.getInstance().log();
 
-		// crate generator server
-		VMInitializerJob vmInitializer = new VMInitializerJob(
-				"saferefactor_initializer", SafeRefactorPlugin.SAFEREFACTOR_SERVER,
-				ProjectLogger.getInstance().getVersions().get(0));
-		vmInitializer.schedule();
-		vmInitializer.setPriority(Job.SHORT);
-
 		// set listener
-		IResourceChangeListener listener = new BuildListener(javaProject);
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
-				IResourceChangeEvent.POST_BUILD);
+		JavaCore.addElementChangedListener(new JavaElementChangedListener(),
+				ElementChangedEvent.POST_RECONCILE);
 
 	}
+
+
 
 }

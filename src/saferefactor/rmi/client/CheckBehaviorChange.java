@@ -1,21 +1,18 @@
 package saferefactor.rmi.client;
 
-import java.io.File;
 import java.io.Serializable;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
-import org.eclipse.core.runtime.jobs.Job;
-
-import csaferefactor.util.ProjectLogger;
 import randoop.ExecutableSequence;
 import randoop.main.GenTests;
-import randoop.main.RandoopTextuiException;
-import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.analysis.TransformationAnalyzer;
 import saferefactor.core.analysis.naive.ASMBasedAnalyzer;
@@ -42,7 +39,8 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	private String safeRefactorJarPath;
 	private String binPath;
 
-	public CheckBehaviorChange(Project sourceProject, Project targetProject, String binPath, String safeRefactorJarPath, String polityPath) {
+	public CheckBehaviorChange(Project sourceProject, Project targetProject,
+			String binPath, String safeRefactorJarPath, String polityPath) {
 		this.sourceP = sourceProject;
 		this.targetP = targetProject;
 		this.binPath = binPath;
@@ -52,8 +50,9 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 
 	@Override
 	public Report execute() {
+		
 		Report result = new Report();
-
+		
 		// identify common methods
 		TransformationAnalyzer analyzer = new ASMBasedAnalyzer(sourceP,
 				targetP, Constants.SAFEREFACTOR_DIR);
@@ -62,11 +61,18 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			saferefactor.core.analysis.Report analysisReport = analyzer
 					.analyze();
 
+			
+			//creating unique id
+			String sourceId = sourceP.getProjectFolder().getName();
+			String targetId = targetP.getProjectFolder().getName();
+			System.out.println("Checking transformation from " + sourceId + " to "  +  targetId);
 			// initiate execute sequence server
-			Thread initializeVM = new Thread(new VMInitializer(
-					CheckBehaviorChange.EXECUTOR, targetP.getBuildFolder()
-							.getAbsolutePath(), binPath, safeRefactorJarPath, polityPath));
-			initializeVM.start();
+//			String serverName = CheckBehaviorChange.EXECUTOR + sourceId + targetId;
+//			Thread initializeVM = new Thread(new VMInitializer(
+//					serverName, targetP.getBuildFolder()
+//							.getAbsolutePath(), binPath, safeRefactorJarPath,
+//					polityPath));
+//			initializeVM.start();
 
 			// generate the tests
 			String fileName = generateMethodListFile(analysisReport
@@ -85,23 +91,40 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			registry = LocateRegistry.getRegistry("localhost");
 			System.setSecurityManager(new RMISecurityManager());
 
-			// run the tests in the second vm
-			RemoteExecutor server = (RemoteExecutor) registry.lookup(CheckBehaviorChange.EXECUTOR);
-			List<ExecutableSequence> comparedSequence = server
-					.executeTask(new SequenceExecution(sequences));
+			// run the tests in the second vm			
+			RemoteExecutor server = (RemoteExecutor) registry
+					.lookup(targetP.getProjectFolder().getName());
+			List<ExecutableSequence> comparedSequences = server
+					.executeTask(new SequenceExecution(targetId, sequences));
 
+			//close service
+//			server.exit();
+			
 			// compare the results
 			boolean changeBehavior = false;
+
+			Set<String> changedMethods = new HashSet<String>();
+
 			for (int i = 0; i < sequences.size(); i++) {
-				
 				if (!sequences.get(i).toCodeString()
-						.equals(comparedSequence.get(i).toCodeString())) {
+						.equals(comparedSequences.get(i).toCodeString())) {
+					ExecutableSequence sequence = sequences.get(i);
+					ExecutableSequence comparedSequence = comparedSequences
+							.get(i);
+					Set<String> compare_checks = sequence
+							.compare_checks(comparedSequence);
+					changedMethods.addAll(compare_checks);
 					changeBehavior = true;
 				}
-					
+
 			}
 			result.setRefactoring(!changeBehavior);
+			ArrayList<String> changeMethodsList = new ArrayList<String>();
+			changeMethodsList.addAll(changedMethods);
+			result.setChangedMethods2(changeMethodsList);
 
+			
+			
 		} catch (RemoteException e) {
 
 			e.printStackTrace();

@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -13,6 +17,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
@@ -25,6 +30,10 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import saferefactor.rmi.common.RemoteExecutor;
+
+import csaferefactor.util.ProjectLogger;
+
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -35,6 +44,10 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator plugin;
+	
+	private Registry registry = null;
+	
+	
 
 	/**
 	 * The constructor
@@ -52,6 +65,7 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		registry = LocateRegistry.createRegistry(1099);
 	}
 
 	/*
@@ -62,8 +76,18 @@ public class Activator extends AbstractUIPlugin {
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
-		Job.getJobManager().cancel("saferefactor_initializer");
-
+		Registry registry = LocateRegistry.getRegistry("localhost");
+		
+		List<Snapshot> snapshotList = ProjectLogger.getInstance().getSnapshotList();
+		for (Snapshot snapshot : snapshotList) {
+			RemoteExecutor generatorServer = (RemoteExecutor) registry
+					.lookup(snapshot.getServerName());
+			generatorServer.exit();
+		}
+		
+		IJobManager jobMan = Job.getJobManager();
+		jobMan.cancel(SafeRefactorPlugin.MY_FAMILY);
+		jobMan.join(SafeRefactorPlugin.MY_FAMILY, null);
 		plugin = null;
 
 		super.stop(context);
@@ -128,5 +152,11 @@ public class Activator extends AbstractUIPlugin {
 		String saferefactorJar = saferefactorJarFile.getAbsolutePath();
 		return saferefactorJar;
 	}
+
+	public Registry getRegistry() {
+		return registry;
+	}
+
+
 
 }

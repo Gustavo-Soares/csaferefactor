@@ -2,14 +2,23 @@ package csaferefactor.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.ui.JavaUI;
@@ -17,14 +26,19 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import csaferefactor.SafeRefactorPlugin;
+import csaferefactor.Snapshot;
+
 import saferefactor.core.util.FileUtil;
+import saferefactor.rmi.common.RemoteExecutor;
 
 public class ProjectLogger {
 
 	private final String sourceFolder;
 	private int counter = 0;
 	private String projectPath;
-	private List<String> versions = new ArrayList<String>();
+
+	private List<Snapshot> snapshotList = new LinkedList<Snapshot>();
 
 	private static ProjectLogger instance;
 
@@ -52,7 +66,27 @@ public class ProjectLogger {
 		return instance;
 	}
 
-	public String log() throws IOException {
+	public Snapshot log() throws IOException {
+
+		Snapshot result = new Snapshot();
+
+		// copying binary files to temp folder
+		File generatedFolder = copyBinFilesToTmpFolder();
+		result.setPath(generatedFolder.getAbsolutePath());
+		result.setServerName(generatedFolder.getName());
+
+		// crate generator server
+		VMInitializerJob vmInitializer = new VMInitializerJob(
+				result.getServerName(), result.getPath());
+		// vmInitializer.schedule();
+		// vmInitializer.setPriority(Job.SHORT);
+		Future<?> submit = result.getExecutor().submit(vmInitializer);
+
+		snapshotList.add(result);
+		return result;
+	}
+
+	private File copyBinFilesToTmpFolder() throws IOException {
 		File source = new File(sourceFolder);
 		String logDir = System.getProperty("java.io.tmpdir");
 		String targetFolder = logDir + projectPath + counter;
@@ -64,13 +98,40 @@ public class ProjectLogger {
 		}
 		target.mkdir();
 		FileUtil.copyFolder(source, target);
-		versions.add(targetFolder);
-		return targetFolder;
+		return target;
 	}
 
-	public List<String> getVersions() {
-		return versions;
+	public List<Snapshot> getSnapshotList() {
+		return snapshotList;
 	}
 
+	public void deleteSnapshot(int index)  {
+		synchronized (snapshotList) {
+
+			Snapshot targetSnapshot = snapshotList.get(index);
+			targetSnapshot.getExecutor().shutdownNow();
+			// stop server
+			
+
+			try {
+			Registry registry = LocateRegistry.getRegistry("localhost");
+			RemoteExecutor generatorServer = (RemoteExecutor) registry
+					.lookup(targetSnapshot.getServerName());
+			generatorServer.exit();
+			} catch (NotBoundException e) {
+				//if the server is not loaded, do no to anything
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// stop thread
+			targetSnapshot.getExecutor().shutdownNow();
+
+			// remove from List
+			snapshotList.remove(index);
+			System.out.println("snapshot " +  targetSnapshot.getServerName()  + "deleted");
+		}	
+	}
 
 }

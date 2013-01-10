@@ -2,11 +2,13 @@ package csaferfactor.actions;
 
 import java.io.IOException;
 
+import org.eclipse.compare.CompareUI;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
+import csaferefactor.CompareInput;
 import csaferefactor.SafeRefactorPlugin;
 
 
@@ -56,6 +58,8 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+//		CompareUI.openCompareEditor(new CompareInput());
 		 
 //		 JavaCore.addElementChangedListener(new MyJavaElementChangeReporter(), ElementChangedEvent.POST_CHANGE);
 		//

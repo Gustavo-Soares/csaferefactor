@@ -2,52 +2,35 @@ package csaferefactor.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.Collections;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.osgi.framework.Bundle;
+import saferefactor.core.util.Constants;
 
 import csaferefactor.Activator;
 
-public class VMInitializerJob extends Job {
+public class VMInitializerJob implements Runnable {
 
 	private String serverName;
 	private String classpath;
 
-	public VMInitializerJob(String name, String serverName, String classpath) {
-		super(name);
-		this.serverName = serverName;
+	public VMInitializerJob(String name, String classpath) {
+		this.serverName = name;
 		this.classpath = classpath;
 	}
 
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	public void run() {
 
-		String s = null;
+//		String s = null;
 
-		// run rmiregistry
 		try {
-			// Registry registry = LocateRegistry.getRegistry("localhost");
-			// if (registry == null)
-			Registry registry = LocateRegistry.createRegistry(1099);
+
 			System.setSecurityManager(new RMISecurityManager());
 
 			String saferefactorJar = Activator.getDefault()
@@ -57,40 +40,48 @@ public class VMInitializerJob extends Job {
 			String securityPolicyPath = Activator.getDefault()
 					.getSecurityPolicyPath();
 
-			Process p = Runtime
-					.getRuntime()
-					.exec(new String[] {
-							"java",
-							"-cp",
-							saferefactorJar + ":" + classpath,
-							"-Djava.rmi.server.codebase=file:" + binPath
-									+ " file:" + saferefactorJar + " file:"
-									+ classpath + "/",
-							"-Djava.security.policy=file:" + securityPolicyPath,
-							"saferefactor.rmi.server.RemoteExecutorImpl",
-							serverName });
+			ProcessBuilder builder = new ProcessBuilder(new String[] {
+					"java",
+					"-cp",
+					saferefactorJar + ":" + classpath,
+					"-Djava.rmi.server.codebase=file:" + binPath + " file:"
+							+ saferefactorJar + " file:" + classpath + "/",
+					"-Djava.security.policy=file:" + securityPolicyPath,
+					"saferefactor.rmi.server.RemoteExecutorImpl", serverName });
 
-			System.out.println("Server " + serverName
-					+ " generated with classpath: " + classpath + "!");
+			builder.redirectErrorStream(true);
+			Process p = builder.start();
 
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					p.getInputStream()));
+			// System.out.println("Server " + serverName
+			// + " generated with classpath: " + classpath + "!");
 
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(
-					p.getErrorStream()));
-
-			// read the output from the command
-			System.out.println("Here is the standard output of the command:\n");
-			while ((s = stdInput.readLine()) != null) {
-				System.out.println(s);
-			}
-
-			// read any errors from the attempted command
-			System.out
-					.println("Here is the standard error of the command (if any):\n");
-			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
-			}
+			 InputStream inputStream = p.getInputStream();
+			BufferedReader stdInput = new BufferedReader(new
+			 InputStreamReader(
+			 inputStream));
+			//
+			// BufferedReader stdError = new BufferedReader(new
+			// InputStreamReader(
+			// p.getErrorStream()));
+			//
+			File outputFile = new File(classpath, "log.txt");
+			
+			FileOutputStream fos = new FileOutputStream(outputFile);
+			// // read the output from the command
+//			 System.out.println("Here is the standard output of the command:\n");
+			 int c;
+			  while ((c = inputStream.read()) != -1) {
+				 fos.write(c);
+			 }
+			  stdInput.close();
+			  fos.close();
+			//
+			// // read any errors from the attempted command
+			// System.out
+			// .println("Here is the standard error of the command (if any):\n");
+			// while ((s = stdError.readLine()) != null) {
+			// System.out.println(s);
+			// }
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -103,7 +94,6 @@ public class VMInitializerJob extends Job {
 			e.printStackTrace();
 		}
 
-		return Status.OK_STATUS;
 	}
 
 }

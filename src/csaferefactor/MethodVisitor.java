@@ -1,5 +1,7 @@
 package csaferefactor;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
@@ -13,8 +15,15 @@ public class MethodVisitor extends ASTVisitor {
 	}
 	@Override
 	public boolean visit(MethodDeclaration node) {
-		String methodName = node.getName().getIdentifier();
-		if (methodName.equals(target))
+		String methodSignature = node.getName().getIdentifier() + "(";
+		List parameters = node.typeParameters();
+		for (int i = 0; i < parameters.size() ; i++ ) {
+			methodSignature = methodSignature + parameters.get(i).toString();
+			if (i < (parameters.size() -2))
+				methodSignature = methodSignature + ", ";
+		}
+		methodSignature = methodSignature + ")";
+		if (methodSignature.equals(target))
 			setMethod(node);
 		return super.visit(node);
 	}
