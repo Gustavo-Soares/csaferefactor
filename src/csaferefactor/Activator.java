@@ -36,7 +36,6 @@ import org.osgi.framework.BundleContext;
 
 import saferefactor.rmi.common.RemoteExecutor;
 
-import csaferefactor.util.ProjectLogger;
 
 /**
  * The activator class controls the plug-in life cycle

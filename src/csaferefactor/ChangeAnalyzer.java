@@ -26,15 +26,18 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 
+import csaferefactor.exception.CompilationException;
+import csaferefactor.runnable.SafeRefactorRunnable;
+import csaferefactor.visitor.MethodVisitor;
+
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
-import csaferefactor.util.ProjectLogger;
 
-public class EvaluateTransformationJob implements Runnable {
+public class ChangeAnalyzer implements Runnable {
 
 	private IJavaElement compilationUnit;
 
-	public EvaluateTransformationJob(String name, IJavaElement javaElement) {
+	public ChangeAnalyzer(String name, IJavaElement javaElement) {
 		// super(name);
 		this.compilationUnit = javaElement;
 	}

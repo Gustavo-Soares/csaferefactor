@@ -1,4 +1,4 @@
-package csaferefactor.util;
+package csaferefactor;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +27,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.SafeRefactorPlugin;
-import csaferefactor.Snapshot;
+import csaferefactor.runnable.VMInitializerRunnable;
 
 import saferefactor.core.util.FileUtil;
 import saferefactor.rmi.common.RemoteExecutor;
@@ -77,7 +76,7 @@ public class ProjectLogger {
 		result.setServerName(generatedFolder.getName());
 
 		// crate generator server
-		VMInitializerJob vmInitializer = new VMInitializerJob(
+		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
 		// vmInitializer.schedule();
 		// vmInitializer.setPriority(Job.SHORT);

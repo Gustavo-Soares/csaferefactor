@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.runnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,12 +11,15 @@ import java.rmi.registry.Registry;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import csaferefactor.Activator;
+import csaferefactor.ProjectLogger;
+import csaferefactor.SafeRefactorPlugin;
+
 import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.util.Project;
 import saferefactor.rmi.client.CheckBehaviorChange;
 import saferefactor.rmi.common.RemoteExecutor;
-import csaferefactor.util.ProjectLogger;
 
 public class SafeRefactorRunnable implements Runnable {
 

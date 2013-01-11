@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.visitor;
 
 import java.util.List;
 

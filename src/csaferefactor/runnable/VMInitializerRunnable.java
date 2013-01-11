@@ -1,4 +1,4 @@
-package csaferefactor.util;
+package csaferefactor.runnable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,12 +14,12 @@ import saferefactor.core.util.Constants;
 
 import csaferefactor.Activator;
 
-public class VMInitializerJob implements Runnable {
+public class VMInitializerRunnable implements Runnable {
 
 	private String serverName;
 	private String classpath;
 
-	public VMInitializerJob(String name, String classpath) {
+	public VMInitializerRunnable(String name, String classpath) {
 		this.serverName = name;
 		this.classpath = classpath;
 	}

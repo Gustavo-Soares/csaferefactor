@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.listener;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -10,7 +10,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import csaferefactor.util.ProjectLogger;
+import csaferefactor.Activator;
+import csaferefactor.ProjectLogger;
+import csaferefactor.visitor.ChangeVisitor;
+
 
 public class BuildListener implements IResourceChangeListener,
 		IPropertyListener {

@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.listener;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
+
+import csaferefactor.ChangeAnalyzer;
 
 public class JavaElementChangedListener implements IElementChangedListener {
 	
@@ -31,7 +33,7 @@ public class JavaElementChangedListener implements IElementChangedListener {
 				if (!executor.awaitTermination(0, TimeUnit.MILLISECONDS)) {
 					executor.shutdownNow();
 					executor = Executors.newFixedThreadPool(1);
-					EvaluateTransformationJob job = new EvaluateTransformationJob("saferefactor", javaElement);
+					ChangeAnalyzer job = new ChangeAnalyzer("saferefactor", javaElement);
 					executor.submit(job);		
 				}
 			} catch (InterruptedException e) {

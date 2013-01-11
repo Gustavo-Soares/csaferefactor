@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.exception;
 
 public class CompilationException extends Exception {
 
