@@ -112,7 +112,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 					ExecutableSequence comparedSequence = comparedSequences
 							.get(i);
 					Set<String> compare_checks = sequence
-							.compare_checks(comparedSequence);
+							.compare_checks(comparedSequence,true);
 					changedMethods.addAll(compare_checks);
 					changeBehavior = true;
 				}

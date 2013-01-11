@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
 public class MethodVisitor extends ASTVisitor {
 	
@@ -16,12 +17,16 @@ public class MethodVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MethodDeclaration node) {
 		String methodSignature = node.getName().getIdentifier() + "(";
-		List parameters = node.typeParameters();
-		for (int i = 0; i < parameters.size() ; i++ ) {
-			methodSignature = methodSignature + parameters.get(i).toString();
+		List<SingleVariableDeclaration> parameters = node.parameters();
+		for (int i = 0; i < parameters.size() ; i++) {
+			SingleVariableDeclaration parameter = parameters.get(i);
+			methodSignature = methodSignature + parameter.getType().toString();
 			if (i < (parameters.size() -2))
-				methodSignature = methodSignature + ", ";
+				methodSignature = methodSignature + ", ";	
+			
+			//TODO check with parameter contain list of string
 		}
+		
 		methodSignature = methodSignature + ")";
 		if (methodSignature.equals(target))
 			setMethod(node);

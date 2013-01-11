@@ -1,8 +1,11 @@
 package csaferefactor;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URISyntaxException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
@@ -98,12 +101,12 @@ public class EvaluateTransformationJob implements Runnable {
 			int targetVersion = 0;
 			try {
 
-				removeExistingPluginMarkers();
+				Activator.getDefault().removeExistingPluginMarkers((ICompilationUnit) compilationUnit);
 
 				// if snapshotList has more than 2 versions, remove second
 				// version, which we are not interested in evaluate the behavior
-				if (ProjectLogger.getInstance().getSnapshotList().size() > 2)
-					ProjectLogger.getInstance().deleteSnapshot(1);
+//				if (ProjectLogger.getInstance().getSnapshotList().size() > 2)
+//					ProjectLogger.getInstance().deleteSnapshot(1);
 
 				// 1. log the project
 				Snapshot snapshot = ProjectLogger.getInstance().log();
@@ -111,42 +114,35 @@ public class EvaluateTransformationJob implements Runnable {
 
 				updateBinariesForTheChangedAST(astRoot, classpath);
 
-				// TODO run in parallel. I am having some problems due to shared
-				// data.
-				ExecutorService executor = Executors.newFixedThreadPool(2);
+				ExecutorService executor = Executors.newFixedThreadPool(1);
 
 				targetVersion = ProjectLogger.getInstance().getSnapshotList()
 						.size() - 1;
 
 				SafeRefactorRunnable runnable1 = new SafeRefactorRunnable(
 						"runnable1", sourceVersion, targetVersion, astRoot);
-
 				Future submit = executor.submit(runnable1);
 				SafeRefactorRunnable runnable2 = null;
-
-				if (ProjectLogger.getInstance().getSnapshotList().size() > 2) {
-					sourceVersion = targetVersion - 1;
-					runnable2 = new SafeRefactorRunnable("runnable2",
-							sourceVersion, targetVersion, astRoot);
-					Future submit2 = executor.submit(runnable2);
-					submit2.get();
-				}
+//				if (ProjectLogger.getInstance().getSnapshotList().size() > 2) {
+//					sourceVersion = targetVersion - 1;
+//					runnable2 = new SafeRefactorRunnable("runnable2",
+//							sourceVersion, targetVersion, astRoot);
+//					Future submit2 = executor.submit(runnable2);
+//					submit2.get();
+//				}
 				submit.get();
 
 				// if no behavioral change, remove head
 				if (runnable1.getSaferefactoReport().isRefactoring()) {
 					if ((runnable2 == null))
 						ProjectLogger.getInstance().deleteSnapshot(0);
-					else if (runnable2.getSaferefactoReport().isRefactoring()) {
-						ProjectLogger.getInstance().deleteSnapshot(0);
-						ProjectLogger.getInstance().deleteSnapshot(1);
-					}
+//					else if (runnable2.getSaferefactoReport().isRefactoring()) {
+//						ProjectLogger.getInstance().deleteSnapshot(0);
+//						ProjectLogger.getInstance().deleteSnapshot(1);
+//					}
 
 				} else {
-					// TODO output the feedback
 
-					// System.out.println("Behavioral change found!!");
-					// System.out.println("methods that changed: ");
 					List<String> changedMethods2 = runnable1
 							.getSaferefactoReport().getChangedMethods2();
 					for (String method : changedMethods2) {
@@ -156,20 +152,21 @@ public class EvaluateTransformationJob implements Runnable {
 									.getResource(), astRoot, method);
 						// System.out.println(method);
 					}
+					ProjectLogger.getInstance().deleteSnapshot(targetVersion);
 				}
-				if (runnable2 != null
-						&& !runnable2.getSaferefactoReport().isRefactoring()) {
-					List<String> changedMethods2 = runnable2
-							.getSaferefactoReport().getChangedMethods2();
-					for (String method : changedMethods2) {
-						// ignore default contructor
-						if (!method.contains(".<init>()"))
-							createMarkerForResource(astRoot.getJavaElement()
-									.getResource(), astRoot, method);
-						// System.out.println(method);
-					}
-
-				}
+//				if (runnable2 != null
+//						&& !runnable2.getSaferefactoReport().isRefactoring()) {
+//					List<String> changedMethods2 = runnable2
+//							.getSaferefactoReport().getChangedMethods2();
+//					for (String method : changedMethods2) {
+//						// ignore default contructor
+//						if (!method.contains(".<init>()"))
+//							createMarkerForResource(astRoot.getJavaElement()
+//									.getResource(), astRoot, method);
+//						// System.out.println(method);
+//					}
+//
+//				}
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -190,6 +187,13 @@ public class EvaluateTransformationJob implements Runnable {
 			} catch (ExecutionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (CompilationException e) {
+				// if thread is interrupted, delete this snapshot
+				System.out.println("version does not compile: ");
+				System.out.println(e.getMessage());
+				System.out.println("Deleting unsatable version "
+						+ targetVersion + " in the snapshotlist");
+				ProjectLogger.getInstance().deleteSnapshot(targetVersion);
 			}
 
 		}
@@ -231,7 +235,7 @@ public class EvaluateTransformationJob implements Runnable {
 	}
 
 	private void updateBinariesForTheChangedAST(CompilationUnit astRoot,
-			String classpath) {
+			String classpath) throws CompilationException {
 		// 2. make a file in a tmp folder for the new AST
 		PackageDeclaration package1 = astRoot.getPackage();
 		String packageName = package1.getName().getFullyQualifiedName();
@@ -256,9 +260,14 @@ public class EvaluateTransformationJob implements Runnable {
 		// pass to the compiler
 		CompilationProgress progress = null; // instantiate your
 												// subclass
+		
+		Writer writer = new StringWriter();
+		PrintWriter errorPrintWriter = new PrintWriter(writer);
 		BatchCompiler.compile("-classpath " + classpath + " "
 				+ pathToSaveTheFile + " -d " + classpath, new PrintWriter(
-				System.out), new PrintWriter(System.err), progress);
+				System.out), errorPrintWriter, progress);
+		if (writer.toString().contains("error")) 
+			throw new CompilationException("compilation error " + writer.toString());
 	}
 
 	private boolean checkCompilationErrors(CompilationUnit astRoot) {
@@ -280,14 +289,7 @@ public class EvaluateTransformationJob implements Runnable {
 		return astRoot;
 	}
 
-	private void removeExistingPluginMarkers() throws CoreException {
-		IMarker[] findMarkers = compilationUnit.getResource().findMarkers(
-				SafeRefactorPlugin.SAFEREFACTOR_MARKER, true, 1);
-		for (IMarker iMarker : findMarkers) {
-			iMarker.delete();
-			System.out.println("marker removed");
-		}
-	}
+	
 
 	public IMarker[] findJavaProblemMarkers(ICompilationUnit cu)
 			throws CoreException {

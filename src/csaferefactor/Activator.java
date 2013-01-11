@@ -10,15 +10,19 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.ui.JavaUI;
@@ -91,6 +95,20 @@ public class Activator extends AbstractUIPlugin {
 		plugin = null;
 
 		super.stop(context);
+	}
+	
+	public void removeExistingPluginMarkers(ICompilationUnit compilationUnit) throws CoreException {
+		IResource resource = compilationUnit.getResource();
+		removeExistingPluginmarkers(resource);
+	}
+
+	public void removeExistingPluginmarkers(IResource resource) throws CoreException {
+		IMarker[] findMarkers = resource.findMarkers(
+				SafeRefactorPlugin.SAFEREFACTOR_MARKER, true, 1);
+		for (IMarker iMarker : findMarkers) {
+			iMarker.delete();
+			System.out.println("marker removed");
+		}
 	}
 
 	/**

@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -105,21 +106,20 @@ public class ProjectLogger {
 		return snapshotList;
 	}
 
-	public void deleteSnapshot(int index)  {
+	public void deleteSnapshot(int index) {
 		synchronized (snapshotList) {
 
 			Snapshot targetSnapshot = snapshotList.get(index);
 			targetSnapshot.getExecutor().shutdownNow();
 			// stop server
-			
 
 			try {
-			Registry registry = LocateRegistry.getRegistry("localhost");
-			RemoteExecutor generatorServer = (RemoteExecutor) registry
-					.lookup(targetSnapshot.getServerName());
-			generatorServer.exit();
+				Registry registry = LocateRegistry.getRegistry("localhost");
+				RemoteExecutor generatorServer = (RemoteExecutor) registry
+						.lookup(targetSnapshot.getServerName());
+				generatorServer.exit();
 			} catch (NotBoundException e) {
-				//if the server is not loaded, do no to anything
+				// if the server is not loaded, do no to anything
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -130,8 +130,20 @@ public class ProjectLogger {
 
 			// remove from List
 			snapshotList.remove(index);
-			System.out.println("snapshot " +  targetSnapshot.getServerName()  + "deleted");
-		}	
+			System.out.println("snapshot " + targetSnapshot.getServerName()
+					+ "deleted");
+		}
+	}
+
+	public void clean() {
+		int size = snapshotList.size();
+		if (size > 1) {
+			deleteSnapshot(0);
+			if (size == 3)
+				deleteSnapshot(1);
+			System.out.println("List was cleaned");
+		}
+
 	}
 
 }

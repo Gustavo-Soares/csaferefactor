@@ -16,6 +16,8 @@ public class JavaElementChangedListener implements IElementChangedListener {
 	
 	public void elementChanged(ElementChangedEvent event) {
 		
+		
+		
 		IJavaElementDelta delta = event.getDelta();
 		IJavaElement javaElement = delta.getElement();
 
