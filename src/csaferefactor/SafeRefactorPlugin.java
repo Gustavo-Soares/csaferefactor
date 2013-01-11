@@ -2,6 +2,9 @@ package csaferefactor;
 
 import java.io.IOException;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.IEditorPart;
@@ -9,14 +12,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import csaferefactor.listener.BuildListener;
 import csaferefactor.listener.JavaElementChangedListener;
 
 
 public class SafeRefactorPlugin {
-
-	// public static final String SAFEREFACTOR_SERVER = "saferefactor";
-
-	public static final String MY_FAMILY = "saferefactorJobFamily";
 
 	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 
@@ -55,9 +55,9 @@ public class SafeRefactorPlugin {
 		if (page == null)
 			return;
 
-//		IResourceChangeListener listener = new BuildListener(page.getActiveEditor());
-//		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
-//				IResourceChangeEvent.POST_BUILD);
+		IResourceChangeListener listener = new BuildListener(page.getActiveEditor());
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
+				IResourceChangeEvent.POST_BUILD);
 
 	}
 

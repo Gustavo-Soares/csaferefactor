@@ -70,11 +70,11 @@ public class ChangeAnalyzerRunnable implements Runnable {
 
 				if (saferefactoReport.isRefactoring()) {
 					// if no behavioral change, desconsider the old snapshot
-					ProjectLogger.getInstance().deleteSnapshot(sourceVersion);
+					ProjectLogger.getInstance().deleteSnapshot(sourceVersion,true);
 				} else {
 					addMarkerToChangedMethods(astRoot, saferefactoReport);
 					// delete the target snapshot
-					ProjectLogger.getInstance().deleteSnapshot(targetVersion);
+					ProjectLogger.getInstance().deleteSnapshot(targetVersion,true);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -98,13 +98,12 @@ public class ChangeAnalyzerRunnable implements Runnable {
 			}
 
 		}
-
 	}
 	
 	private void deleteUnstableVersion() {
 		System.out.println("Deleting unsatable version " + targetVersion
 				+ " in the snapshotlist");
-		ProjectLogger.getInstance().deleteSnapshot(targetVersion);
+		ProjectLogger.getInstance().deleteSnapshot(targetVersion,true);
 	}
 
 	private void addMarkerToChangedMethods(CompilationUnit astRoot,

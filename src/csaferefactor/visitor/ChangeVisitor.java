@@ -1,13 +1,24 @@
 package csaferefactor.visitor;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.texteditor.ITextEditor;
 
+import csaferefactor.Activator;
+import csaferefactor.ProjectLogger;
 
 public class ChangeVisitor implements IResourceDeltaVisitor {
 
-	private static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
+	private IEditorPart editorPart;
+
+	public ChangeVisitor(IEditorPart editorPart) {
+		this.editorPart = editorPart;
+	}
 
 	public boolean visit(IResourceDelta delta) {
 		IResource res = delta.getResource();
@@ -18,18 +29,32 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 			break;
 		case IResourceDelta.CHANGED:
 
-//			if (isJavFile(delta, res)) {
-//
-//
-//			}
+			int flags = delta.getFlags();
+
+			// if a java file was saved
+			if (res != null && res.getFileExtension() != null && res.getFileExtension().equals("java")
+					&& (flags & IResourceDelta.CONTENT) != 0) {
+
+				ITextEditor editor = (ITextEditor) editorPart
+						.getAdapter(ITextEditor.class);
+
+				if (editor != null && !editor.isDirty()) {
+					// remove markers
+					try {
+						Activator.getDefault().removeExistingPluginmarkers(res);
+						ProjectLogger.getInstance().clean();
+						ProjectLogger.getInstance().log();
+					} catch (CoreException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 			break;
 		}
 		return true;
 	}
 
-	private boolean isJavFile(IResourceDelta delta, IResource res) {
-		return res.getFileExtension() != null
-				&& res.getFileExtension().equals("java")
-				&& (delta.getFlags() & IResourceDelta.CONTENT) == 0;
-	}
 }

@@ -36,10 +36,6 @@ public class SafeRefactorRunnable implements Runnable {
 
 	}
 
-	public boolean belongsTo(Object family) {
-		return family == SafeRefactorPlugin.MY_FAMILY;
-	}
-
 	@Override
 	public void run() {
 

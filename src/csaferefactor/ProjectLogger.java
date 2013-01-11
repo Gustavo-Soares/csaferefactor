@@ -105,7 +105,7 @@ public class ProjectLogger {
 		return snapshotList;
 	}
 
-	public void deleteSnapshot(int index) {
+	public void deleteSnapshot(int index, boolean removeFromArray) {
 		synchronized (snapshotList) {
 
 			Snapshot targetSnapshot = snapshotList.get(index);
@@ -126,22 +126,25 @@ public class ProjectLogger {
 
 			// stop thread
 			targetSnapshot.getExecutor().shutdownNow();
-
+  
 			// remove from List
-			snapshotList.remove(index);
+			if (removeFromArray)
+				snapshotList.remove(index);
 			System.out.println("snapshot " + targetSnapshot.getServerName()
 					+ "deleted");
 		}
 	}
 
 	public void clean() {
-		int size = snapshotList.size();
-		if (size > 1) {
-			deleteSnapshot(0);
-			if (size == 3)
-				deleteSnapshot(1);
-			System.out.println("List was cleaned");
+		int i = 0;
+		for (Iterator<Snapshot> iterator = this.snapshotList.iterator(); iterator
+				.hasNext();) {
+			Snapshot snapshot = iterator.next();
+			deleteSnapshot(i, false);
+			iterator.remove();
+			i++;
 		}
+		System.out.println("List was cleaned");
 
 	}
 

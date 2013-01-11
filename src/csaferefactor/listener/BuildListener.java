@@ -2,6 +2,7 @@ package csaferefactor.listener;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.ui.IEditorPart;
@@ -13,7 +14,6 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import csaferefactor.Activator;
 import csaferefactor.ProjectLogger;
 import csaferefactor.visitor.ChangeVisitor;
-
 
 public class BuildListener implements IResourceChangeListener,
 		IPropertyListener {
@@ -31,29 +31,8 @@ public class BuildListener implements IResourceChangeListener,
 		switch (event.getType()) {
 		case IResourceChangeEvent.POST_BUILD:
 
-
-
-			if (editorPart != null) {
-				ITextEditor editor = (ITextEditor) editorPart
-						.getAdapter(ITextEditor.class);
-
-				if (editor != null && !editor.isDirty()) {
-
-					// remove markers
-					try {
-						Activator.getDefault().removeExistingPluginmarkers(
-								event.getDelta().getResource());
-						ProjectLogger.getInstance().clean();
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-			}
-
 			try {
-				event.getDelta().accept(new ChangeVisitor());
+				event.getDelta().accept(new ChangeVisitor(editorPart));
 			} catch (CoreException e1) {
 				e1.printStackTrace();
 			}

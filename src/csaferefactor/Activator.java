@@ -88,9 +88,7 @@ public class Activator extends AbstractUIPlugin {
 			generatorServer.exit();
 		}
 		
-		IJobManager jobMan = Job.getJobManager();
-		jobMan.cancel(SafeRefactorPlugin.MY_FAMILY);
-		jobMan.join(SafeRefactorPlugin.MY_FAMILY, null);
+		
 		plugin = null;
 
 		super.stop(context);
