@@ -3,19 +3,19 @@ package csaferefactor.runnable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
-import org.eclipse.jdt.core.dom.CompilationUnit;
+import java.util.List;
 
 import csaferefactor.Activator;
 import csaferefactor.ProjectLogger;
 import csaferefactor.SafeRefactorPlugin;
+import csaferefactor.Snapshot;
 
-import saferefactor.core.Parameters;
 import saferefactor.core.Report;
 import saferefactor.core.util.Project;
 import saferefactor.rmi.client.CheckBehaviorChange;
@@ -25,15 +25,14 @@ public class SafeRefactorRunnable implements Runnable {
 
 	private int targetVersion;
 	private int sourceVersion;
-	private CompilationUnit astRoot;
-	private Report saferefactoReport;
+
+	private Report saferefactoReport = new Report();
 
 	public SafeRefactorRunnable(String name, int sourceVersion,
-			int targetVersion, CompilationUnit astRoot) {
+			int targetVersion) {
 
 		this.sourceVersion = sourceVersion;
 		this.targetVersion = targetVersion;
-		this.astRoot = astRoot;
 
 	}
 
@@ -49,56 +48,22 @@ public class SafeRefactorRunnable implements Runnable {
 	}
 
 	private void performSafeRefactor() {
-		// perform saferefactor
-		// setting up rmi
-		Registry registry;
+
 		try {
-			// debug
+			List<Snapshot> snapshotList = ProjectLogger.getInstance()
+					.getSnapshotList();
 
-			registry = LocateRegistry.getRegistry("localhost");
+			String sourceFolder = snapshotList.get(sourceVersion).getPath();
 
-			System.setSecurityManager(new RMISecurityManager());
+			String targetPath = snapshotList.get(targetVersion).getPath();
 
-			Project targetP = new Project();
+			Project sourceP = configureProject(sourceFolder);
 
-			String targetPath = ProjectLogger.getInstance().getSnapshotList()
-					.get(targetVersion).getPath();
+			Project targetP = configureProject(targetPath);
 
-			File targetFolder = new File(targetPath);
-			targetP.setProjectFolder(targetFolder);
-			targetP.setBuildFolder(targetFolder);
-			targetP.setSrcFolder(targetFolder);
+			evaluate(sourceP, targetP);
 
-			Project sourceP = new Project();
-
-			File sourceFolder = new File(ProjectLogger.getInstance()
-					.getSnapshotList().get(sourceVersion).getPath());
-			sourceP.setProjectFolder(sourceFolder);
-			sourceP.setBuildFolder(sourceFolder);
-			sourceP.setSrcFolder(sourceFolder);
-
-			// define parameters
-			Parameters parameters = new Parameters();
-			parameters.setCompileProjects(false);
-			parameters.setTimeLimit(1);
-			parameters.setAnalyzeChangeMethods(true);
-
-			// invoke saferefactor
-			setSaferefactoReport(new Report());
-
-			RemoteExecutor generatorServer = (RemoteExecutor) registry
-					.lookup(ProjectLogger.getInstance().getSnapshotList()
-							.get(sourceVersion).getServerName());
-			setSaferefactoReport(generatorServer
-					.executeTask(new CheckBehaviorChange(sourceP, targetP,
-							Activator.getDefault().getBinPath(), Activator
-									.getDefault().getSafeRefactorJarPath(),
-							Activator.getDefault().getSecurityPolicyPath())));
-
-			// debug
-			System.out.println("Transformation: "
-					+ sourceP.getBuildFolder().getName() + "-> "
-					+ targetP.getBuildFolder().getName() + " is refactoring? " + this.saferefactoReport.isRefactoring());
+			printResult(sourceP, targetP);
 
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -113,6 +78,40 @@ public class SafeRefactorRunnable implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void printResult(Project sourceP, Project targetP) {		
+		System.out.println("Transformation: "
+				+ sourceP.getBuildFolder().getName() + "-> "
+				+ targetP.getBuildFolder().getName() + " is refactoring? "
+				+ this.saferefactoReport.isRefactoring());
+	}
+
+	private void evaluate(Project sourceP, Project targetP)
+			throws RemoteException, NotBoundException, AccessException,
+			URISyntaxException, IOException {
+		Registry registry = LocateRegistry.getRegistry("localhost");
+
+		System.setSecurityManager(new RMISecurityManager());
+
+		RemoteExecutor generatorServer = (RemoteExecutor) registry
+				.lookup(ProjectLogger.getInstance().getSnapshotList()
+						.get(sourceVersion).getServerName());
+		setSaferefactoReport(generatorServer
+				.executeTask(new CheckBehaviorChange(sourceP, targetP,
+						Activator.getDefault().getBinPath(), Activator
+								.getDefault().getSafeRefactorJarPath(),
+						Activator.getDefault().getSecurityPolicyPath())));
+	}
+
+	private Project configureProject(String targetPath) {
+		Project targetP;
+		targetP = new Project();
+		File targetFolder = new File(targetPath);
+		targetP.setProjectFolder(targetFolder);
+		targetP.setBuildFolder(targetFolder);
+		targetP.setSrcFolder(targetFolder);
+		return targetP;
 	}
 
 	public Report getSaferefactoReport() {

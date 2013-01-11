@@ -1,6 +1,7 @@
-package csaferefactor;
+package csaferefactor.runnable;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -26,150 +27,118 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 
+import csaferefactor.Activator;
+import csaferefactor.ProjectLogger;
+import csaferefactor.SafeRefactorPlugin;
+import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
-import csaferefactor.runnable.SafeRefactorRunnable;
 import csaferefactor.visitor.MethodVisitor;
 
+import saferefactor.core.Report;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
 
-public class ChangeAnalyzer implements Runnable {
+public class ChangeAnalyzerRunnable implements Runnable {
 
 	private IJavaElement compilationUnit;
+	private int sourceVersion;
+	private int targetVersion;
 
-	public ChangeAnalyzer(String name, IJavaElement javaElement) {
-		// super(name);
+	public ChangeAnalyzerRunnable(String name, IJavaElement javaElement) {
 		this.compilationUnit = javaElement;
 	}
 
-	// @Override
-	// protected IStatus run(IProgressMonitor monitor) {
-	//
-	// evaluateTransformation();
-	//
-	// IJobManager jobMan = Job.getJobManager();
-	// try {
-	// jobMan.join(SafeRefactorPlugin.MY_FAMILY, null);
-	// } catch (OperationCanceledException e) {
-	// e.printStackTrace();
-	// return Status.CANCEL_STATUS;
-	//
-	// } catch (InterruptedException e) {
-	// e.printStackTrace();
-	// return Status.CANCEL_STATUS;
-	// }
-	//
-	// return Status.OK_STATUS;
-	// }
-
 	@Override
 	public void run() {
+
 		CompilationUnit astRoot = parseCompilationUnit();
 
 		boolean hasCompilationError = checkCompilationErrors(astRoot);
 
 		if (!hasCompilationError) {
-			int sourceVersion = 0;
-			int targetVersion = 0;
+			sourceVersion = 0;
+			targetVersion = 0;
 			try {
+				Activator.getDefault().removeExistingPluginMarkers(
+						(ICompilationUnit) compilationUnit);
 
-				Activator.getDefault().removeExistingPluginMarkers((ICompilationUnit) compilationUnit);
-
-				// if snapshotList has more than 2 versions, remove second
-				// version, which we are not interested in evaluate the behavior
-//				if (ProjectLogger.getInstance().getSnapshotList().size() > 2)
-//					ProjectLogger.getInstance().deleteSnapshot(1);
-
-				// 1. log the project
-				Snapshot snapshot = ProjectLogger.getInstance().log();
-				String classpath = snapshot.getPath();
+				String classpath = logProject();
 
 				updateBinariesForTheChangedAST(astRoot, classpath);
 
-				ExecutorService executor = Executors.newFixedThreadPool(1);
+				Report saferefactoReport = compareBehaviorOfSnapshots();
 
-				targetVersion = ProjectLogger.getInstance().getSnapshotList()
-						.size() - 1;
-
-				SafeRefactorRunnable runnable1 = new SafeRefactorRunnable(
-						"runnable1", sourceVersion, targetVersion, astRoot);
-				Future submit = executor.submit(runnable1);
-				SafeRefactorRunnable runnable2 = null;
-//				if (ProjectLogger.getInstance().getSnapshotList().size() > 2) {
-//					sourceVersion = targetVersion - 1;
-//					runnable2 = new SafeRefactorRunnable("runnable2",
-//							sourceVersion, targetVersion, astRoot);
-//					Future submit2 = executor.submit(runnable2);
-//					submit2.get();
-//				}
-				submit.get();
-
-				// if no behavioral change, remove head
-				if (runnable1.getSaferefactoReport().isRefactoring()) {
-					if ((runnable2 == null))
-						ProjectLogger.getInstance().deleteSnapshot(0);
-//					else if (runnable2.getSaferefactoReport().isRefactoring()) {
-//						ProjectLogger.getInstance().deleteSnapshot(0);
-//						ProjectLogger.getInstance().deleteSnapshot(1);
-//					}
-
+				if (saferefactoReport.isRefactoring()) {
+					// if no behavioral change, desconsider the old snapshot
+					ProjectLogger.getInstance().deleteSnapshot(sourceVersion);
 				} else {
-
-					List<String> changedMethods2 = runnable1
-							.getSaferefactoReport().getChangedMethods2();
-					for (String method : changedMethods2) {
-						// ignore default contructor
-						if (!method.contains(".<init>()"))
-							createMarkerForResource(astRoot.getJavaElement()
-									.getResource(), astRoot, method);
-						// System.out.println(method);
-					}
+					addMarkerToChangedMethods(astRoot, saferefactoReport);
+					// delete the target snapshot
 					ProjectLogger.getInstance().deleteSnapshot(targetVersion);
 				}
-//				if (runnable2 != null
-//						&& !runnable2.getSaferefactoReport().isRefactoring()) {
-//					List<String> changedMethods2 = runnable2
-//							.getSaferefactoReport().getChangedMethods2();
-//					for (String method : changedMethods2) {
-//						// ignore default contructor
-//						if (!method.contains(".<init>()"))
-//							createMarkerForResource(astRoot.getJavaElement()
-//									.getResource(), astRoot, method);
-//						// System.out.println(method);
-//					}
-//
-//				}
-
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}  catch (CoreException e) {
-				// TODO Auto-generated catch block
+			} catch (CoreException e) {
 				e.printStackTrace();
 			} catch (OperationCanceledException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-
 				// if thread is interrupted, delete this snapshot
-				System.out.println("Deleting unsatable version "
-						+ targetVersion + " in the snapshotlist");
-				ProjectLogger.getInstance().deleteSnapshot(targetVersion);
+				deleteUnstableVersion();
 
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (CompilationException e) {
 				// if thread is interrupted, delete this snapshot
+				// TODO: when compilation error is found, how to show that to
+				// user
 				System.out.println("version does not compile: ");
 				System.out.println(e.getMessage());
-				System.out.println("Deleting unsatable version "
-						+ targetVersion + " in the snapshotlist");
-				ProjectLogger.getInstance().deleteSnapshot(targetVersion);
+				deleteUnstableVersion();
 			}
 
 		}
 
+	}
+	
+	private void deleteUnstableVersion() {
+		System.out.println("Deleting unsatable version " + targetVersion
+				+ " in the snapshotlist");
+		ProjectLogger.getInstance().deleteSnapshot(targetVersion);
+	}
+
+	private void addMarkerToChangedMethods(CompilationUnit astRoot,
+			Report saferefactoReport) throws CoreException {
+		List<String> changedMethods2 = saferefactoReport.getChangedMethods2();
+		for (String method : changedMethods2) {
+			// ignore default contructor
+			if (!method.contains(".<init>()"))
+				createMarkerForResource(astRoot.getJavaElement().getResource(),
+						astRoot, method);
+			// System.out.println(method);
+		}
+	}
+
+	private Report compareBehaviorOfSnapshots() throws InterruptedException,
+			ExecutionException {
+		ExecutorService executor = Executors.newFixedThreadPool(1);
+
+		targetVersion = ProjectLogger.getInstance().getSnapshotList().size() - 1;
+
+		//TODO: does it really need to be a runnable? It seems that it does not. 
+		SafeRefactorRunnable runnable1 = new SafeRefactorRunnable("runnable1",
+				sourceVersion, targetVersion);
+		Future submit = executor.submit(runnable1);
+		submit.get();
+		// if no behavioral change, remove head
+		Report saferefactoReport = runnable1.getSaferefactoReport();
+		return saferefactoReport;
+	}
+
+	private String logProject() throws IOException {
+		Snapshot snapshot = ProjectLogger.getInstance().log();
+		String classpath = snapshot.getPath();
+		return classpath;
 	}
 
 	private void createMarkerForResource(IResource res,
@@ -181,7 +150,7 @@ public class ChangeAnalyzer implements Runnable {
 		int length = methodNameParts.length;
 
 		String target = methodNameParts[length - 1];
-//		System.out.println("method changed: " + target);
+		// System.out.println("method changed: " + target);
 		MethodVisitor methodVisitor = new MethodVisitor(target);
 		compilationUnit.accept(methodVisitor);
 		org.eclipse.jdt.core.dom.MethodDeclaration changedMethod = methodVisitor
@@ -201,8 +170,9 @@ public class ChangeAnalyzer implements Runnable {
 		int lineNumber = compilationUnit.getLineNumber(changedMethod
 				.getStartPosition());
 		marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);
-//		System.out.println("marker: " + marker.getId() + " created to method: "
-//				+ changedMethod.getName().getFullyQualifiedName());
+		// System.out.println("marker: " + marker.getId() +
+		// " created to method: "
+		// + changedMethod.getName().getFullyQualifiedName());
 
 	}
 
@@ -232,14 +202,15 @@ public class ChangeAnalyzer implements Runnable {
 		// pass to the compiler
 		CompilationProgress progress = null; // instantiate your
 												// subclass
-		
+
 		Writer writer = new StringWriter();
 		PrintWriter errorPrintWriter = new PrintWriter(writer);
 		BatchCompiler.compile("-classpath " + classpath + " "
 				+ pathToSaveTheFile + " -d " + classpath, new PrintWriter(
 				System.out), errorPrintWriter, progress);
-		if (writer.toString().contains("error")) 
-			throw new CompilationException("compilation error " + writer.toString());
+		if (writer.toString().contains("error"))
+			throw new CompilationException("compilation error "
+					+ writer.toString());
 	}
 
 	private boolean checkCompilationErrors(CompilationUnit astRoot) {
@@ -260,8 +231,6 @@ public class ChangeAnalyzer implements Runnable {
 		CompilationUnit astRoot = (CompilationUnit) parser.createAST(null);
 		return astRoot;
 	}
-
-	
 
 	public IMarker[] findJavaProblemMarkers(ICompilationUnit cu)
 			throws CoreException {
