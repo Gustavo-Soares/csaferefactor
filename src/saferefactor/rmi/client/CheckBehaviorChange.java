@@ -32,20 +32,16 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1977315047044202868L;
-	private static final String EXECUTOR = "executor";
+	
 	private Project targetP;
 	private Project sourceP;
-	private String polityPath;
-	private String safeRefactorJarPath;
-	private String binPath;
+	private String classToTest;
 
 	public CheckBehaviorChange(Project sourceProject, Project targetProject,
-			String binPath, String safeRefactorJarPath, String polityPath) {
+			String classToTest) {
 		this.sourceP = sourceProject;
-		this.targetP = targetProject;
-		this.binPath = binPath;
-		this.safeRefactorJarPath = safeRefactorJarPath;
-		this.polityPath = polityPath;
+		this.targetP = targetProject;		
+		this.classToTest = classToTest;
 	}
 
 	@Override
@@ -54,12 +50,12 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 		Report result = new Report();
 		
 		// identify common methods
-		TransformationAnalyzer analyzer = new ASMBasedAnalyzer(sourceP,
-				targetP, Constants.SAFEREFACTOR_DIR);
+//		TransformationAnalyzer analyzer = new ASMBasedAnalyzer(sourceP,
+//				targetP, Constants.SAFEREFACTOR_DIR);
 
 		try {
-			saferefactor.core.analysis.Report analysisReport = analyzer
-					.analyze();
+//			saferefactor.core.analysis.Report analysisReport = analyzer
+//					.analyze();
 
 			
 			//creating unique id
@@ -75,12 +71,15 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 //			initializeVM.start();
 
 			// generate the tests
-			String fileName = generateMethodListFile(analysisReport
-					.getMethodsToTest());
+//			String fileName = generateMethodListFile(analysisReport
+//					.getMethodsToTest());
 
 			GenTests generator = new GenTests();
-			String[] command = { "--methodlist=" + fileName, "--timelimit=1",
-					"--log=filewriter", "--output-nonexec=true" };
+			
+			
+			String path = this.classToTest;
+			String[] command = { "--classlist=" + path, "--timelimit=15",
+					"--log=filewriter", "--output-nonexec=true","--dont-output-tests=false","--junit-output-dir=/Users/gustavoas" };
 
 			generator.handle(command);
 

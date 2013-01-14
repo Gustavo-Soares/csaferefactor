@@ -58,7 +58,6 @@ public class CompareInput extends CompareEditorInput {
 
 		@Override
 		public long getModificationDate() {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 	}

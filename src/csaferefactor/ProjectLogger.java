@@ -14,6 +14,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -105,45 +107,50 @@ public class ProjectLogger {
 		return snapshotList;
 	}
 
-	public void deleteSnapshot(int index, boolean removeFromArray) {
+	public void deleteSnapshot(int index, boolean deleteSnapshot) {
 		synchronized (snapshotList) {
 
 			Snapshot targetSnapshot = snapshotList.get(index);
-			targetSnapshot.getExecutor().shutdownNow();
-			// stop server
-
-			try {
-				Registry registry = LocateRegistry.getRegistry("localhost");
-				RemoteExecutor generatorServer = (RemoteExecutor) registry
-						.lookup(targetSnapshot.getServerName());
-				generatorServer.exit();
-			} catch (NotBoundException e) {
-				// if the server is not loaded, do no to anything
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// stop thread
-			targetSnapshot.getExecutor().shutdownNow();
-  
-			// remove from List
-			if (removeFromArray)
-				snapshotList.remove(index);
-			System.out.println("snapshot " + targetSnapshot.getServerName()
-					+ "deleted");
+			removeSnapshot(targetSnapshot, deleteSnapshot);
 		}
+	}
+
+	private void removeSnapshot(Snapshot targetSnapshot,boolean deleteSnapshot) {
+		targetSnapshot.getExecutor().shutdownNow();
+		// stop server
+
+		try {
+			Registry registry = LocateRegistry.getRegistry("localhost");
+			RemoteExecutor generatorServer = (RemoteExecutor) registry
+					.lookup(targetSnapshot.getServerName());
+			generatorServer.exit();
+		} catch (NotBoundException e) {
+			// if the server is not loaded, do no to anything
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
+		// stop thread
+		targetSnapshot.getExecutor().shutdownNow();
+
+		// remove from List
+		if (deleteSnapshot)
+		snapshotList.remove(targetSnapshot);
+		System.out.println("snapshot " + targetSnapshot.getServerName()
+				+ "deleted");
 	}
 
 	public void clean() {
 		int i = 0;
+
 		for (Iterator<Snapshot> iterator = this.snapshotList.iterator(); iterator
 				.hasNext();) {
 			Snapshot snapshot = iterator.next();
-			deleteSnapshot(i, false);
+			removeSnapshot(snapshot,false);
 			iterator.remove();
 			i++;
 		}
+
 		System.out.println("List was cleaned");
 
 	}

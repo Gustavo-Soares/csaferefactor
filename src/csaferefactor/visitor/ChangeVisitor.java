@@ -47,7 +47,6 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 					} catch (CoreException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

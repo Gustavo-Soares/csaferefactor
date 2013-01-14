@@ -27,7 +27,7 @@ public class VMInitializerRunnable implements Runnable {
 	@Override
 	public void run() {
 
-//		String s = null;
+		// String s = null;
 
 		try {
 
@@ -40,14 +40,20 @@ public class VMInitializerRunnable implements Runnable {
 			String securityPolicyPath = Activator.getDefault()
 					.getSecurityPolicyPath();
 
-			ProcessBuilder builder = new ProcessBuilder(new String[] {
-					"java",
-					"-cp",
-					saferefactorJar + ":" + classpath,
-					"-Djava.rmi.server.codebase=file:" + binPath + " file:"
-							+ saferefactorJar + " file:" + classpath + "/",
-					"-Djava.security.policy=file:" + securityPolicyPath,
-					"saferefactor.rmi.server.RemoteExecutorImpl", serverName });
+			ProcessBuilder builder = new ProcessBuilder(
+					new String[] {
+							"java",
+							"-cp",
+							saferefactorJar
+									+ ":"
+									+ classpath
+									+ ":/Users/gustavoas/workspaces/ncstate/saferefactoraj/test/data/jhotdraw_source/lib/",
+							"-Djava.rmi.server.codebase=file:" + binPath
+									+ " file:" + saferefactorJar + " file:"
+									+ classpath + "/",
+							"-Djava.security.policy=file:" + securityPolicyPath,
+							"saferefactor.rmi.server.RemoteExecutorImpl",
+							serverName });
 
 			builder.redirectErrorStream(true);
 			Process p = builder.start();
@@ -55,26 +61,25 @@ public class VMInitializerRunnable implements Runnable {
 			// System.out.println("Server " + serverName
 			// + " generated with classpath: " + classpath + "!");
 
-			 InputStream inputStream = p.getInputStream();
-			BufferedReader stdInput = new BufferedReader(new
-			 InputStreamReader(
-			 inputStream));
+			InputStream inputStream = p.getInputStream();
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+					inputStream));
 			//
 			// BufferedReader stdError = new BufferedReader(new
 			// InputStreamReader(
 			// p.getErrorStream()));
 			//
 			File outputFile = new File(classpath, "log.txt");
-			
+
 			FileOutputStream fos = new FileOutputStream(outputFile);
 			// // read the output from the command
-//			 System.out.println("Here is the standard output of the command:\n");
-			 int c;
-			  while ((c = inputStream.read()) != -1) {
-				 fos.write(c);
-			 }
-			  stdInput.close();
-			  fos.close();
+			// System.out.println("Here is the standard output of the command:\n");
+			int c;
+			while ((c = inputStream.read()) != -1) {
+				fos.write(c);
+			}
+			stdInput.close();
+			fos.close();
 			//
 			// // read any errors from the attempted command
 			// System.out
@@ -84,13 +89,10 @@ public class VMInitializerRunnable implements Runnable {
 			// }
 
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

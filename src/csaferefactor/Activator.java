@@ -137,7 +137,6 @@ public class Activator extends AbstractUIPlugin {
 		try {
 			url = Platform.asLocalURL(url);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return url.getPath();

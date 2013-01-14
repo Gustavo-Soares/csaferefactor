@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
+import java.util.Random;
 
 import csaferefactor.Activator;
 import csaferefactor.ProjectLogger;
@@ -17,7 +18,12 @@ import csaferefactor.SafeRefactorPlugin;
 import csaferefactor.Snapshot;
 
 import saferefactor.core.Report;
+import saferefactor.core.util.Constants;
+import saferefactor.core.util.FileUtil;
 import saferefactor.core.util.Project;
+import saferefactor.core.util.ast.ConstructorImp;
+import saferefactor.core.util.ast.Method;
+import saferefactor.core.util.ast.MethodImp;
 import saferefactor.rmi.client.CheckBehaviorChange;
 import saferefactor.rmi.common.RemoteExecutor;
 
@@ -27,12 +33,16 @@ public class SafeRefactorRunnable implements Runnable {
 	private int sourceVersion;
 
 	private Report saferefactoReport = new Report();
+	private List<String> classesToTest;
+	
 
 	public SafeRefactorRunnable(String name, int sourceVersion,
-			int targetVersion) {
+			int targetVersion, List<String> classesToTest) {
 
 		this.sourceVersion = sourceVersion;
 		this.targetVersion = targetVersion;
+		this.classesToTest = classesToTest;
+		
 
 	}
 
@@ -56,27 +66,27 @@ public class SafeRefactorRunnable implements Runnable {
 			Project sourceP = configureProject(sourceFolder);
 
 			Project targetP = configureProject(targetPath);
+			
+			System.out.println("Analyzing transformation: "
+					+ sourceP.getBuildFolder().getName() + "-> "
+					+ targetP.getBuildFolder().getName());
 
 			evaluate(sourceP, targetP);
 
 			printResult(sourceP, targetP);
 
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void printResult(Project sourceP, Project targetP) {		
+	private void printResult(Project sourceP, Project targetP) {
 		System.out.println("Transformation: "
 				+ sourceP.getBuildFolder().getName() + "-> "
 				+ targetP.getBuildFolder().getName() + " is refactoring? "
@@ -93,13 +103,32 @@ public class SafeRefactorRunnable implements Runnable {
 		RemoteExecutor generatorServer = (RemoteExecutor) registry
 				.lookup(ProjectLogger.getInstance().getSnapshotList()
 						.get(sourceVersion).getServerName());
+		
+		String fileName = generateClassesListFile();
 		setSaferefactoReport(generatorServer
 				.executeTask(new CheckBehaviorChange(sourceP, targetP,
-						Activator.getDefault().getBinPath(), Activator
-								.getDefault().getSafeRefactorJarPath(),
-						Activator.getDefault().getSecurityPolicyPath())));
+						fileName)));
 	}
 
+	
+	private String generateClassesListFile() {
+
+		Random random = new Random();
+		int choice = random.nextInt(2);
+		System.out.println(choice);
+		StringBuffer lines = new StringBuffer();
+		
+			for (String clazz : classesToTest) {				
+					lines.append(clazz);
+					lines.append("\n");
+			}
+
+		String fileName = Constants.SAFEREFACTOR_DIR + Constants.SEPARATOR
+				+ "classesToTest.txt";
+		FileUtil.makeFile(fileName, lines.toString());
+		return fileName;
+	}
+	
 	private Project configureProject(String targetPath) {
 		Project targetP;
 		targetP = new Project();

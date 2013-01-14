@@ -38,7 +38,7 @@ public class JavaElementChangedListener implements IElementChangedListener {
 					checkTransformation(javaElement);
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 

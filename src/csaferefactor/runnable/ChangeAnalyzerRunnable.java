@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -15,10 +16,15 @@ import java.util.concurrent.Future;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaModelMarker;
+import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.ITypeHierarchy;
+import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.compiler.CompilationProgress;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
@@ -43,6 +49,7 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	private IJavaElement compilationUnit;
 	private int sourceVersion;
 	private int targetVersion;
+	private CompilationUnit astRoot;
 
 	public ChangeAnalyzerRunnable(String name, IJavaElement javaElement) {
 		this.compilationUnit = javaElement;
@@ -51,7 +58,7 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	@Override
 	public void run() {
 
-		CompilationUnit astRoot = parseCompilationUnit();
+		astRoot = parseCompilationUnit();
 
 		boolean hasCompilationError = checkCompilationErrors(astRoot);
 
@@ -70,11 +77,13 @@ public class ChangeAnalyzerRunnable implements Runnable {
 
 				if (saferefactoReport.isRefactoring()) {
 					// if no behavioral change, desconsider the old snapshot
-					ProjectLogger.getInstance().deleteSnapshot(sourceVersion,true);
+					ProjectLogger.getInstance().deleteSnapshot(sourceVersion,
+							true);
 				} else {
 					addMarkerToChangedMethods(astRoot, saferefactoReport);
 					// delete the target snapshot
-					ProjectLogger.getInstance().deleteSnapshot(targetVersion,true);
+					ProjectLogger.getInstance().deleteSnapshot(targetVersion,
+							true);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -90,7 +99,7 @@ public class ChangeAnalyzerRunnable implements Runnable {
 				e.printStackTrace();
 			} catch (CompilationException e) {
 				// if thread is interrupted, delete this snapshot
-				// TODO: when compilation error is found, how to show that to
+				// TODO when compilation error is found, how to show that to
 				// user
 				System.out.println("version does not compile: ");
 				System.out.println(e.getMessage());
@@ -99,11 +108,12 @@ public class ChangeAnalyzerRunnable implements Runnable {
 
 		}
 	}
-	
+
 	private void deleteUnstableVersion() {
+		targetVersion = ProjectLogger.getInstance().getSnapshotList().size() - 1;
 		System.out.println("Deleting unsatable version " + targetVersion
 				+ " in the snapshotlist");
-		ProjectLogger.getInstance().deleteSnapshot(targetVersion,true);
+		ProjectLogger.getInstance().deleteSnapshot(targetVersion, true);
 	}
 
 	private void addMarkerToChangedMethods(CompilationUnit astRoot,
@@ -119,14 +129,40 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	}
 
 	private Report compareBehaviorOfSnapshots() throws InterruptedException,
-			ExecutionException {
+			ExecutionException, JavaModelException {
 		ExecutorService executor = Executors.newFixedThreadPool(1);
 
 		targetVersion = ProjectLogger.getInstance().getSnapshotList().size() - 1;
 
-		//TODO: does it really need to be a runnable? It seems that it does not. 
+		// get changed class
+		// StringBuffer fullQualifiedName = new StringBuffer();
+		// PackageDeclaration package1 = astRoot.getPackage();
+		// String packageName = package1.getName().getFullyQualifiedName();
+		// fullQualifiedName.append(packageName);
+		// fullQualifiedName.append(".");
+		// String className = this.compilationUnit.getElementName();
+		// className = className.replace(".java", "");
+		// fullQualifiedName.append(className);
+		// debug
+		// System.out.println(fullQualifiedName.toString());
+
+		ITypeRoot typeRoot = astRoot.getTypeRoot();
+		IType findPrimaryType = typeRoot.findPrimaryType();
+		ITypeHierarchy newTypeHierarchy = findPrimaryType
+				.newTypeHierarchy(new NullProgressMonitor());
+		IType[] allClasses = newTypeHierarchy.getAllClasses();
+		List<String> classesToTest = new ArrayList<String>();
+		for (IType iType : allClasses) {
+			if (iType.getFullyQualifiedName().equals("java.lang.Object"))
+				continue;		
+			classesToTest.add(iType.getFullyQualifiedName());
+
+		}
+
+		// TODO: does it really need to be a runnable? It seems that it does
+		// not.
 		SafeRefactorRunnable runnable1 = new SafeRefactorRunnable("runnable1",
-				sourceVersion, targetVersion);
+				sourceVersion, targetVersion, classesToTest);
 		Future submit = executor.submit(runnable1);
 		submit.get();
 		// if no behavioral change, remove head

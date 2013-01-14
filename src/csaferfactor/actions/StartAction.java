@@ -55,7 +55,6 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 		try {
 			saferefactor.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -86,7 +85,6 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 		// createMarkerForResource(file, method.getStartPosition(),
 		// method.getLength());
 		// } catch (CoreException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 
@@ -112,7 +110,6 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 		// IResourceChangeEvent.POST_BUILD);
 		// // | IResourceChangeEvent.POST_CHANGE);
 		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 
@@ -126,7 +123,6 @@ public class StartAction implements IWorkbenchWindowActionDelegate {
 		// IJavaElement elementAt = root.getElementAt(offset);
 		//
 		// } catch (JavaModelException e) {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 		// }
