@@ -40,9 +40,6 @@ public class SafeRefactorPlugin {
 		// log current project
 		ProjectLogger.getInstance().log();
 
-		// set listener
-		JavaCore.addElementChangedListener(new JavaElementChangedListener(),
-				ElementChangedEvent.POST_RECONCILE);
 		
 		
 		IWorkbenchWindow activeWorkbenchWindow = Activator.getDefault()
@@ -55,6 +52,10 @@ public class SafeRefactorPlugin {
 		if (page == null)
 			return;
 
+		// set listener
+		JavaCore.addElementChangedListener(new JavaElementChangedListener(page.getActiveEditor()),
+				ElementChangedEvent.POST_RECONCILE);
+		
 		IResourceChangeListener listener = new BuildListener(page.getActiveEditor());
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
 				IResourceChangeEvent.POST_BUILD);

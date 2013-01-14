@@ -78,7 +78,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			
 			
 			String path = this.classToTest;
-			String[] command = { "--classlist=" + path, "--timelimit=15",
+			String[] command = { "--classlist=" + path, "--timelimit=1",
 					"--log=filewriter", "--output-nonexec=true","--dont-output-tests=false","--junit-output-dir=/Users/gustavoas" };
 
 			generator.handle(command);

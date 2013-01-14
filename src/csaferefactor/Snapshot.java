@@ -3,9 +3,13 @@ package csaferefactor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import csaferefactor.runnable.DesignWizardThread;
+
 public class Snapshot {
 	
 	private String path;
+	
+	private DesignWizardThread designWizardRunner;
 	
 	private String serverName;
 	
@@ -33,6 +37,14 @@ public class Snapshot {
 
 	public void setExecutor(ExecutorService executor) {
 		this.executor = executor;
+	}
+
+	public DesignWizardThread getDesignWizardRunner() {
+		return designWizardRunner;
+	}
+
+	public void setDesignWizardRunner(DesignWizardThread designWizardRunner) {
+		this.designWizardRunner = designWizardRunner;
 	}
 
 }

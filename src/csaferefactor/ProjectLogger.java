@@ -16,6 +16,7 @@ import java.util.concurrent.Future;
 
 import javax.sql.rowset.spi.SyncResolver;
 
+import org.designwizard.main.DesignWizard;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -29,6 +30,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import csaferefactor.runnable.DesignWizardThread;
 import csaferefactor.runnable.VMInitializerRunnable;
 
 import saferefactor.core.util.FileUtil;
@@ -71,6 +73,11 @@ public class ProjectLogger {
 	public Snapshot log() throws IOException {
 
 		Snapshot result = new Snapshot();
+		
+		DesignWizardThread designWizardThread = new DesignWizardThread(ProjectLogger.getInstance().getSourceFolder());		
+		designWizardThread.start();
+		
+		result.setDesignWizardRunner(designWizardThread);
 
 		// copying binary files to temp folder
 		File generatedFolder = copyBinFilesToTmpFolder();
@@ -85,11 +92,12 @@ public class ProjectLogger {
 		Future<?> submit = result.getExecutor().submit(vmInitializer);
 
 		snapshotList.add(result);
+		
 		return result;
 	}
 
 	private File copyBinFilesToTmpFolder() throws IOException {
-		File source = new File(sourceFolder);
+		File source = new File(getSourceFolder());
 		String logDir = System.getProperty("java.io.tmpdir");
 		String targetFolder = logDir + projectPath + counter;
 		File target = new File(targetFolder);
@@ -153,6 +161,10 @@ public class ProjectLogger {
 
 		System.out.println("List was cleaned");
 
+	}
+
+	public String getSourceFolder() {
+		return sourceFolder;
 	}
 
 }

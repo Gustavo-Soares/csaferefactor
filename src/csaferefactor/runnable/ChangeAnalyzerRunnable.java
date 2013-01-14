@@ -8,19 +8,33 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.designwizard.design.MethodNode;
+import org.designwizard.exception.InexistentEntityException;
+import org.designwizard.main.DesignWizard;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.jdt.core.IClassFile;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.IJavaModel;
 import org.eclipse.jdt.core.IJavaModelMarker;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMember;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.IOpenable;
+import org.eclipse.jdt.core.ISourceRange;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeHierarchy;
 import org.eclipse.jdt.core.ITypeRoot;
@@ -32,6 +46,9 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
+import org.eclipse.jdt.core.search.SearchEngine;
+import org.eclipse.jdt.internal.corext.callhierarchy.CallHierarchy;
+import org.eclipse.jdt.internal.corext.callhierarchy.MethodWrapper;
 
 import csaferefactor.Activator;
 import csaferefactor.ProjectLogger;
@@ -50,14 +67,19 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	private int sourceVersion;
 	private int targetVersion;
 	private CompilationUnit astRoot;
+	private IMethod changedMethod;
+	private double start;
 
-	public ChangeAnalyzerRunnable(String name, IJavaElement javaElement) {
+	public ChangeAnalyzerRunnable(String name, IJavaElement javaElement,
+			IMethod changedMethod) {
 		this.compilationUnit = javaElement;
+		this.changedMethod = changedMethod;
 	}
 
 	@Override
 	public void run() {
 
+		 start = System.currentTimeMillis();
 		astRoot = parseCompilationUnit();
 
 		boolean hasCompilationError = checkCompilationErrors(astRoot);
@@ -84,7 +106,9 @@ public class ChangeAnalyzerRunnable implements Runnable {
 					// delete the target snapshot
 					ProjectLogger.getInstance().deleteSnapshot(targetVersion,
 							true);
+					
 				}
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (CoreException e) {
@@ -134,17 +158,50 @@ public class ChangeAnalyzerRunnable implements Runnable {
 
 		targetVersion = ProjectLogger.getInstance().getSnapshotList().size() - 1;
 
-		// get changed class
-		// StringBuffer fullQualifiedName = new StringBuffer();
-		// PackageDeclaration package1 = astRoot.getPackage();
-		// String packageName = package1.getName().getFullyQualifiedName();
-		// fullQualifiedName.append(packageName);
-		// fullQualifiedName.append(".");
-		// String className = this.compilationUnit.getElementName();
-		// className = className.replace(".java", "");
-		// fullQualifiedName.append(className);
-		// debug
-		// System.out.println(fullQualifiedName.toString());
+		try {
+
+			
+			String methodSignature = "org.jhotdraw.standard.AbstractFigure.clone()";
+
+			DesignWizardThread designWizardThread = ProjectLogger.getInstance()
+					.getSnapshotList().get(sourceVersion)
+					.getDesignWizardRunner();
+			designWizardThread.join();
+			DesignWizard designWizard = designWizardThread.getDesignWizard();
+			
+			MethodNode method = designWizard.getMethod(methodSignature);
+			Set<MethodNode> callerMethods = method.getCallerMethods();
+			for (MethodNode methodNode : callerMethods) {
+				System.out.print("method name: ");
+				System.out.println(methodNode.getName());
+			}
+			double stop = System.currentTimeMillis();
+			double total = (stop - start) / 1000;
+			System.out.println("Total time (s): " + total);
+		} 
+
+		// MethodWrapper[] callerRoots = CallHierarchy
+		// .getDefault().getCallerRoots(
+		// new IMember[] { this.changedMethod });
+		// for (MethodWrapper methodWrapper : callerRoots) {
+		// MethodWrapper[] calls = methodWrapper.getCalls(new
+		// NullProgressMonitor());
+		//
+		// for (MethodWrapper methodWrapper2 : calls) {
+		// StringBuffer signature = new StringBuffer();
+		// IMethod method = (IMethod) methodWrapper2.getMember();
+		// signature.append(method.getDeclaringType().getFullyQualifiedName());
+		// signature.append(".");
+		// signature.append(method.getElementName());
+		// System.out.println(signature);
+		// }
+		//
+		// }
+
+		catch (InexistentEntityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ITypeRoot typeRoot = astRoot.getTypeRoot();
 		IType findPrimaryType = typeRoot.findPrimaryType();
@@ -154,7 +211,7 @@ public class ChangeAnalyzerRunnable implements Runnable {
 		List<String> classesToTest = new ArrayList<String>();
 		for (IType iType : allClasses) {
 			if (iType.getFullyQualifiedName().equals("java.lang.Object"))
-				continue;		
+				continue;
 			classesToTest.add(iType.getFullyQualifiedName());
 
 		}

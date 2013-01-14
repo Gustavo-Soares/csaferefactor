@@ -10,12 +10,23 @@ import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaElementDelta;
+import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.ITypeRoot;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
+import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.ui.IEditorPart;
 
 import csaferefactor.runnable.ChangeAnalyzerRunnable;
 
 public class JavaElementChangedListener implements IElementChangedListener {
 
 	private ExecutorService executor = Executors.newFixedThreadPool(1);
+	private IEditorPart activeEditor;
+
+	public JavaElementChangedListener(IEditorPart activeEditor) {
+		this.activeEditor = activeEditor;
+	}
 
 	public void elementChanged(ElementChangedEvent event) {
 
@@ -48,9 +59,24 @@ public class JavaElementChangedListener implements IElementChangedListener {
 
 	private void checkTransformation(IJavaElement javaElement) {
 		executor = Executors.newFixedThreadPool(1);
+		
+		try {
+	        ITextSelection sel = (ITextSelection) ((JavaEditor) this.activeEditor).getSelectionProvider().getSelection();
+	        int offset = sel.getOffset();
+	        IJavaElement elementAt = ((ITypeRoot) javaElement).getElementAt(offset);
+	        if(elementAt.getElementType() != IJavaElement.METHOD)
+	            return;
+	        IMethod changedMethod = (IMethod) elementAt;
+	        
+	        
+	    
+		
 		ChangeAnalyzerRunnable changeAnalyzerRunnable = new ChangeAnalyzerRunnable("saferefactor",
-				javaElement);
+				javaElement, changedMethod);
 		executor.submit(changeAnalyzerRunnable);
+		} catch (JavaModelException e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	private boolean changedFilecontent(IJavaElementDelta delta) {
