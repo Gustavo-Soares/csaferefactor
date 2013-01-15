@@ -9,12 +9,13 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
+import java.util.concurrent.Callable;
 
 import saferefactor.core.util.Constants;
 
 import csaferefactor.Activator;
 
-public class VMInitializerRunnable implements Runnable {
+public class VMInitializerRunnable implements Callable<Boolean> {
 
 	private String serverName;
 	private String classpath;
@@ -25,9 +26,7 @@ public class VMInitializerRunnable implements Runnable {
 	}
 
 	@Override
-	public void run() {
-
-		// String s = null;
+	public Boolean call() {
 
 		try {
 
@@ -74,9 +73,14 @@ public class VMInitializerRunnable implements Runnable {
 			FileOutputStream fos = new FileOutputStream(outputFile);
 			// // read the output from the command
 			// System.out.println("Here is the standard output of the command:\n");
-			int c;
-			while ((c = inputStream.read()) != -1) {
-				fos.write(c);
+			String line;
+			while ((line = stdInput.readLine()) != null) {
+				fos.write(line.getBytes());
+				// server was loaded correctly
+//				if (line.equals("Server " + serverName + " loaded!")) {
+//					return true;
+//				}
+
 			}
 			stdInput.close();
 			fos.close();
@@ -95,6 +99,7 @@ public class VMInitializerRunnable implements Runnable {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+		return true;
 
 	}
 

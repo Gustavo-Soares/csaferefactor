@@ -89,7 +89,8 @@ public class ProjectLogger {
 				result.getServerName(), result.getPath());
 		// vmInitializer.schedule();
 		// vmInitializer.setPriority(Job.SHORT);
-		Future<?> submit = result.getExecutor().submit(vmInitializer);
+		Future<Boolean> submit = result.getExecutor().submit(vmInitializer);
+		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);
 		

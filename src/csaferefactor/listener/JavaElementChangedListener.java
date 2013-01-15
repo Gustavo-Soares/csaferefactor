@@ -68,9 +68,7 @@ public class JavaElementChangedListener implements IElementChangedListener {
 	            return;
 	        IMethod changedMethod = (IMethod) elementAt;
 	        
-	        
 	    
-		
 		ChangeAnalyzerRunnable changeAnalyzerRunnable = new ChangeAnalyzerRunnable("saferefactor",
 				javaElement, changedMethod);
 		executor.submit(changeAnalyzerRunnable);

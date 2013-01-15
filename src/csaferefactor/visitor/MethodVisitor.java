@@ -23,8 +23,6 @@ public class MethodVisitor extends ASTVisitor {
 			methodSignature = methodSignature + parameter.getType().toString();
 			if (i < (parameters.size() -2))
 				methodSignature = methodSignature + ", ";	
-			
-			//TODO check with parameter contain list of string
 		}
 		
 		methodSignature = methodSignature + ")";

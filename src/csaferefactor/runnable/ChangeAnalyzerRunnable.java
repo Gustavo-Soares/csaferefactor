@@ -6,6 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URISyntaxException;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +20,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import org.designwizard.design.ClassNode;
 import org.designwizard.design.MethodNode;
 import org.designwizard.exception.InexistentEntityException;
 import org.designwizard.main.DesignWizard;
@@ -39,6 +49,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.ITypeHierarchy;
 import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.compiler.CompilationProgress;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
@@ -55,11 +66,16 @@ import csaferefactor.ProjectLogger;
 import csaferefactor.SafeRefactorPlugin;
 import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
+import csaferefactor.exception.ServerCreationException;
 import csaferefactor.visitor.MethodVisitor;
 
+import randoop.experiments.TargetMaker;
 import saferefactor.core.Report;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
+import saferefactor.core.util.Project;
+import saferefactor.rmi.client.CheckBehaviorChange;
+import saferefactor.rmi.common.RemoteExecutor;
 
 public class ChangeAnalyzerRunnable implements Runnable {
 
@@ -68,7 +84,6 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	private int targetVersion;
 	private CompilationUnit astRoot;
 	private IMethod changedMethod;
-	private double start;
 
 	public ChangeAnalyzerRunnable(String name, IJavaElement javaElement,
 			IMethod changedMethod) {
@@ -79,7 +94,6 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	@Override
 	public void run() {
 
-		 start = System.currentTimeMillis();
 		astRoot = parseCompilationUnit();
 
 		boolean hasCompilationError = checkCompilationErrors(astRoot);
@@ -106,9 +120,9 @@ public class ChangeAnalyzerRunnable implements Runnable {
 					// delete the target snapshot
 					ProjectLogger.getInstance().deleteSnapshot(targetVersion,
 							true);
-					
+
 				}
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (CoreException e) {
@@ -128,6 +142,21 @@ public class ChangeAnalyzerRunnable implements Runnable {
 				System.out.println("version does not compile: ");
 				System.out.println(e.getMessage());
 				deleteUnstableVersion();
+			} catch (InexistentEntityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotBoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServerCreationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
@@ -143,88 +172,210 @@ public class ChangeAnalyzerRunnable implements Runnable {
 	private void addMarkerToChangedMethods(CompilationUnit astRoot,
 			Report saferefactoReport) throws CoreException {
 		List<String> changedMethods2 = saferefactoReport.getChangedMethods2();
+
 		for (String method : changedMethods2) {
-			// ignore default contructor
-			if (!method.contains(".<init>()"))
-				createMarkerForResource(astRoot.getJavaElement().getResource(),
-						astRoot, method);
-			// System.out.println(method);
+			System.out.println("behavioral change in the method: " + method);
+			createMarkerForResource(astRoot.getJavaElement().getResource(),
+					astRoot, method);
 		}
 	}
 
 	private Report compareBehaviorOfSnapshots() throws InterruptedException,
-			ExecutionException, JavaModelException {
+			ExecutionException, JavaModelException, InexistentEntityException,
+			TimeoutException, AccessException, RemoteException,
+			NotBoundException, URISyntaxException, IOException,
+			ServerCreationException {
 		ExecutorService executor = Executors.newFixedThreadPool(1);
 
 		targetVersion = ProjectLogger.getInstance().getSnapshotList().size() - 1;
 
-		try {
+		List<String> methodsToTest = calculateImpactedMethods();
 
-			
-			String methodSignature = "org.jhotdraw.standard.AbstractFigure.clone()";
+		List<Snapshot> snapshotList = ProjectLogger.getInstance()
+				.getSnapshotList();
 
-			DesignWizardThread designWizardThread = ProjectLogger.getInstance()
-					.getSnapshotList().get(sourceVersion)
-					.getDesignWizardRunner();
-			designWizardThread.join();
-			DesignWizard designWizard = designWizardThread.getDesignWizard();
-			
-			MethodNode method = designWizard.getMethod(methodSignature);
-			Set<MethodNode> callerMethods = method.getCallerMethods();
-			for (MethodNode methodNode : callerMethods) {
-				System.out.print("method name: ");
-				System.out.println(methodNode.getName());
+		String sourceFolder = snapshotList.get(sourceVersion).getPath();
+
+		String targetPath = snapshotList.get(targetVersion).getPath();
+
+		Project sourceP = configureProject(sourceFolder);
+
+		Project targetP = configureProject(targetPath);
+
+		System.out.println("Analyzing transformation: "
+				+ sourceP.getBuildFolder().getName() + "-> "
+				+ targetP.getBuildFolder().getName());
+
+		Report report = evaluate(sourceP, targetP, methodsToTest);
+
+		printResult(sourceP, targetP, report);
+
+		return report;
+	}
+
+	private void printResult(Project sourceP, Project targetP, Report report) {
+		System.out.println("Transformation: "
+				+ sourceP.getBuildFolder().getName() + "-> "
+				+ targetP.getBuildFolder().getName() + " is refactoring? "
+				+ report.isRefactoring());
+	}
+
+	private Project configureProject(String targetPath) {
+		Project targetP;
+		targetP = new Project();
+		File targetFolder = new File(targetPath);
+		targetP.setProjectFolder(targetFolder);
+		targetP.setBuildFolder(targetFolder);
+		targetP.setSrcFolder(targetFolder);
+		return targetP;
+	}
+
+	private Report evaluate(Project sourceP, Project targetP, List<String> methodsToTest)
+			throws RemoteException, NotBoundException, AccessException,
+			URISyntaxException, IOException, InterruptedException,
+			ExecutionException, ServerCreationException, TimeoutException {
+		Registry registry = LocateRegistry.getRegistry("localhost");
+
+		System.setSecurityManager(new RMISecurityManager());
+
+		RemoteExecutor generatorServer = (RemoteExecutor) registry
+				.lookup(ProjectLogger.getInstance().getSnapshotList()
+						.get(sourceVersion).getServerName());
+
+		String fileName = generateMethodListFile(methodsToTest);
+		Future<Boolean> futureIsServerLoaded = ProjectLogger.getInstance()
+				.getSnapshotList().get(targetVersion).getFutureIsServerLoaded();
+//		Boolean isTargetServerLoaded = futureIsServerLoaded.get(3,
+//				TimeUnit.SECONDS);
+//		if (!isTargetServerLoaded)
+//			throw new ServerCreationException(
+//					"problem loading the target server");
+
+		// debug
+		System.out.println("running task on server...");
+		Report result = generatorServer.executeTask(new CheckBehaviorChange(
+				sourceP, targetP, fileName));
+		return result;
+	}
+
+	private String generateMethodListFile(List<String> methodsToTest) {
+
+		StringBuffer lines = new StringBuffer();
+
+		for (String method : methodsToTest) {
+			lines.append(method);
+			lines.append("\n");
+		}
+
+		String fileName = Constants.SAFEREFACTOR_DIR + Constants.SEPARATOR
+				+ "methodsToTest.txt";
+		FileUtil.makeFile(fileName, lines.toString());
+		return fileName;
+	}
+
+	private List<String> calculateImpactedMethods()
+			throws InterruptedException, JavaModelException,
+			InexistentEntityException {
+		List<String> result = new ArrayList<String>();
+
+		String targetSignature = generateIMethodSignature();
+		DesignWizard designWizard = getDesignWizardAnalyzer();
+		MethodNode method = designWizard.getMethod(targetSignature);
+
+		// add the target method to the list of methods to test
+		result.add(toRandoopSignaturePattern(method));
+
+		// add constructor dependences for the method
+		List<String> constructorDependence = generateConstructorDependences(method
+				.getDeclaringClass());
+		result.addAll(constructorDependence);
+
+		// add parameter dependences for the method
+		for (ClassNode classNode : method.getParameters()) {
+			result.addAll(generateConstructorDependences(classNode));
+		}
+
+		// get methods that call the targetMethod
+		Set<MethodNode> callerMethods = method.getCallerMethods();
+
+		for (MethodNode caller : callerMethods) {
+			// add constructor dependences for the method
+			result.addAll(generateConstructorDependences(caller
+					.getDeclaringClass()));
+
+			// add parameter dependences for the method
+			for (ClassNode classNode : caller.getParameters()) {
+				result.addAll(generateConstructorDependences(classNode));
 			}
-			double stop = System.currentTimeMillis();
-			double total = (stop - start) / 1000;
-			System.out.println("Total time (s): " + total);
-		} 
-
-		// MethodWrapper[] callerRoots = CallHierarchy
-		// .getDefault().getCallerRoots(
-		// new IMember[] { this.changedMethod });
-		// for (MethodWrapper methodWrapper : callerRoots) {
-		// MethodWrapper[] calls = methodWrapper.getCalls(new
-		// NullProgressMonitor());
-		//
-		// for (MethodWrapper methodWrapper2 : calls) {
-		// StringBuffer signature = new StringBuffer();
-		// IMethod method = (IMethod) methodWrapper2.getMember();
-		// signature.append(method.getDeclaringType().getFullyQualifiedName());
-		// signature.append(".");
-		// signature.append(method.getElementName());
-		// System.out.println(signature);
-		// }
-		//
-		// }
-
-		catch (InexistentEntityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			result.add(toRandoopSignaturePattern(caller));
 		}
+		return result;
+	}
 
-		ITypeRoot typeRoot = astRoot.getTypeRoot();
-		IType findPrimaryType = typeRoot.findPrimaryType();
-		ITypeHierarchy newTypeHierarchy = findPrimaryType
-				.newTypeHierarchy(new NullProgressMonitor());
-		IType[] allClasses = newTypeHierarchy.getAllClasses();
-		List<String> classesToTest = new ArrayList<String>();
-		for (IType iType : allClasses) {
-			if (iType.getFullyQualifiedName().equals("java.lang.Object"))
-				continue;
-			classesToTest.add(iType.getFullyQualifiedName());
+	private List<String> generateConstructorDependences(ClassNode declaringClass) {
+		List<String> result = new ArrayList<String>();
 
+		Set<MethodNode> constructors = declaringClass.getConstructors();
+		for (MethodNode constructor : constructors) {
+			String randoopSignature = toRandoopSignaturePattern(constructor);
+			result.add(randoopSignature);
 		}
+		return result;
+	}
 
-		// TODO: does it really need to be a runnable? It seems that it does
-		// not.
-		SafeRefactorRunnable runnable1 = new SafeRefactorRunnable("runnable1",
-				sourceVersion, targetVersion, classesToTest);
-		Future submit = executor.submit(runnable1);
-		submit.get();
-		// if no behavioral change, remove head
-		Report saferefactoReport = runnable1.getSaferefactoReport();
-		return saferefactoReport;
+	private DesignWizard getDesignWizardAnalyzer() throws InterruptedException {
+		DesignWizardThread designWizardThread = ProjectLogger.getInstance()
+				.getSnapshotList().get(sourceVersion).getDesignWizardRunner();
+		if (designWizardThread.isAlive())
+			designWizardThread.join();
+		DesignWizard designWizard = designWizardThread.getDesignWizard();
+		return designWizard;
+	}
+
+	// private String toRandoopSignaturePattern(String targetSignature)
+	// throws JavaModelException {
+	// StringBuffer result = new StringBuffer();
+	// if (changedMethod.isConstructor()) {
+	// result.append("cons : ");
+	// result.append(targetSignature);
+	// } else {
+	// result.append("method : ");
+	// result.append(targetSignature);
+	// result.append(" : ");
+	// result.append(changedMethod.getDeclaringType()
+	// .getFullyQualifiedName());
+	// }
+	// return result.toString();
+	// }
+
+	private String generateIMethodSignature() throws JavaModelException {
+
+		String createMethodSignature = Signature.createMethodSignature(
+				changedMethod.getParameterTypes(),
+				changedMethod.getReturnType());
+
+		String string = Signature.toString(createMethodSignature,
+				changedMethod.getElementName(),
+				changedMethod.getParameterNames(), true, false);
+		String signature = changedMethod.getDeclaringType()
+				.getFullyQualifiedName() + "." + string;
+
+		return signature;
+	}
+
+	private String toRandoopSignaturePattern(MethodNode methodNode) {
+		StringBuffer sb = new StringBuffer();
+		String signature = methodNode.toString();
+		if (methodNode.isConstructor()) {
+			sb.append("cons : ");
+			sb.append(signature);
+		} else {
+			sb.append("method : ");
+			sb.append(signature.substring(0, signature.length() - 1));
+			sb.append(" : ");
+			sb.append(methodNode.getDeclaringClass().getName());
+		}
+		return sb.toString();
 	}
 
 	private String logProject() throws IOException {
@@ -333,19 +484,5 @@ public class ChangeAnalyzerRunnable implements Runnable {
 				IResource.DEPTH_INFINITE);
 		return markers;
 	}
-
-	// private MessageConsole findConsole(String name) {
-	// ConsolePlugin plugin = ConsolePlugin.getDefault();
-	// IConsoleManager conMan = plugin.getConsoleManager();
-	// IConsole[] existing = conMan.getConsoles();
-	// for (int i = 0; i < existing.length; i++)
-	// if (name.equals(existing[i].getName()))
-	// return (MessageConsole) existing[i];
-	// // no console found, so create a new one
-	// MessageConsole myConsole = new MessageConsole(name, null);
-	// conMan.addConsoles(new IConsole[] { myConsole });
-	// return myConsole;
-	// }
-	//
 
 }

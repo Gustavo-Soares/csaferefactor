@@ -2,11 +2,14 @@ package csaferefactor;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import csaferefactor.runnable.DesignWizardThread;
 
 public class Snapshot {
 	
+	
+	private Future<Boolean> futureIsServerLoaded;
 	private String path;
 	
 	private DesignWizardThread designWizardRunner;
@@ -45,6 +48,14 @@ public class Snapshot {
 
 	public void setDesignWizardRunner(DesignWizardThread designWizardRunner) {
 		this.designWizardRunner = designWizardRunner;
+	}
+
+	public Future<Boolean> getFutureIsServerLoaded() {
+		return futureIsServerLoaded;
+	}
+
+	public void setFutureIsServerLoaded(Future<Boolean> futureIsServerLoaded) {
+		this.futureIsServerLoaded = futureIsServerLoaded;
 	}
 
 }

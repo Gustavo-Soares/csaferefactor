@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.bcel.util.ClassPath;
+
 import randoop.ExecutableSequence;
 import randoop.main.GenTests;
 import saferefactor.core.Report;
@@ -32,7 +34,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1977315047044202868L;
-	
+
 	private Project targetP;
 	private Project sourceP;
 	private String classToTest;
@@ -40,48 +42,34 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	public CheckBehaviorChange(Project sourceProject, Project targetProject,
 			String classToTest) {
 		this.sourceP = sourceProject;
-		this.targetP = targetProject;		
+		this.targetP = targetProject;
 		this.classToTest = classToTest;
 	}
 
 	@Override
 	public Report execute() {
-		
+
 		Report result = new Report();
-		
-		// identify common methods
-//		TransformationAnalyzer analyzer = new ASMBasedAnalyzer(sourceP,
-//				targetP, Constants.SAFEREFACTOR_DIR);
 
 		try {
-//			saferefactor.core.analysis.Report analysisReport = analyzer
-//					.analyze();
 
-			
-			//creating unique id
 			String sourceId = sourceP.getProjectFolder().getName();
 			String targetId = targetP.getProjectFolder().getName();
-			System.out.println("Checking transformation from " + sourceId + " to "  +  targetId);
-			// initiate execute sequence server
-//			String serverName = CheckBehaviorChange.EXECUTOR + sourceId + targetId;
-//			Thread initializeVM = new Thread(new VMInitializer(
-//					serverName, targetP.getBuildFolder()
-//							.getAbsolutePath(), binPath, safeRefactorJarPath,
-//					polityPath));
-//			initializeVM.start();
-
-			// generate the tests
-//			String fileName = generateMethodListFile(analysisReport
-//					.getMethodsToTest());
+			System.out.println("Checking transformation from " + sourceId
+					+ " to " + targetId);
 
 			GenTests generator = new GenTests();
-			
-			
+
 			String path = this.classToTest;
-			String[] command = { "--classlist=" + path, "--timelimit=1",
-					"--log=filewriter", "--output-nonexec=true","--dont-output-tests=false","--junit-output-dir=/Users/gustavoas" };
+			String[] command = {
+					"--methodlist=" + path,
+					"--timelimit=1",
+					"--log=" + sourceP.getProjectFolder() + Constants.SEPARATOR
+							+ "filewriter", "--output-nonexec=true",
+					"--dont-output-tests=true" };
 
 			generator.handle(command);
+			
 
 			List<ExecutableSequence> sequences = generator.getSequences();
 
@@ -90,15 +78,15 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			registry = LocateRegistry.getRegistry("localhost");
 			System.setSecurityManager(new RMISecurityManager());
 
-			// run the tests in the second vm			
-			RemoteExecutor server = (RemoteExecutor) registry
-					.lookup(targetP.getProjectFolder().getName());
+			// run the tests in the second vm
+			RemoteExecutor server = (RemoteExecutor) registry.lookup(targetP
+					.getProjectFolder().getName());
 			List<ExecutableSequence> comparedSequences = server
 					.executeTask(new SequenceExecution(targetId, sequences));
 
-			//close service
-//			server.exit();
-			
+			// close service
+			// server.exit();
+
 			// compare the results
 			boolean changeBehavior = false;
 
@@ -110,8 +98,8 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 					ExecutableSequence sequence = sequences.get(i);
 					ExecutableSequence comparedSequence = comparedSequences
 							.get(i);
-					Set<String> compare_checks = sequence
-							.compare_checks(comparedSequence,true);
+					Set<String> compare_checks = sequence.compare_checks(
+							comparedSequence, true);
 					changedMethods.addAll(compare_checks);
 					changeBehavior = true;
 				}
@@ -122,8 +110,6 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			changeMethodsList.addAll(changedMethods);
 			result.setChangedMethods2(changeMethodsList);
 
-			
-			
 		} catch (RemoteException e) {
 
 			e.printStackTrace();

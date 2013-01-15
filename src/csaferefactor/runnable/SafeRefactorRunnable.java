@@ -11,11 +11,16 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import csaferefactor.Activator;
 import csaferefactor.ProjectLogger;
 import csaferefactor.SafeRefactorPlugin;
 import csaferefactor.Snapshot;
+import csaferefactor.exception.ServerCreationException;
 
 import saferefactor.core.Report;
 import saferefactor.core.util.Constants;
@@ -33,15 +38,15 @@ public class SafeRefactorRunnable implements Runnable {
 	private int sourceVersion;
 
 	private Report saferefactoReport = new Report();
-	private List<String> classesToTest;
+	private List<String> methodsToTest;
 	
 
 	public SafeRefactorRunnable(String name, int sourceVersion,
-			int targetVersion, List<String> classesToTest) {
+			int targetVersion, List<String> methodsToTest) {
 
 		this.sourceVersion = sourceVersion;
 		this.targetVersion = targetVersion;
-		this.classesToTest = classesToTest;
+		this.methodsToTest = methodsToTest;
 		
 
 	}
@@ -83,8 +88,21 @@ public class SafeRefactorRunnable implements Runnable {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServerCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+	
 
 	private void printResult(Project sourceP, Project targetP) {
 		System.out.println("Transformation: "
@@ -95,7 +113,7 @@ public class SafeRefactorRunnable implements Runnable {
 
 	private void evaluate(Project sourceP, Project targetP)
 			throws RemoteException, NotBoundException, AccessException,
-			URISyntaxException, IOException {
+			URISyntaxException, IOException, InterruptedException, ExecutionException, ServerCreationException, TimeoutException {
 		Registry registry = LocateRegistry.getRegistry("localhost");
 
 		System.setSecurityManager(new RMISecurityManager());
@@ -104,27 +122,31 @@ public class SafeRefactorRunnable implements Runnable {
 				.lookup(ProjectLogger.getInstance().getSnapshotList()
 						.get(sourceVersion).getServerName());
 		
-		String fileName = generateClassesListFile();
+		String fileName = generateMethodListFile();
+		Future<Boolean> futureIsServerLoaded = ProjectLogger.getInstance().getSnapshotList().get(targetVersion).getFutureIsServerLoaded();
+		Boolean isTargetServerLoaded = futureIsServerLoaded.get(3,TimeUnit.SECONDS);
+		if (!isTargetServerLoaded)
+			throw new ServerCreationException("problem loading the target server");
+		
+		//debug
+		System.out.println("running task on server...");
 		setSaferefactoReport(generatorServer
 				.executeTask(new CheckBehaviorChange(sourceP, targetP,
 						fileName)));
 	}
 
 	
-	private String generateClassesListFile() {
+	private String generateMethodListFile() {
 
-		Random random = new Random();
-		int choice = random.nextInt(2);
-		System.out.println(choice);
 		StringBuffer lines = new StringBuffer();
 		
-			for (String clazz : classesToTest) {				
-					lines.append(clazz);
+			for (String method : methodsToTest) {				
+					lines.append(method);
 					lines.append("\n");
 			}
 
 		String fileName = Constants.SAFEREFACTOR_DIR + Constants.SEPARATOR
-				+ "classesToTest.txt";
+				+ "methodsToTest.txt";
 		FileUtil.makeFile(fileName, lines.toString());
 		return fileName;
 	}
