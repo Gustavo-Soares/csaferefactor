@@ -3,6 +3,7 @@ package csaferefactor.runnable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -70,12 +71,16 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			//
 			File outputFile = new File(classpath, "log.txt");
 
-			FileOutputStream fos = new FileOutputStream(outputFile);
+//			FileOutputStream fos = new FileOutputStream(outputFile);
+			FileWriter fw = new FileWriter(outputFile);
 			// // read the output from the command
 			// System.out.println("Here is the standard output of the command:\n");
 			String line;
 			while ((line = stdInput.readLine()) != null) {
-				fos.write(line.getBytes());
+//				fos.write(line.getBytes());
+				fw.write(line);
+				fw.write("\n");
+				
 				// server was loaded correctly
 //				if (line.equals("Server " + serverName + " loaded!")) {
 //					return true;
@@ -83,7 +88,7 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 
 			}
 			stdInput.close();
-			fos.close();
+			fw.close();
 			//
 			// // read any errors from the attempted command
 			// System.out

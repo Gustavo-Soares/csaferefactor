@@ -9,6 +9,8 @@ import java.rmi.registry.Registry;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -49,6 +51,8 @@ public class Activator extends AbstractUIPlugin {
 	private static Activator plugin;
 	
 	private Registry registry = null;
+	
+	private ExecutorService executor = Executors.newCachedThreadPool();
 	
 	
 
@@ -169,6 +173,14 @@ public class Activator extends AbstractUIPlugin {
 
 	public Registry getRegistry() {
 		return registry;
+	}
+
+	public ExecutorService getExecutor() {
+		return executor;
+	}
+
+	public void setExecutor(ExecutorService executor) {
+		this.executor = executor;
 	}
 
 

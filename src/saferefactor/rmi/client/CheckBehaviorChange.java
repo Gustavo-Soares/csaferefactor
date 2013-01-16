@@ -1,6 +1,8 @@
 package saferefactor.rmi.client;
 
 import java.io.Serializable;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,6 +17,7 @@ import org.apache.bcel.util.ClassPath;
 
 import randoop.ExecutableSequence;
 import randoop.main.GenTests;
+import randoop.main.RandoopTextuiException;
 import saferefactor.core.Report;
 import saferefactor.core.analysis.TransformationAnalyzer;
 import saferefactor.core.analysis.naive.ASMBasedAnalyzer;
@@ -47,7 +50,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	}
 
 	@Override
-	public Report execute() {
+	public Report execute() throws NotBoundException {
 
 		Report result = new Report();
 
@@ -79,8 +82,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			System.setSecurityManager(new RMISecurityManager());
 
 			// run the tests in the second vm
-			RemoteExecutor server = (RemoteExecutor) registry.lookup(targetP
-					.getProjectFolder().getName());
+			RemoteExecutor server = getServer(registry);
 			List<ExecutableSequence> comparedSequences = server
 					.executeTask(new SequenceExecution(targetId, sequences));
 
@@ -113,12 +115,22 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 		} catch (RemoteException e) {
 
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (RandoopTextuiException e) {
 
 			e.printStackTrace();
 		}
 
 		return result;
+	}
+
+	private RemoteExecutor getServer(Registry registry) throws RemoteException,
+			AccessException {
+		try {
+			return (RemoteExecutor) registry.lookup(targetP
+					.getProjectFolder().getName());
+		} catch (NotBoundException e) {
+			return getServer(registry);
+		}
 	}
 
 	private String generateMethodListFile(List<Method> methods) {

@@ -30,7 +30,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.runnable.DesignWizardThread;
+import csaferefactor.runnable.DesignWizardCallable;
 import csaferefactor.runnable.VMInitializerRunnable;
 
 import saferefactor.core.util.FileUtil;
@@ -74,10 +74,10 @@ public class ProjectLogger {
 
 		Snapshot result = new Snapshot();
 		
-		DesignWizardThread designWizardThread = new DesignWizardThread(ProjectLogger.getInstance().getSourceFolder());		
-		designWizardThread.start();
+		DesignWizardCallable designWizardCallable = new DesignWizardCallable(ProjectLogger.getInstance().getSourceFolder());		
+		Future<DesignWizard> futureDesignWizard = Activator.getDefault().getExecutor().submit(designWizardCallable);
 		
-		result.setDesignWizardRunner(designWizardThread);
+		result.setFutureDesignWizard(futureDesignWizard);
 
 		// copying binary files to temp folder
 		File generatedFolder = copyBinFilesToTmpFolder();
@@ -87,9 +87,7 @@ public class ProjectLogger {
 		// crate generator server
 		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
-		// vmInitializer.schedule();
-		// vmInitializer.setPriority(Job.SHORT);
-		Future<Boolean> submit = result.getExecutor().submit(vmInitializer);
+		Future<Boolean> submit = Activator.getDefault().getExecutor().submit(vmInitializer);
 		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);
@@ -125,7 +123,6 @@ public class ProjectLogger {
 	}
 
 	private void removeSnapshot(Snapshot targetSnapshot,boolean deleteSnapshot) {
-		targetSnapshot.getExecutor().shutdownNow();
 		// stop server
 
 		try {
@@ -140,7 +137,7 @@ public class ProjectLogger {
 		}
 
 		// stop thread
-		targetSnapshot.getExecutor().shutdownNow();
+		targetSnapshot.getFutureIsServerLoaded().cancel(true);
 
 		// remove from List
 		if (deleteSnapshot)

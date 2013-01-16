@@ -4,7 +4,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import csaferefactor.runnable.DesignWizardThread;
+import org.designwizard.main.DesignWizard;
+
+import csaferefactor.runnable.DesignWizardCallable;
 
 public class Snapshot {
 	
@@ -12,11 +14,12 @@ public class Snapshot {
 	private Future<Boolean> futureIsServerLoaded;
 	private String path;
 	
-	private DesignWizardThread designWizardRunner;
+	private Future<DesignWizard> futureDesignWizard;
+	
 	
 	private String serverName;
 	
-	private ExecutorService executor = Executors.newSingleThreadExecutor();
+//	private ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	public String getPath() {
 		return path;
@@ -34,21 +37,15 @@ public class Snapshot {
 		this.serverName = threadName;
 	}
 
-	public ExecutorService getExecutor() {
-		return executor;
-	}
+//	public ExecutorService getExecutor() {
+//		return executor;
+//	}
+//
+//	public void setExecutor(ExecutorService executor) {
+//		this.executor = executor;
+//	}
 
-	public void setExecutor(ExecutorService executor) {
-		this.executor = executor;
-	}
-
-	public DesignWizardThread getDesignWizardRunner() {
-		return designWizardRunner;
-	}
-
-	public void setDesignWizardRunner(DesignWizardThread designWizardRunner) {
-		this.designWizardRunner = designWizardRunner;
-	}
+	
 
 	public Future<Boolean> getFutureIsServerLoaded() {
 		return futureIsServerLoaded;
@@ -56,6 +53,14 @@ public class Snapshot {
 
 	public void setFutureIsServerLoaded(Future<Boolean> futureIsServerLoaded) {
 		this.futureIsServerLoaded = futureIsServerLoaded;
+	}
+
+	public Future<DesignWizard> getFutureDesignWizard() {
+		return futureDesignWizard;
+	}
+
+	public void setFutureDesignWizard(Future<DesignWizard> futureDesignWizard) {
+		this.futureDesignWizard = futureDesignWizard;
 	}
 
 }
