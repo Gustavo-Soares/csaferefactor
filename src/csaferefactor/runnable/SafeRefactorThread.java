@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -93,7 +94,6 @@ public class SafeRefactorThread extends Thread {
 		this.changedMethod = changedMethod;
 	}
 
-	
 	public void run() {
 
 		astRoot = parseCompilationUnit();
@@ -115,8 +115,7 @@ public class SafeRefactorThread extends Thread {
 					deleteUnstableVersion();
 					return;
 				}
-					
-				
+
 				updateBinariesForTheChangedAST(astRoot, classpath);
 
 				if (!isRunning()) {
@@ -144,7 +143,7 @@ public class SafeRefactorThread extends Thread {
 					deleteUnstableVersion();
 					return;
 				}
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (CoreException e) {
@@ -177,7 +176,7 @@ public class SafeRefactorThread extends Thread {
 				deleteUnstableVersion();
 			}
 		}
-		
+
 	}
 
 	private void deleteUnstableVersion() {
@@ -258,8 +257,8 @@ public class SafeRefactorThread extends Thread {
 						.get(sourceVersion).getServerName());
 
 		String fileName = generateMethodListFile(methodsToTest);
-//		Future<Boolean> futureIsServerLoaded = ProjectLogger.getInstance()
-//				.getSnapshotList().get(targetVersion).getFutureIsServerLoaded();
+		// Future<Boolean> futureIsServerLoaded = ProjectLogger.getInstance()
+		// .getSnapshotList().get(targetVersion).getFutureIsServerLoaded();
 		// Boolean isTargetServerLoaded = futureIsServerLoaded.get(3,
 		// TimeUnit.SECONDS);
 		// if (!isTargetServerLoaded)
@@ -294,17 +293,35 @@ public class SafeRefactorThread extends Thread {
 		List<String> result = new ArrayList<String>();
 
 		String targetSignature = generateIMethodSignature();
-		 DesignWizard designWizard = getDesignWizardAnalyzer();
-		
-		MethodNode method = designWizard.getMethod(targetSignature);
+		DesignWizard designWizard = getDesignWizardAnalyzer();
 
-		// add the target method to the list of methods to test
-		result.add(toRandoopSignaturePattern(method));
+		MethodNode method = designWizard.getMethod(targetSignature);
 
 		// add constructor dependences for the method
 		List<String> constructorDependence = generateConstructorDependences(method
 				.getDeclaringClass());
 		result.addAll(constructorDependence);
+		Set<ClassNode> subClasses = method.getDeclaringClass().getSubClasses();
+		List<String> classesThatInheriteTheMethod = new ArrayList<String>();
+		for (ClassNode classNode : subClasses) {
+			if (classNode.isAbstract())
+				continue;
+			Set<MethodNode> allMethods = classNode.getAllMethods();
+			if (allMethods.contains(method)) {
+				result.addAll(generateConstructorDependences(classNode));
+				classesThatInheriteTheMethod.add(classNode.getClassName());
+			}
+
+			// for (MethodNode methodNode : allMethods) {
+			// if (methodNode.getName().equals(method.getName())) {
+			// result.addAll(generateConstructorDependences(classNode));
+			// break;
+			// }
+			// }
+		}
+		// add the target method to the list of methods to test
+		result.add(toRandoopSignaturePattern(method,
+				classesThatInheriteTheMethod));
 
 		// add parameter dependences for the method
 		for (ClassNode classNode : method.getParameters()) {
@@ -312,19 +329,19 @@ public class SafeRefactorThread extends Thread {
 		}
 
 		// get methods that call the targetMethod
-		Set<MethodNode> callerMethods = method.getCallerMethods();
-
-		for (MethodNode caller : callerMethods) {
-			// add constructor dependences for the method
-			result.addAll(generateConstructorDependences(caller
-					.getDeclaringClass()));
-
-			// add parameter dependences for the method
-			for (ClassNode classNode : caller.getParameters()) {
-				result.addAll(generateConstructorDependences(classNode));
-			}
-			result.add(toRandoopSignaturePattern(caller));
-		}
+		// Set<MethodNode> callerMethods = method.getCallerMethods();
+		//
+		// for (MethodNode caller : callerMethods) {
+		// // add constructor dependences for the method
+		// result.addAll(generateConstructorDependences(caller
+		// .getDeclaringClass()));
+		//
+		// // add parameter dependences for the method
+		// for (ClassNode classNode : caller.getParameters()) {
+		// result.addAll(generateConstructorDependences(classNode));
+		// }
+		// result.add(toRandoopSignaturePattern(caller));
+		// }
 		return result;
 	}
 
@@ -333,7 +350,15 @@ public class SafeRefactorThread extends Thread {
 
 		Set<MethodNode> constructors = declaringClass.getConstructors();
 		for (MethodNode constructor : constructors) {
-			String randoopSignature = toRandoopSignaturePattern(constructor);
+
+			String randoopSignature = toRandoopSignaturePattern(constructor,
+					null);
+			// get constructor dependences
+			List<ClassNode> parameters = constructor.getParameters();
+			for (ClassNode classNode : parameters) {
+				List<String> constructorDependences = generateConstructorDependences(classNode);
+				result.addAll(constructorDependences);
+			}
 			result.add(randoopSignature);
 		}
 		return result;
@@ -379,7 +404,8 @@ public class SafeRefactorThread extends Thread {
 		return signature;
 	}
 
-	private String toRandoopSignaturePattern(MethodNode methodNode) {
+	private String toRandoopSignaturePattern(MethodNode methodNode,
+			List<String> classesThatInheriteTheMethod) {
 		StringBuffer sb = new StringBuffer();
 		String signature = methodNode.toString();
 		if (methodNode.isConstructor()) {
@@ -390,6 +416,16 @@ public class SafeRefactorThread extends Thread {
 			sb.append(signature.substring(0, signature.length() - 1));
 			sb.append(" : ");
 			sb.append(methodNode.getDeclaringClass().getName());
+			if (classesThatInheriteTheMethod != null
+					&& classesThatInheriteTheMethod.size() > 0) {
+				sb.append(";");
+				for (int i = 0; i < classesThatInheriteTheMethod.size(); i++) {
+					String subClass = classesThatInheriteTheMethod.get(i);
+					sb.append(subClass);
+					if (i < classesThatInheriteTheMethod.size() - 1)
+						sb.append(";");
+				}
+			}
 		}
 		return sb.toString();
 	}
@@ -501,13 +537,11 @@ public class SafeRefactorThread extends Thread {
 		return markers;
 	}
 
-
 	public boolean isRunning() {
 		return running;
 	}
 
-
-	public synchronized void setRunning(boolean running) {		
+	public synchronized void setRunning(boolean running) {
 		this.running = running;
 	}
 
