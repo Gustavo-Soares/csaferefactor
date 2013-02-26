@@ -20,7 +20,7 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 
-import csaferefactor.Activator;
+import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
 import csaferefactor.runnable.SafeRefactorThread;
 

@@ -75,7 +75,7 @@ public class ProjectLogger {
 		Snapshot result = new Snapshot();
 		
 		DesignWizardCallable designWizardCallable = new DesignWizardCallable(ProjectLogger.getInstance().getSourceFolder());		
-		Future<DesignWizard> futureDesignWizard = Activator.getDefault().getExecutor().submit(designWizardCallable);
+		Future<DesignWizard> futureDesignWizard = SafeRefactorActivator.getDefault().getExecutor().submit(designWizardCallable);
 		
 		result.setFutureDesignWizard(futureDesignWizard);
 
@@ -87,7 +87,7 @@ public class ProjectLogger {
 		// crate generator server
 		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
-		Future<Boolean> submit = Activator.getDefault().getExecutor().submit(vmInitializer);
+		Future<Boolean> submit = SafeRefactorActivator.getDefault().getExecutor().submit(vmInitializer);
 		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);

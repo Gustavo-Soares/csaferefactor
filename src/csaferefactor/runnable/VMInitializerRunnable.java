@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 
 import saferefactor.core.util.Constants;
 
-import csaferefactor.Activator;
+import csaferefactor.SafeRefactorActivator;
 
 public class VMInitializerRunnable implements Callable<Boolean> {
 
@@ -33,11 +33,11 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 
 			System.setSecurityManager(new RMISecurityManager());
 
-			String saferefactorJar = Activator.getDefault()
+			String saferefactorJar = SafeRefactorActivator.getDefault()
 					.getSafeRefactorJarPath();
-			String binPath = Activator.getDefault().getBinPath();
+			String binPath = SafeRefactorActivator.getDefault().getBinPath();
 
-			String securityPolicyPath = Activator.getDefault()
+			String securityPolicyPath = SafeRefactorActivator.getDefault()
 					.getSecurityPolicyPath();
 
 			ProcessBuilder builder = new ProcessBuilder(
@@ -51,6 +51,7 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 							"-Djava.rmi.server.codebase=file:" + binPath
 									+ " file:" + saferefactorJar + " file:"
 									+ classpath + "/",
+									"-Djava.awt.headless=true",
 							"-Djava.security.policy=file:" + securityPolicyPath,
 							"saferefactor.rmi.server.RemoteExecutorImpl",
 							serverName });

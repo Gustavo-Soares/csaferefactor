@@ -1,0 +1,26 @@
+grant   {
+	permission java.security.AllPermission;
+	////permission java.io.File//permission "/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/-", "read,write";
+	////permission java.io.File//permission "${user.home}/-", "read";
+	
+	////permission java.net.Socket//permission "127.0.0.1:1024-", "accept, connect, listen, resolve";
+	////permission java.net.Socket//permission "localhost:1024-", "accept, connect, listen, resolve";
+	
+//	//permission java.lang.Runtime//permission "getClassLoader";
+	////permission java.lang.Runtime//permission "createClassLoader";
+	////permission java.lang.Runtime//permission "setContextClassLoader";
+    ////permission java.lang.Runtime//permission "accessDeclaredMembers";
+    ////permission java.lang.Runtime//permission "modifyThreadGroup";
+    ////permission java.lang.Runtime//permission "modifyThread";
+    //permission java.lang.Runtime//permission "stopThread";		
+    
+    //permission java.lang.reflect.Reflect//permission "suppressAccessChecks";
+    
+    //permission java.util.Property//permission "user.home", "read";
+    //permission java.util.Property//permission "java.io.tmpdir", "read";
+    
+     //permission java.security.Security//permission "Security.insertProvider.*";
+      //permission java.security.Security//permission "Security.removeProvider.*";
+      //permission java.security.Security//permission "Security.setProperty.*";
+      //permission java.security.Security//permission "getPolicy";
+};

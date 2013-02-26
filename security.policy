@@ -17,12 +17,17 @@
 //    http://java.sun.com/j2se/1.5.0/docs/guide/security/PolicyFiles.html
 // 
 
+
+
+//grant codeBase "file:${user.home}/-" {
+//	permission java.security.AllPermission;
+//};
+	
 grant {
 	permission java.security.AllPermission;
 	
 	// Other options:
-	// permission java.net.SocketPermission "127.0.0.1:1024-", "accept, connect, listen, resolve";
-	// permission java.net.SocketPermission "localhost:1024-", "accept, connect, listen, resolve";
+	
 	
 	// From http://java.sun.com/docs/books/tutorial/rmi/running.html
 	// Copyright 1995-2005 Sun Microsystems, Inc. Reprinted with permission 

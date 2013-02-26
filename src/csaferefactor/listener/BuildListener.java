@@ -11,7 +11,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import csaferefactor.Activator;
+import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
 import csaferefactor.visitor.ChangeVisitor;
 

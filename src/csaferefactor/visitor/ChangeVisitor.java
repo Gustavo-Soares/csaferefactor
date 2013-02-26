@@ -9,7 +9,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import csaferefactor.Activator;
+import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
 
 public class ChangeVisitor implements IResourceDeltaVisitor {
@@ -41,7 +41,7 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 				if (editor != null && !editor.isDirty()) {
 					// remove markers
 					try {
-						Activator.getDefault().removeExistingPluginmarkers(res);
+						SafeRefactorActivator.getDefault().removeExistingPluginmarkers(res);
 						ProjectLogger.getInstance().clean();
 						ProjectLogger.getInstance().log();
 					} catch (CoreException e) {

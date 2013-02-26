@@ -95,9 +95,11 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 
 			Set<String> changedMethods = new HashSet<String>();
 
+			int fail = 0;
 			for (int i = 0; i < sequences.size(); i++) {
 				if (!sequences.get(i).toCodeString()
 						.equals(comparedSequences.get(i).toCodeString())) {
+					fail++;
 					ExecutableSequence sequence = sequences.get(i);
 					ExecutableSequence comparedSequence = comparedSequences
 							.get(i);
@@ -106,8 +108,10 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 					changedMethods.addAll(compare_checks);
 					changeBehavior = true;
 				}
-
 			}
+			System.out.println("tests: " + sequences.size());
+			System.out.println("different: " + fail);
+			
 			result.setRefactoring(!changeBehavior);
 			ArrayList<String> changeMethodsList = new ArrayList<String>();
 			changeMethodsList.addAll(changedMethods);

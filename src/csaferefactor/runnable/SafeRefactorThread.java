@@ -63,9 +63,8 @@ import org.eclipse.jdt.core.search.SearchEngine;
 import org.eclipse.jdt.internal.corext.callhierarchy.CallHierarchy;
 import org.eclipse.jdt.internal.corext.callhierarchy.MethodWrapper;
 
-import csaferefactor.Activator;
+import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
-import csaferefactor.SafeRefactorPlugin;
 import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
 import csaferefactor.exception.ServerCreationException;
@@ -104,7 +103,7 @@ public class SafeRefactorThread extends Thread {
 			sourceVersion = 0;
 			targetVersion = 0;
 			try {
-				Activator.getDefault().removeExistingPluginMarkers(
+				SafeRefactorActivator.getDefault().removeExistingPluginMarkers(
 						(ICompilationUnit) compilationUnit);
 
 				if (!isRunning())
@@ -312,12 +311,6 @@ public class SafeRefactorThread extends Thread {
 				classesThatInheriteTheMethod.add(classNode.getClassName());
 			}
 
-			// for (MethodNode methodNode : allMethods) {
-			// if (methodNode.getName().equals(method.getName())) {
-			// result.addAll(generateConstructorDependences(classNode));
-			// break;
-			// }
-			// }
 		}
 		// add the target method to the list of methods to test
 		result.add(toRandoopSignaturePattern(method,
@@ -452,7 +445,7 @@ public class SafeRefactorThread extends Thread {
 				.getMethod();
 
 		IMarker marker = res
-				.createMarker(SafeRefactorPlugin.SAFEREFACTOR_MARKER);
+				.createMarker(SafeRefactorActivator.SAFEREFACTOR_MARKER);
 
 		// marker.setAttribute(IMarker.CHAR_START,
 		// changedMethod.getStartPosition());
