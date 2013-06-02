@@ -84,10 +84,12 @@ public class ProjectLogger {
 		result.setPath(generatedFolder.getAbsolutePath());
 		result.setServerName(generatedFolder.getName());
 
+		
 		// crate generator server
 		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
-		Future<Boolean> submit = SafeRefactorActivator.getDefault().getExecutor().submit(vmInitializer);
+		SafeRefactorActivator.getDefault().log("logando...");
+		Future<Boolean> submit = SafeRefactorActivator.getDefault().getExecutor().submit(vmInitializer);		
 		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);

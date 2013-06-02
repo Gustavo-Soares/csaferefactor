@@ -65,15 +65,15 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 
 			String path = this.classToTest;
 			String[] command = {
-					
+
 					"--methodlist=" + path,
 					"--timelimit=1",
 					"--log=" + sourceP.getProjectFolder() + Constants.SEPARATOR
 							+ "filewriter", "--output-nonexec=true",
-					"--dont-output-tests=false", "--junit-output-dir=/Users/gustavoas" };
+					"--dont-output-tests=true",
+					"--junit-output-dir=/Users/gustavoas" };
 
 			generator.handle(command);
-			
 
 			List<ExecutableSequence> sequences = generator.getSequences();
 
@@ -96,10 +96,19 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			Set<String> changedMethods = new HashSet<String>();
 
 			int fail = 0;
+			System.out.println("comparando resultados");
+//			StringBuffer results = new StringBuffer();
 			for (int i = 0; i < sequences.size(); i++) {
 				if (!sequences.get(i).toCodeString()
 						.equals(comparedSequences.get(i).toCodeString())) {
+//					results.append("Test");
+					int testId = i + 1;
+					result.getFailedTests().put(testId, sequences.get(i).toCodeString());
+//					results.append(testId);
+//					results.append(" passes before this change but has a different result after the change.");
+//					results.append(";");
 					fail++;
+
 					ExecutableSequence sequence = sequences.get(i);
 					ExecutableSequence comparedSequence = comparedSequences
 							.get(i);
@@ -113,6 +122,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			System.out.println("different: " + fail);
 			
 			result.setRefactoring(!changeBehavior);
+//			result.setChanges(results.toString());
 			ArrayList<String> changeMethodsList = new ArrayList<String>();
 			changeMethodsList.addAll(changedMethods);
 			result.setChangedMethods2(changeMethodsList);
@@ -131,8 +141,8 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 	private RemoteExecutor getServer(Registry registry) throws RemoteException,
 			AccessException {
 		try {
-			return (RemoteExecutor) registry.lookup(targetP
-					.getProjectFolder().getName());
+			return (RemoteExecutor) registry.lookup(targetP.getProjectFolder()
+					.getName());
 		} catch (NotBoundException e) {
 			return getServer(registry);
 		}

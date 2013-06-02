@@ -1,6 +1,9 @@
 package csaferefactor.listener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,11 @@ import csaferefactor.ProjectLogger;
 
 public class PartListener implements IPartListener {
 
-	private List<JavaElementChangedListener> listeners = new ArrayList<JavaElementChangedListener>();
+	private List<String> listeners = new ArrayList<String>();
+
+	public PartListener(String title) {
+		listeners.add(title);
+	}
 
 	@Override
 	public void partActivated(IWorkbenchPart part) {
@@ -40,11 +47,14 @@ public class PartListener implements IPartListener {
 		// set listener
 		JavaElementChangedListener javaElementChangedListener = new JavaElementChangedListener(
 				page.getActiveEditor());
-		if (!listeners.contains(javaElementChangedListener)) {
-			
+		
+		if (!listeners.contains(page.getActiveEditor().getTitle())) {
+			listeners.add(page.getActiveEditor().getTitle());
+//			System.out.println("listerner ativado na classe: " + page.getActiveEditor().getTitle());
+//			System.out.println(listeners);
 			JavaCore.addElementChangedListener(javaElementChangedListener,
 					ElementChangedEvent.POST_RECONCILE);
-
+			
 			IResourceChangeListener listener = new BuildListener(
 					page.getActiveEditor());
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
@@ -53,8 +63,11 @@ public class PartListener implements IPartListener {
 			try {
 				ProjectLogger.getInstance().log();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				OutputStream stream = new ByteArrayOutputStream();
+				PrintStream printStream = new PrintStream(stream);
+				e.printStackTrace(printStream);
+				SafeRefactorActivator.getDefault().log(stream.toString());
+				printStream.flush();
 			}
 		}
 	}

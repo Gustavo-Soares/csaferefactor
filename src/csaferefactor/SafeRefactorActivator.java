@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.ElementChangedEvent;
@@ -73,7 +74,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	private ExecutorService executor = Executors.newCachedThreadPool();
 
 	private boolean initComplete;
-	
+
 	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 
 	/**
@@ -183,13 +184,15 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 
 	private String getPath(String relativePath) throws URISyntaxException,
 			IOException {
-		IPath pathToSafeRefactorJar = new Path(relativePath);
-		URL SafeRefactorJarUrl = FileLocator.find(getBundle(),
-				pathToSafeRefactorJar, Collections.EMPTY_MAP);
-		File saferefactorJarFile = new File(FileLocator.toFileURL(
-				SafeRefactorJarUrl).toURI());
-		String saferefactorJar = saferefactorJarFile.getAbsolutePath();
-		return saferefactorJar;
+		// File file = new File(getPluginFolder() + relativePath);
+
+		// IPath path = new Path(relativePath);
+		// URL pathUrl = FileLocator.find(getBundle(),
+		// path, Collections.EMPTY_MAP);
+		// File file = new File(FileLocator.toFileURL(
+		// pathUrl).toURI());
+		// String filePath = file.getAbsolutePath();
+		return getPluginFolder() + relativePath;
 	}
 
 	public Registry getRegistry() {
@@ -229,7 +232,8 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 		// log current project
 		ProjectLogger.getInstance().log();
 
-		IPartListener partListener = new PartListener();
+		IPartListener partListener = new PartListener(page.getActiveEditor()
+				.getTitle());
 		final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow();
 		if (workbenchWindow != null) {
@@ -241,22 +245,38 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 
 	private void configureRMI() throws RemoteException {
 		this.registry = LocateRegistry.createRegistry(1099);
-		System.setProperty("eclipse.home", "/Users/gustavoas/Downloads");
 		System.setProperty("plugin.folder", SafeRefactorActivator.getDefault()
 				.getPluginFolder());
 		System.setProperty("java.security.policy", SafeRefactorActivator
 				.getDefault().getPluginFolder() + "/security.policy");
-		System.setProperty("java.rmi.server.codebase", "file:"
-				+ SafeRefactorActivator.getDefault().getPluginFolder()
-				+ "/lib/server.jar file:"
-				+ SafeRefactorActivator.getDefault().getPluginFolder()
-				+ "/bin/ file:"
-				+ SafeRefactorActivator.getDefault().getPluginFolder()
-				+ "/lib/saferefactor-beta.jar");
+
+		StringBuffer classpath = new StringBuffer();
+		File binFile = new File(SafeRefactorActivator.getDefault()
+				.getPluginFolder() + "/bin/");
+		if (!binFile.exists())
+			binFile = new File(SafeRefactorActivator.getDefault()
+				.getPluginFolder());
+		classpath.append("file:");
+		classpath.append(binFile.getAbsolutePath());
+		classpath.append("/");
+		classpath.append(" file:");
+		classpath.append(SafeRefactorActivator.getDefault().getPluginFolder());
+		classpath.append("lib/saferefactor-beta.jar");
+		SafeRefactorActivator.getDefault().log(classpath.toString());
+
+		System.setProperty("java.rmi.server.codebase", classpath.toString());
 	}
 
 	public void setRegistry(Registry registry) {
 		this.registry = registry;
+	}
+
+	public void log(String msg) {
+		log(msg, null);
+	}
+
+	public void log(String msg, Exception e) {
+		getLog().log(new Status(Status.INFO, this.PLUGIN_ID, Status.OK, msg, e));
 	}
 
 }

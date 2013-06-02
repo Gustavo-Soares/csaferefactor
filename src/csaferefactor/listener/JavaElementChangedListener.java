@@ -1,13 +1,5 @@
 package csaferefactor.listener;
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
@@ -20,8 +12,6 @@ import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 
-import csaferefactor.SafeRefactorActivator;
-import csaferefactor.ProjectLogger;
 import csaferefactor.runnable.SafeRefactorThread;
 
 public class JavaElementChangedListener implements IElementChangedListener {
@@ -47,14 +37,18 @@ public class JavaElementChangedListener implements IElementChangedListener {
 				&& changedFilecontent(delta)) {
 
 			try {
-				ITextSelection sel = (ITextSelection) ((JavaEditor) this.activeEditor)
+				JavaEditor javaEditor = (JavaEditor) this.activeEditor;
+				ITextSelection sel = (ITextSelection) javaEditor
 						.getSelectionProvider().getSelection();
+				
 				int offset = sel.getOffset();
 				IJavaElement elementAt = ((ITypeRoot) javaElement)
 						.getElementAt(offset);
+				
+				
 				if (elementAt.getElementType() != IJavaElement.METHOD)
 					return;
-				IMethod changedMethod = (IMethod) elementAt;
+				IJavaElement changedElement = elementAt;
 
 				// if there is any thread running to check the behavior of
 				// previous transformation, stop it, and ignore the unstable
@@ -64,7 +58,7 @@ public class JavaElementChangedListener implements IElementChangedListener {
 					saferefactorThread.setRunning(false);
 					saferefactorThread.join();					
 				}
-				checkTransformation(javaElement, changedMethod);
+				checkTransformation(javaElement, changedElement, sel.getStartLine());
 
 			} catch (JavaModelException e) {
 				// TODO Auto-generated catch block
@@ -78,11 +72,11 @@ public class JavaElementChangedListener implements IElementChangedListener {
 	}
 
 	private void checkTransformation(IJavaElement javaElement,
-			IMethod changedMethod) {
+			IJavaElement changedElement, int changeLine) {
 
 		
 
-		saferefactorThread = new SafeRefactorThread("saferefactor", javaElement, changedMethod);
+		saferefactorThread = new SafeRefactorThread("saferefactor", javaElement, changedElement, changeLine);
 		saferefactorThread.start();
 //		executor = Executors.newSingleThreadExecutor();
 		// Thread t = new Thread();

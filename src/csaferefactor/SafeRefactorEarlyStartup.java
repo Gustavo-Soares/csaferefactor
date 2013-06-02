@@ -1,6 +1,9 @@
 package csaferefactor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
@@ -27,9 +30,17 @@ public class SafeRefactorEarlyStartup implements IStartup {
 				try {
 					SafeRefactorActivator.getDefault().finishInit();
 				} catch (RemoteException e) {
-					e.printStackTrace();
+					OutputStream stream = new ByteArrayOutputStream();
+					PrintStream printStream = new PrintStream(stream);
+					e.printStackTrace(printStream);
+					SafeRefactorActivator.getDefault().log(stream.toString());
+					printStream.flush();
 				} catch (IOException e) {
-					e.printStackTrace();
+					OutputStream stream = new ByteArrayOutputStream();
+					PrintStream printStream = new PrintStream(stream);
+					e.printStackTrace(printStream);
+					SafeRefactorActivator.getDefault().log(stream.toString());
+					printStream.flush();
 				}
 
 			}

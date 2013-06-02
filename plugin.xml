@@ -35,7 +35,7 @@
 </extension>
 <extension
       id="xmlProblem"
-      name="XML Problem"
+      name="%extension.name"
       point="org.eclipse.core.resources.markers">
    <super
          type="org.eclipse.core.resources.problemmarker">
@@ -49,6 +49,13 @@
    <startup
          class="csaferefactor.SafeRefactorEarlyStartup">
    </startup>
+</extension>
+<extension
+      point="org.eclipse.ui.ide.markerResolution">
+   <markerResolutionGenerator
+         class="csaferefactor.MarkerResolutionGenerator"
+         markerType="csaferefactor.saferefactorproblem">
+   </markerResolutionGenerator>
 </extension>
    
 <!--<extension
