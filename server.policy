@@ -1,4 +1,4 @@
-grant  codeBase "file:/c:/Users/Gustavo/-" {
+grant  codeBase "file:${user.home}/-" {
 	permission java.security.AllPermission;
 	////permission java.io.File//permission "/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/-", "read,write";
 	////permission java.io.File//permission "${user.home}/-", "read";
