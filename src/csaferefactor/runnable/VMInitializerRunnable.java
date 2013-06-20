@@ -26,7 +26,7 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 
 	public VMInitializerRunnable(String name, String classpath) {
 		this.serverName = name;
-		this.classpath = classpath;
+		this.classpath = classpath.replaceAll("\\\\", "/");
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			// + binPath + " file:" + saferefactorJar + " file:"
 			// + classpath + "/";
 			StringBuffer codeBase = new StringBuffer();
-			codeBase.append("-Djava.rmi.server.codebase=file:");
+			codeBase.append("-Djava.rmi.server.codebase=file:/");
 			File binFile = new File(binPath);
 			if (!binFile.exists())
 				binFile = new File(SafeRefactorActivator.getDefault().getPluginFolder());
@@ -57,13 +57,13 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			codeBase.append("/");
 			codeBase.append(" file:");
 			codeBase.append(saferefactorJar);
-			codeBase.append(" file:");
+			codeBase.append(" file:/");
 			codeBase.append(classpath);
 			codeBase.append("/");
 
 			SafeRefactorActivator.getDefault().log("Configurando builder...");
 			ProcessBuilder builder = new ProcessBuilder(new String[] { "java",
-					"-cp", saferefactorJar + ":" + classpath,
+					"-cp", saferefactorJar + ";/" + classpath,
 					codeBase.toString(), "-Djava.awt.headless=true",
 					"-Djava.security.policy=file:" + securityPolicyPath,
 					"saferefactor.rmi.server.RemoteExecutorImpl", serverName });

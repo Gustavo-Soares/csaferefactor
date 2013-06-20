@@ -19,7 +19,7 @@
 
 
 
-//grant codeBase "file:${user.home}/-" {
+//grant codeBase "file:/c:/Users/Gustavo/-" {
 //	permission java.security.AllPermission;
 //};
 	

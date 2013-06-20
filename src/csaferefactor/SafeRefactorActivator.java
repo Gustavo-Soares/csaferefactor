@@ -207,65 +207,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 		this.executor = executor;
 	}
 
-	public void finishInit() throws IOException {
-		configureRMI();
-
-		IWorkbenchWindow activeWorkbenchWindow = SafeRefactorActivator
-				.getDefault().getWorkbench().getActiveWorkbenchWindow();
-
-		if (activeWorkbenchWindow == null)
-			return;
-		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-
-		if (page == null)
-			return;
-
-		// set listener
-		JavaCore.addElementChangedListener(
-				new JavaElementChangedListener(page.getActiveEditor()),
-				ElementChangedEvent.POST_RECONCILE);
-
-		IResourceChangeListener listener = new BuildListener(
-				page.getActiveEditor());
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,
-				IResourceChangeEvent.POST_BUILD);
-		// log current project
-		ProjectLogger.getInstance().log();
-
-		IPartListener partListener = new PartListener(page.getActiveEditor()
-				.getTitle());
-		final IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow();
-		if (workbenchWindow != null) {
-			IPartService partService = workbenchWindow.getPartService();
-			partService.addPartListener(partListener);
-		}
-
-	}
-
-	private void configureRMI() throws RemoteException {
-		this.registry = LocateRegistry.createRegistry(1099);
-		System.setProperty("plugin.folder", SafeRefactorActivator.getDefault()
-				.getPluginFolder());
-		System.setProperty("java.security.policy", SafeRefactorActivator
-				.getDefault().getPluginFolder() + "/security.policy");
-
-		StringBuffer classpath = new StringBuffer();
-		File binFile = new File(SafeRefactorActivator.getDefault()
-				.getPluginFolder() + "/bin/");
-		if (!binFile.exists())
-			binFile = new File(SafeRefactorActivator.getDefault()
-				.getPluginFolder());
-		classpath.append("file:");
-		classpath.append(binFile.getAbsolutePath());
-		classpath.append("/");
-		classpath.append(" file:");
-		classpath.append(SafeRefactorActivator.getDefault().getPluginFolder());
-		classpath.append("lib/saferefactor-beta.jar");
-		SafeRefactorActivator.getDefault().log(classpath.toString());
-
-		System.setProperty("java.rmi.server.codebase", classpath.toString());
-	}
+	
 
 	public void setRegistry(Registry registry) {
 		this.registry = registry;
@@ -279,4 +221,27 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 		getLog().log(new Status(Status.INFO, this.PLUGIN_ID, Status.OK, msg, e));
 	}
 
+	public void configureRMI() throws RemoteException {
+		this.registry = LocateRegistry.createRegistry(1099);
+		System.setProperty("plugin.folder", SafeRefactorActivator.getDefault()
+				.getPluginFolder());
+		System.setProperty("java.security.policy", SafeRefactorActivator
+				.getDefault().getPluginFolder() + "/security.policy");
+
+		StringBuffer classpath = new StringBuffer();
+		File binFile = new File(SafeRefactorActivator.getDefault()
+				.getPluginFolder() + "/bin/");
+		if (!binFile.exists())
+			binFile = new File(SafeRefactorActivator.getDefault()
+				.getPluginFolder());
+		classpath.append("file:/");
+		classpath.append(binFile.getAbsolutePath());
+		classpath.append("/");
+		classpath.append(" file:");
+		classpath.append(SafeRefactorActivator.getDefault().getPluginFolder());
+		classpath.append("lib/saferefactor-beta.jar");
+		SafeRefactorActivator.getDefault().log(classpath.toString());
+
+		System.setProperty("java.rmi.server.codebase", classpath.toString());
+	}
 }

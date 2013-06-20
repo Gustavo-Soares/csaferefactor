@@ -2,7 +2,7 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-<!--  <extension
+ <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
             label="Sample Action Set"
@@ -18,7 +18,7 @@
          <action
                label="Start"
                icon="icons/sample.gif"
-               class="csaferfactor.actions.StartAction"
+               class="csaferefactor.actions.SampleAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"
@@ -26,7 +26,7 @@
          </action>
       </actionSet>
    </extension>
-   -->
+   
    
 <extension id="saferefactormarker" point="org.eclipse.core.resources.markers"/>
 <extension id="saferefactorproblem" point="org.eclipse.core.resources.markers">
@@ -44,12 +44,12 @@
          value="true">
    </persistent>
 </extension>
-<extension
+<!--<extension
       point="org.eclipse.ui.startup">
    <startup
          class="csaferefactor.SafeRefactorEarlyStartup">
    </startup>
-</extension>
+</extension> -->
 <extension
       point="org.eclipse.ui.ide.markerResolution">
    <markerResolutionGenerator

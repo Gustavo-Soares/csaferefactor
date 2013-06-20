@@ -10,15 +10,15 @@ import org.eclipse.jdt.core.ITypeRoot;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.internal.ui.javaeditor.JavaEditor;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
 import csaferefactor.runnable.SafeRefactorThread;
 
 public class JavaElementChangedListener implements IElementChangedListener {
 
-	private IEditorPart activeEditor;
-	
-	
+	static private IEditorPart activeEditor;
+
 	private SafeRefactorThread saferefactorThread;
 
 	public JavaElementChangedListener(IEditorPart activeEditor) {
@@ -28,7 +28,7 @@ public class JavaElementChangedListener implements IElementChangedListener {
 	public void elementChanged(ElementChangedEvent event) {
 
 		IJavaElementDelta delta = event.getDelta();
-		IJavaElement javaElement = delta.getElement();
+		final IJavaElement javaElement = delta.getElement();
 
 		// only listen to events on compilationunits, and when they affect their
 		// code
@@ -36,51 +36,63 @@ public class JavaElementChangedListener implements IElementChangedListener {
 				&& javaElement instanceof ICompilationUnit
 				&& changedFilecontent(delta)) {
 
-			try {
-				JavaEditor javaEditor = (JavaEditor) this.activeEditor;
-				ITextSelection sel = (ITextSelection) javaEditor
-						.getSelectionProvider().getSelection();
-				
-				int offset = sel.getOffset();
-				IJavaElement elementAt = ((ITypeRoot) javaElement)
-						.getElementAt(offset);
-				
-				
-				if (elementAt.getElementType() != IJavaElement.METHOD)
-					return;
-				IJavaElement changedElement = elementAt;
+			final JavaEditor javaEditor = (JavaEditor) this.activeEditor;
 
-				// if there is any thread running to check the behavior of
-				// previous transformation, stop it, and ignore the unstable
-				// version
-				if (saferefactorThread != null && saferefactorThread.isAlive()) {
-					System.out.println("canceling thread");
-					saferefactorThread.setRunning(false);
-					saferefactorThread.join();					
+			Display.getDefault().syncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					ITextSelection sel = (ITextSelection) javaEditor
+							.getSelectionProvider().getSelection();
+
+					int offset = sel.getOffset();
+					IJavaElement elementAt;
+					try {
+						elementAt = ((ITypeRoot) javaElement)
+								.getElementAt(offset);
+
+						if (elementAt.getElementType() != IJavaElement.METHOD)
+							return;
+						IJavaElement changedElement = elementAt;
+
+						// if there is any thread running to check the behavior
+						// of
+						// previous transformation, stop it, and ignore the
+						// unstable
+						// version
+						if (saferefactorThread != null
+								&& saferefactorThread.isAlive()) {
+							System.out.println("canceling thread");
+							saferefactorThread.setRunning(false);
+							saferefactorThread.join();
+						}
+						checkTransformation(javaElement, changedElement,
+								sel.getStartLine());
+
+					} catch (JavaModelException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
-				checkTransformation(javaElement, changedElement, sel.getStartLine());
 
-			} catch (JavaModelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			});
+
 		}
-
 	}
 
 	private void checkTransformation(IJavaElement javaElement,
 			IJavaElement changedElement, int changeLine) {
 
-		
-
-		saferefactorThread = new SafeRefactorThread("saferefactor", javaElement, changedElement, changeLine);
+		saferefactorThread = new SafeRefactorThread("saferefactor",
+				javaElement, changedElement, changeLine);
 		saferefactorThread.start();
-//		executor = Executors.newSingleThreadExecutor();
+		// executor = Executors.newSingleThreadExecutor();
 		// Thread t = new Thread();
-//		submit = executor.submit(changeAnalyzerRunnable);
+		// submit = executor.submit(changeAnalyzerRunnable);
 
 	}
 
