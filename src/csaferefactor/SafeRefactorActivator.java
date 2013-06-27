@@ -40,12 +40,6 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 
 	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 
-	/**
-	 * The constructor
-	 */
-	public SafeRefactorActivator() {
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

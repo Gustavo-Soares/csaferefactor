@@ -36,10 +36,12 @@ public class ProjectLogger {
 
 	private List<Snapshot> snapshotList = new LinkedList<Snapshot>();
 
-	private static ProjectLogger instance;
+	private volatile static ProjectLogger instance = null;
 
+	/**
+	 * Private constructor for Singleton
+	 */
 	private ProjectLogger() {
-
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IPath location = root.getLocation();
@@ -56,19 +58,31 @@ public class ProjectLogger {
 		sourceFolder = str + projectPath + "/bin";
 	}
 
+	/**
+	 * Singleton for ProjectLogger
+	 * 
+	 * @return The instance of this class
+	 */
 	public static ProjectLogger getInstance() {
-		if (instance == null)
-			instance = new ProjectLogger();
+		// double-checked locking
+		if (instance == null) {
+			synchronized (ProjectLogger.class) {
+				if (instance == null)
+					instance = new ProjectLogger();
+			}
+		}
 		return instance;
 	}
 
 	public Snapshot log() throws IOException {
 
 		Snapshot result = new Snapshot();
-		
-		DesignWizardCallable designWizardCallable = new DesignWizardCallable(ProjectLogger.getInstance().getSourceFolder());		
-		Future<DesignWizard> futureDesignWizard = SafeRefactorActivator.getDefault().getExecutor().submit(designWizardCallable);
-		
+
+		DesignWizardCallable designWizardCallable = new DesignWizardCallable(
+				ProjectLogger.getInstance().getSourceFolder());
+		Future<DesignWizard> futureDesignWizard = SafeRefactorActivator
+				.getDefault().getExecutor().submit(designWizardCallable);
+
 		result.setFutureDesignWizard(futureDesignWizard);
 
 		// copying binary files to temp folder
@@ -76,16 +90,16 @@ public class ProjectLogger {
 		result.setPath(generatedFolder.getAbsolutePath());
 		result.setServerName(generatedFolder.getName());
 
-		
 		// crate generator server
 		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
 		SafeRefactorActivator.getDefault().log("logando...");
-		Future<Boolean> submit = SafeRefactorActivator.getDefault().getExecutor().submit(vmInitializer);		
+		Future<Boolean> submit = SafeRefactorActivator.getDefault()
+				.getExecutor().submit(vmInitializer);
 		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);
-		
+
 		return result;
 	}
 
@@ -116,7 +130,7 @@ public class ProjectLogger {
 		}
 	}
 
-	private void removeSnapshot(Snapshot targetSnapshot,boolean deleteSnapshot) {
+	private void removeSnapshot(Snapshot targetSnapshot, boolean deleteSnapshot) {
 		// stop server
 
 		try {
@@ -135,7 +149,7 @@ public class ProjectLogger {
 
 		// remove from List
 		if (deleteSnapshot)
-		snapshotList.remove(targetSnapshot);
+			snapshotList.remove(targetSnapshot);
 		System.out.println("snapshot " + targetSnapshot.getServerName()
 				+ "deleted");
 	}
@@ -146,7 +160,7 @@ public class ProjectLogger {
 		for (Iterator<Snapshot> iterator = this.snapshotList.iterator(); iterator
 				.hasNext();) {
 			Snapshot snapshot = iterator.next();
-			removeSnapshot(snapshot,false);
+			removeSnapshot(snapshot, false);
 			iterator.remove();
 			i++;
 		}
