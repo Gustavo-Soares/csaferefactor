@@ -16,12 +16,12 @@ import csaferefactor.runnable.SafeRefactorThread;
 
 public class JavaElementChangedListener implements IElementChangedListener {
 
-	static private IEditorPart activeEditor;
+	private IEditorPart activeEditor;
 
 	private SafeRefactorThread saferefactorThread;
 
 	public JavaElementChangedListener(IEditorPart activeEditor) {
-		JavaElementChangedListener.activeEditor = activeEditor;
+		this.activeEditor = activeEditor;
 	}
 
 	public void elementChanged(ElementChangedEvent event) {
