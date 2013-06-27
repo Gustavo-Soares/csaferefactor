@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -126,7 +126,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	public String getPluginFolder() {
 		URL url = getBundle().getEntry("/");
 		try {
-			url = Platform.asLocalURL(url);
+			url = FileLocator.toFileURL(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
