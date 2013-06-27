@@ -21,65 +21,67 @@ public class JavaElementChangedListener implements IElementChangedListener {
 	private SafeRefactorThread saferefactorThread;
 
 	public JavaElementChangedListener(IEditorPart activeEditor) {
-		this.activeEditor = activeEditor;
+		JavaElementChangedListener.activeEditor = activeEditor;
 	}
 
 	public void elementChanged(ElementChangedEvent event) {
-
 		IJavaElementDelta delta = event.getDelta();
-		final IJavaElement javaElement = delta.getElement();
+		if (delta != null) {
 
-		// only listen to events on compilationunits, and when they affect their
-		// code
-		if (delta != null && javaElement != null
-				&& javaElement instanceof ICompilationUnit
-				&& changedFilecontent(delta)) {
+			final IJavaElement javaElement = delta.getElement();
+			/*
+			 * only listen to events on compilation units, and when they affect
+			 * their code
+			 */
+			if (javaElement != null && javaElement instanceof ICompilationUnit
+					&& changedFilecontent(delta)) {
 
-			final JavaEditor javaEditor = (JavaEditor) this.activeEditor;
+				final JavaEditor javaEditor = (JavaEditor) this.activeEditor;
 
-			Display.getDefault().syncExec(new Runnable() {
+				Display.getDefault().syncExec(new Runnable() {
 
-				@Override
-				public void run() {
-					ITextSelection sel = (ITextSelection) javaEditor
-							.getSelectionProvider().getSelection();
+					@Override
+					public void run() {
+						ITextSelection sel = (ITextSelection) javaEditor
+								.getSelectionProvider().getSelection();
 
-					int offset = sel.getOffset();
-					IJavaElement elementAt;
-					try {
-						elementAt = ((ITypeRoot) javaElement)
-								.getElementAt(offset);
+						int offset = sel.getOffset();
+						IJavaElement elementAt;
+						try {
+							elementAt = ((ITypeRoot) javaElement)
+									.getElementAt(offset);
 
-						if (elementAt.getElementType() != IJavaElement.METHOD)
-							return;
-						IJavaElement changedElement = elementAt;
+							if (elementAt.getElementType() != IJavaElement.METHOD)
+								return;
+							IJavaElement changedElement = elementAt;
 
-						// if there is any thread running to check the behavior
-						// of
-						// previous transformation, stop it, and ignore the
-						// unstable
-						// version
-						if (saferefactorThread != null
-								&& saferefactorThread.isAlive()) {
-							System.out.println("canceling thread");
-							saferefactorThread.setRunning(false);
-							saferefactorThread.join();
+							// if there is any thread running to check the
+							// behavior
+							// of
+							// previous transformation, stop it, and ignore the
+							// unstable
+							// version
+							if (saferefactorThread != null
+									&& saferefactorThread.isAlive()) {
+								System.out.println("canceling thread");
+								saferefactorThread.setRunning(false);
+								saferefactorThread.join();
+							}
+							checkTransformation(javaElement, changedElement,
+									sel.getStartLine());
+
+						} catch (JavaModelException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						checkTransformation(javaElement, changedElement,
-								sel.getStartLine());
 
-					} catch (JavaModelException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
 					}
 
-				}
-
-			});
-
+				});
+			}
 		}
 	}
 
