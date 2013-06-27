@@ -6,23 +6,16 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import javax.sql.rowset.spi.SyncResolver;
-
 import org.designwizard.main.DesignWizard;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.ui.JavaUI;
@@ -30,11 +23,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.runnable.DesignWizardCallable;
-import csaferefactor.runnable.VMInitializerRunnable;
-
 import saferefactor.core.util.FileUtil;
 import saferefactor.rmi.common.RemoteExecutor;
+import csaferefactor.runnable.DesignWizardCallable;
+import csaferefactor.runnable.VMInitializerRunnable;
 
 public class ProjectLogger {
 

@@ -1,29 +1,7 @@
 package csaferefactor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.jdt.core.ElementChangedEvent;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IStartup;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-
-import csaferefactor.listener.BuildListener;
-import csaferefactor.listener.JavaElementChangedListener;
-import csaferefactor.listener.PartListener;
 
 public class SafeRefactorEarlyStartup implements IStartup {
 

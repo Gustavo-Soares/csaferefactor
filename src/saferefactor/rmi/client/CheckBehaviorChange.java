@@ -13,14 +13,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.bcel.util.ClassPath;
-
 import randoop.ExecutableSequence;
 import randoop.main.GenTests;
 import randoop.main.RandoopTextuiException;
 import saferefactor.core.Report;
-import saferefactor.core.analysis.TransformationAnalyzer;
-import saferefactor.core.analysis.naive.ASMBasedAnalyzer;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
 import saferefactor.core.util.Project;
@@ -29,7 +25,6 @@ import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.MethodImp;
 import saferefactor.rmi.common.RemoteExecutor;
 import saferefactor.rmi.common.Task;
-import saferefactor.rmi.common.VMInitializer;
 
 public class CheckBehaviorChange implements Task<Report>, Serializable {
 

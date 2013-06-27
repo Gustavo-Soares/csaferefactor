@@ -1,12 +1,8 @@
 package csaferefactor;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.designwizard.main.DesignWizard;
-
-import csaferefactor.runnable.DesignWizardCallable;
 
 public class Snapshot {
 	

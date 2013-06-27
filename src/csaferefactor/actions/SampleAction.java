@@ -15,7 +15,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.jface.dialogs.MessageDialog;
 
 import csaferefactor.ProjectLogger;
 import csaferefactor.SafeRefactorActivator;
