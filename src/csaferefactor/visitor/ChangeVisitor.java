@@ -21,37 +21,37 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 	}
 
 	public boolean visit(IResourceDelta delta) {
-		IResource res = delta.getResource();
-		switch (delta.getKind()) {
-		case IResourceDelta.ADDED:
-			break;
-		case IResourceDelta.REMOVED:
-			break;
-		case IResourceDelta.CHANGED:
-
+		if (delta == null)
+			return false;
+		if (delta.getKind() == IResourceDelta.CHANGED) {
+			IResource res = delta.getResource();
 			int flags = delta.getFlags();
 
 			// if a java file was saved
-			if (res != null && res.getFileExtension() != null && res.getFileExtension().equals("java")
+			if (res != null && res.getFileExtension() != null
+					&& res.getFileExtension().equals("java")
 					&& (flags & IResourceDelta.CONTENT) != 0) {
 
-				ITextEditor editor = (ITextEditor) editorPart
-						.getAdapter(ITextEditor.class);
+				if (editorPart != null) {
+					ITextEditor editor = (ITextEditor) editorPart
+							.getAdapter(ITextEditor.class);
 
-				if (editor != null && !editor.isDirty()) {
-					// remove markers
-					try {
-						SafeRefactorActivator.getDefault().removeExistingPluginmarkers(res);
-						ProjectLogger.getInstance().clean();
-						ProjectLogger.getInstance().log();
-					} catch (CoreException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
+					if (editor != null && !editor.isDirty()) {
+						// remove markers
+						try {
+							SafeRefactorActivator.getDefault()
+									.removeExistingPluginmarkers(res);
+							ProjectLogger.getInstance().clean();
+							ProjectLogger.getInstance().log();
+
+						} catch (CoreException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
-			break;
 		}
 		return true;
 	}
