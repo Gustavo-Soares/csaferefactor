@@ -1,2 +1,5 @@
 # ignoring bin folder
 bin/
+
+# ignoring FINDBUGS preferences
+edu.umd.cs.findbugs.*
