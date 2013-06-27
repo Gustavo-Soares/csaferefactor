@@ -29,7 +29,7 @@ import saferefactor.rmi.common.RemoteExecutor;
 public class SafeRefactorActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "test"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "CSafeRefactor"; //$NON-NLS-1$
 
 	// The shared instance
 	private static SafeRefactorActivator plugin;
@@ -37,8 +37,6 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	private Registry registry = null;
 
 	private ExecutorService executor = Executors.newCachedThreadPool();
-
-	private boolean initComplete;
 
 	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 
@@ -169,13 +167,13 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	}
 
 	public void setExecutor(ExecutorService executor) {
-		this.executor = executor;
+		if (executor != null)
+			this.executor = executor;
 	}
 
-	
-
 	public void setRegistry(Registry registry) {
-		this.registry = registry;
+		if (registry != null)
+			this.registry = registry;
 	}
 
 	public void log(String msg) {
@@ -183,30 +181,43 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	}
 
 	public void log(String msg, Exception e) {
-		getLog().log(new Status(Status.INFO, this.PLUGIN_ID, Status.OK, msg, e));
+		getLog().log(new Status(Status.INFO, PLUGIN_ID, Status.OK, msg, e));
 	}
 
 	public void configureRMI() throws RemoteException {
+
+		// Creating a new RMI Registry
 		this.registry = LocateRegistry.createRegistry(1099);
+
+		/*
+		 * PROPERTIES
+		 */
+
+		// Plug-in folder
 		System.setProperty("plugin.folder", SafeRefactorActivator.getDefault()
 				.getPluginFolder());
-		System.setProperty("java.security.policy", SafeRefactorActivator
-				.getDefault().getPluginFolder() + "/security.policy");
 
-		StringBuffer classpath = new StringBuffer();
+		// Security policy
+		StringBuffer path = new StringBuffer(SafeRefactorActivator.getDefault()
+				.getPluginFolder());
+		System.setProperty("java.security.policy",
+				path.append("/security.policy").toString());
+
+		// Class path
+		path = new StringBuffer();
 		File binFile = new File(SafeRefactorActivator.getDefault()
 				.getPluginFolder() + "/bin/");
 		if (!binFile.exists())
 			binFile = new File(SafeRefactorActivator.getDefault()
-				.getPluginFolder());
-		classpath.append("file:/");
-		classpath.append(binFile.getAbsolutePath());
-		classpath.append("/");
-		classpath.append(" file:");
-		classpath.append(SafeRefactorActivator.getDefault().getPluginFolder());
-		classpath.append("lib/saferefactor-beta.jar");
-		SafeRefactorActivator.getDefault().log(classpath.toString());
+					.getPluginFolder());
+		path.append("file:/");
+		path.append(binFile.getAbsolutePath());
+		path.append("/");
+		path.append(" file:");
+		path.append(SafeRefactorActivator.getDefault().getPluginFolder());
+		path.append("lib/saferefactor-beta.jar");
+		SafeRefactorActivator.getDefault().log(path.toString());
 
-		System.setProperty("java.rmi.server.codebase", classpath.toString());
+		System.setProperty("java.rmi.server.codebase", path.toString());
 	}
 }
