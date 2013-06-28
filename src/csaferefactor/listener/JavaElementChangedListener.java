@@ -1,5 +1,7 @@
 package csaferefactor.listener;
 
+import javax.sound.midi.SysexMessage;
+
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
@@ -51,25 +53,31 @@ public class JavaElementChangedListener implements IElementChangedListener {
 							elementAt = ((ITypeRoot) javaElement)
 									.getElementAt(offset);
 
-							if (elementAt.getElementType() != IJavaElement.METHOD)
-								return;
-							IJavaElement changedElement = elementAt;
+							/*
+							 * According to the Eclipse API, elementAt will
+							 * return null if there's no element (that is, a
+							 * method, field, etc) at the given position. For
+							 * instance, white spaces in a blank line.
+							 */
+							if (elementAt != null) {
+								if (elementAt.getElementType() != IJavaElement.METHOD)
+									return;
+								IJavaElement changedElement = elementAt;
 
-							// if there is any thread running to check the
-							// behavior
-							// of
-							// previous transformation, stop it, and ignore the
-							// unstable
-							// version
-							if (saferefactorThread != null
-									&& saferefactorThread.isAlive()) {
-								System.out.println("canceling thread");
-								saferefactorThread.setRunning(false);
-								saferefactorThread.join();
+								/*
+								 * if there is any thread running to check the
+								 * behavior of previous transformation, stop it,
+								 * and ignore the unstable version
+								 */
+								if (saferefactorThread != null
+										&& saferefactorThread.isAlive()) {
+									System.out.println("canceling thread");
+									saferefactorThread.setRunning(false);
+									saferefactorThread.join();
+								}
+								checkTransformation(javaElement,
+										changedElement, sel.getStartLine());
 							}
-							checkTransformation(javaElement, changedElement,
-									sel.getStartLine());
-
 						} catch (JavaModelException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
