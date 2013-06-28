@@ -1,7 +1,5 @@
 package csaferefactor.listener;
 
-import javax.sound.midi.SysexMessage;
-
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IElementChangedListener;
