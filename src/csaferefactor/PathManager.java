@@ -16,20 +16,7 @@ import csaferefactor.runnable.VMInitializerRunnable;
  */
 public class PathManager {
 
-	private static PathManager instance;
-
-	/**
-	 * Singleton for this class.
-	 * 
-	 * @return An instance for this class.
-	 */
-	public static PathManager getInstance() {
-		if (instance == null) {
-			instance = new PathManager();
-		}
-		return instance;
-	}
-
+	// by the moment, PathManager should be only static
 	private PathManager() {
 	}
 
@@ -40,7 +27,7 @@ public class PathManager {
 	 *            A string representing a path
 	 * @return The adapted path
 	 */
-	public String pathAdapter(String path) {
+	public static String adapt(String path) {
 		String operatingSystemID = System.getProperty("os.name");
 		if (operatingSystemID.toLowerCase().contains("windows")) {
 			return getWindowsFriendlyPath(path);
@@ -48,7 +35,7 @@ public class PathManager {
 		return getUnixFriendlyPath(path);
 	}
 
-	private String getUnixFriendlyPath(String path) {
+	private static String getUnixFriendlyPath(String path) {
 		// TODO
 		return null;
 	}
@@ -67,7 +54,7 @@ public class PathManager {
 	 *            The String to be converted
 	 * @return A friendly DOS 8.3 converted path
 	 */
-	private String getWindowsFriendlyPath(String path) {
+	private static String getWindowsFriendlyPath(String path) {
 		/*
 		 * FIXME Code will crash in the following case:
 		 * 

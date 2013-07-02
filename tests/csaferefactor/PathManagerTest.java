@@ -17,7 +17,6 @@ import org.junit.Test;
  */
 public class PathManagerTest {
 
-	private PathManager manager = PathManager.getInstance();
 
 	@Test
 	public void testWindowsPaths() throws FileNotFoundException {
@@ -32,7 +31,7 @@ public class PathManagerTest {
 
 		for (int i = 0; in.hasNext() && i < expectedResults.length; i++) {
 			String path = in.nextLine();
-			String result = manager.pathAdapter(path);
+			String result = PathManager.adapt(path);
 			Assert.assertEquals(expectedResults[i], result);
 		}
 		in.close();

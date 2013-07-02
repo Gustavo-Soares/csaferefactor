@@ -2,7 +2,6 @@ package csaferefactor;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,10 +27,14 @@ import saferefactor.rmi.common.RemoteExecutor;
  */
 public class SafeRefactorActivator extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/**
+	 * The plug-in identifier
+	 */
 	public static final String PLUGIN_ID = "CSafeRefactor"; //$NON-NLS-1$
 
-	// The shared instance
+	/**
+	 * The shared instance
+	 */
 	private static SafeRefactorActivator plugin;
 
 	private Registry registry = null;
@@ -39,6 +42,8 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	private ExecutorService executor = Executors.newCachedThreadPool();
 
 	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
+
+	private static String cachedPluginFolder = null;
 
 	/*
 	 * (non-Javadoc)
@@ -113,44 +118,35 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @return The File Location of this plugin
+	 * @return The File Location of this plug-in
 	 */
 	public String getPluginFolder() {
-		URL url = getBundle().getEntry("/");
-		try {
-			url = FileLocator.toFileURL(url);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (cachedPluginFolder == null) {
+			URL url = getBundle().getEntry("/");
+			try {
+				url = FileLocator.toFileURL(url);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String path = url.getPath();
+			cachedPluginFolder = PathManager.adapt(path);
 		}
-		String path = url.getPath();
-		return PathManager.getInstance().pathAdapter(path);
+		return cachedPluginFolder;
 	}
 
-	
-	public String getSafeRefactorJarPath() throws URISyntaxException,
-			IOException {
+	public String getSafeRefactorJarPath() {
 		return getPath("lib/saferefactor-beta.jar");
 	}
 
-	public String getSecurityPolicyPath() throws URISyntaxException,
-			IOException {
+	public String getSecurityPolicyPath() {
 		return getPath("/server.policy");
 	}
 
-	public String getBinPath() throws URISyntaxException, IOException {
+	public String getBinPath() {
 		return getPath("/bin/");
 	}
 
-	private String getPath(String relativePath) throws URISyntaxException,
-			IOException {
-		// File file = new File(getPluginFolder() + relativePath);
-
-		// IPath path = new Path(relativePath);
-		// URL pathUrl = FileLocator.find(getBundle(),
-		// path, Collections.EMPTY_MAP);
-		// File file = new File(FileLocator.toFileURL(
-		// pathUrl).toURI());
-		// String filePath = file.getAbsolutePath();
+	private String getPath(String relativePath) {
 		return getPluginFolder() + relativePath;
 	}
 

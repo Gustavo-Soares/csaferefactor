@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.URISyntaxException;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.util.concurrent.Callable;
@@ -116,12 +115,6 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			SafeRefactorActivator.getDefault().log(stream.toString());
 			printStream.flush();
 		} catch (IOException e) {
-			OutputStream stream = new ByteArrayOutputStream();
-			PrintStream printStream = new PrintStream(stream);
-			e.printStackTrace(printStream);
-			SafeRefactorActivator.getDefault().log(stream.toString());
-			printStream.flush();
-		} catch (URISyntaxException e) {
 			OutputStream stream = new ByteArrayOutputStream();
 			PrintStream printStream = new PrintStream(stream);
 			e.printStackTrace(printStream);

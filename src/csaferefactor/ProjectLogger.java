@@ -155,18 +155,13 @@ public class ProjectLogger {
 	}
 
 	public void clean() {
-		int i = 0;
-
 		for (Iterator<Snapshot> iterator = this.snapshotList.iterator(); iterator
 				.hasNext();) {
 			Snapshot snapshot = iterator.next();
 			removeSnapshot(snapshot, false);
 			iterator.remove();
-			i++;
 		}
-
 		System.out.println("List was cleaned");
-
 	}
 
 	public String getSourceFolder() {
