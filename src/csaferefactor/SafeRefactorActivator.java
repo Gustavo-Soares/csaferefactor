@@ -111,11 +111,9 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
-
-	/**
-	 * @return The File Location of this plugin
-	 */
-	public String getPluginFolder() {
+	
+	// FIXME CONSIDER BLANK SPACES IN PATH
+	public String getUnixFriendlyPath() {
 		URL url = getBundle().getEntry("/");
 		try {
 			url = FileLocator.toFileURL(url);
@@ -123,6 +121,22 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 			e.printStackTrace();
 		}
 		return url.getPath();
+	}
+	
+	public String getWindowsFriendlyPath() {
+		// TODO
+		return "/C:/Users/Jeanderson/Documents/SUMMER~1/workspace/csaferefactor/";
+	}
+
+	/**
+	 * @return The File Location of this plugin
+	 */
+	public String getPluginFolder() {
+		String operatingSystemID = System.getProperty("os.name");
+		if (operatingSystemID.toLowerCase().contains("windows")) {
+			return getWindowsFriendlyPath();
+		}
+		return getUnixFriendlyPath();
 	}
 
 	public String getSafeRefactorJarPath() throws URISyntaxException,
