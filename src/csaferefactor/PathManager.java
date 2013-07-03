@@ -37,7 +37,7 @@ public class PathManager {
 
 	private static String getUnixFriendlyPath(String path) {
 		// TODO
-		return null;
+		return path;
 	}
 
 	/**
