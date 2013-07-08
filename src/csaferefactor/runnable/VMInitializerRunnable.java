@@ -31,8 +31,13 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 		try {
 			SafeRefactorActivator.getDefault().log(
 					"Inicializando secury manneger...");
-			System.setSecurityManager(new RMISecurityManager());
 
+			if (System.getSecurityManager() != null) {
+				SafeRefactorActivator.getDefault().log(
+						"Security mannager already activated");
+			} else {
+				System.setSecurityManager(new RMISecurityManager());
+			}
 			SafeRefactorActivator.getDefault().log("Atribuindo variaveis...");
 			String saferefactorJar = SafeRefactorActivator.getDefault()
 					.getSafeRefactorJarPath();
@@ -48,7 +53,8 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			codeBase.append("-Djava.rmi.server.codebase=file:/");
 			File binFile = new File(binPath);
 			if (!binFile.exists())
-				binFile = new File(SafeRefactorActivator.getDefault().getPluginFolder());
+				binFile = new File(SafeRefactorActivator.getDefault()
+						.getPluginFolder());
 			codeBase.append(binFile.getAbsolutePath());
 			codeBase.append("/");
 			codeBase.append(" file:");
