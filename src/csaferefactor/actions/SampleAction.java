@@ -66,6 +66,16 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 					JOptionPane.OK_CANCEL_OPTION);
 			return;
 		}
+		/*
+		 * Checks if RMI was already configured which means that there's an
+		 * activated thread listening.
+		 */
+		if (System.getSecurityManager() != null) {
+			JOptionPane.showMessageDialog(null,
+					"CSafeRefactor is already running!", "Warning",
+					JOptionPane.OK_CANCEL_OPTION);
+			return;
+		}
 		SafeRefactorActivator.getDefault().configureRMI();
 
 		// set listener
