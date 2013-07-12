@@ -32,12 +32,7 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			SafeRefactorActivator.getDefault().log(
 					"Inicializando secury manneger...");
 
-			if (System.getSecurityManager() != null) {
-				SafeRefactorActivator.getDefault().log(
-						"Security mannager already activated");
-			} else {
-				System.setSecurityManager(new RMISecurityManager());
-			}
+			System.setSecurityManager(new RMISecurityManager());
 			SafeRefactorActivator.getDefault().log("Atribuindo variaveis...");
 			String saferefactorJar = SafeRefactorActivator.getDefault()
 					.getSafeRefactorJarPath();

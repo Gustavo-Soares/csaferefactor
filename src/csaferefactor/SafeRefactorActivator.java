@@ -176,14 +176,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 		getLog().log(new Status(Status.INFO, PLUGIN_ID, Status.OK, msg, e));
 	}
 
-	// this method should be executed ONCE and JUST ONCE... it should be private
-	// instead of public
 	public void configureRMI() throws RemoteException {
-
-		// Checking if this method was already executed
-		if (System.getSecurityManager() != null)
-			return;
-
 		// Creating a new RMI Registry
 		this.registry = LocateRegistry.createRegistry(1099);
 
