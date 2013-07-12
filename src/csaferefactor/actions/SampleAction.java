@@ -36,12 +36,6 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 	private IWorkbenchWindow window;
 
 	/**
-	 * The constructor.
-	 */
-	public SampleAction() {
-	}
-
-	/**
 	 * The action has been activated. The argument of the method represents the
 	 * 'real' action sitting in the workbench UI.
 	 * 
@@ -69,10 +63,22 @@ public class SampleAction implements IWorkbenchWindowActionDelegate {
 			return;
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
 
+		// Checks if there's something to be listened
 		if (page == null || page.getActiveEditor() == null) {
 			JOptionPane.showMessageDialog(null,
 					"There is no active editor to watch",
-					"Couldn't initialize", JOptionPane.OK_CANCEL_OPTION);
+					"Couldn't initialize CSafeRefactor",
+					JOptionPane.OK_CANCEL_OPTION);
+			return;
+		}
+		/*
+		 * Checks if RMI was already configured which means that there's an
+		 * activated thread listening.
+		 */
+		if (System.getSecurityManager() != null) {
+			JOptionPane.showMessageDialog(null,
+					"CSafeRefactor is already running!", "Warning",
+					JOptionPane.OK_CANCEL_OPTION);
 			return;
 		}
 		SafeRefactorActivator.getDefault().configureRMI();
