@@ -1,5 +1,7 @@
-# ignoring bin folder
+# .class files #
 bin/
 
-# ignoring FINDBUGS preferences
-edu.umd.cs.findbugs.*
+# SafeRefactor generated files #
+filewriter
+log_coverage.txt
+TEST-RandoopTest.xml

@@ -6,4 +6,4 @@ clean:
 run_tests:
      [echo] Running JUnit to test on C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14source\bin
     [junit] Running RandoopTest0
-    [junit] Tests run: 136, Failures: 0, Errors: 0, Time elapsed: 0.348 sec
+    [junit] Tests run: 136, Failures: 0, Errors: 0, Time elapsed: 0.343 sec
