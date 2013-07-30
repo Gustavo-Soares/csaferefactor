@@ -1,6 +1,3 @@
-# .class files #
-bin/
-
 # SafeRefactor generated files #
 filewriter
 log_coverage.txt
