@@ -1,0 +1,9 @@
+
+init:
+
+emma:
+
+clean:
+
+run_target:
+     [echo] Running JUnit to test the "target"

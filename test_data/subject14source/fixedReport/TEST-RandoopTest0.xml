@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="0" hostname="nom0059649.nomadic.ncsu.edu" name="RandoopTest0" tests="3" time="0.103" timestamp="2012-12-19T19:22:44">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries" />
+    <property name="java.vm.version" value="20.12-b01-434" />
+    <property name="awt.nativeDoubleBuffering" value="true" />
+    <property name="gopherProxySet" value="false" />
+    <property name="ant.version" value="Apache Ant version 1.8.1 compiled on April 30 2010" />
+    <property name="mrj.build" value="11M3909" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="java.vm.vendor" value="Apple Inc." />
+    <property name="java.vendor.url" value="http://www.apple.com/" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="user.country" value="US" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="user.dir" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj" />
+    <property name="java.runtime.version" value="1.6.0_37-b06-434-11M3909" />
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment" />
+    <property name="ant.file.type.1RefactoringProject" value="url" />
+    <property name="basedir" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj" />
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed" />
+    <property name="os.arch" value="x86_64" />
+    <property name="ant.project.default-target" value="run_tests" />
+    <property name="java.io.tmpdir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/" />
+    <property name="ant.core.lib" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj/lib/ant.jar" />
+    <property name="line.separator" value="
+" />
+    <property name="libClasspath" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj/test/data/subject14source/bin" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="os.name" value="Mac OS X" />
+    <property name="ant.project.name" value="1RefactoringProject" />
+    <property name="binClasspath" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj/test/data/subject14source/bin" />
+    <property name="sun.jnu.encoding" value="MacRoman" />
+    <property name="ant.file.1RefactoringProject" value="file:/Users/gustavoas/workspaces/ncstate/saferefactoraj/bin/build_run.xml" />
+    <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="50.0" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="os.version" value="10.8.2" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="user.home" value="/Users/gustavoas" />
+    <property name="user.timezone" value="" />
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="file.encoding" value="MacRoman" />
+    <property name="user.name" value="gustavoas" />
+    <property name="java.class.path" value="/Users/gustavoas/workspaces/ncstate/saferefactoraj/test/data/subject14source/bin:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@5f7a8a02/tests/tests/bin_source:/Users/gustavoas/workspaces/ncstate/saferefactoraj/lib/plume.jar:/Users/gustavoas/workspaces/ncstate/saferefactoraj/lib/ant-launcher.jar:/Users/gustavoas/workspaces/ncstate/saferefactoraj/lib/ant.jar:/Users/gustavoas/workspaces/ncstate/saferefactoraj/lib/ant-junit.jar" />
+    <property name="report.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@5f7a8a02/tests/tests/source" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest0 filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@5f7a8a02/tests/tests/source/TEST-RandoopTest0.xml crashfile=/Users/gustavoas/workspaces/ncstate/saferefactoraj/junitvmwatcher273856646398763325.properties propsfile=/Users/gustavoas/workspaces/ncstate/saferefactoraj/junit4347177925188083093.properties" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="user.language" value="en" />
+    <property name="awt.toolkit" value="apple.awt.CToolkit" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="java.version" value="1.6.0_37" />
+    <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext" />
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar" />
+    <property name="java.vendor" value="Apple Inc." />
+    <property name="tests.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@5f7a8a02/tests/tests/bin_source" />
+    <property name="file.separator" value="/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="mrj.version" value="1070.1.6.0_37-434" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="sun.cpu.isalist" value="" />
+  </properties>
+  <testcase classname="RandoopTest0" name="test1" time="0.0020" />
+  <testcase classname="RandoopTest0" name="test2" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test3" time="0.0010" />
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

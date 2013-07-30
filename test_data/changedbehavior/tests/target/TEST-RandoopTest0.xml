@@ -1,0 +1,1163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" failures="1" hostname="nom0059649.nomadic.ncsu.edu" name="RandoopTest0" tests="77" time="0.182" timestamp="2012-12-20T15:21:09">
+  <properties>
+    <property name="java.vendor" value="Apple Inc." />
+    <property name="osgi.bundles.defaultStartLevel" value="4" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="org.osgi.supports.framework.extension" value="true" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="eclipse.p2.profile" value="epp.package.rcp" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar" />
+    <property name="osgi.ws" value="cocoa" />
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="java.runtime.version" value="1.6.0_37-b06-434-11M3909" />
+    <property name="osgi.instance.area" value="file:/Users/gustavoas/workspaces/runtime-EclipseApplication/" />
+    <property name="org.osgi.framework.uuid" value="5035aaac-b84a-0012-14c9-b91357de418d" />
+    <property name="osgi.nl.user" value="en_US" />
+    <property name="user.name" value="gustavoas" />
+    <property name="osgi.framework.extensions" value="" />
+    <property name="org.osgi.framework.system.packages" value="javax.accessibility,javax.activation,javax.activity,javax.annotation,javax.annotation.processing,javax.crypto,javax.crypto.interfaces,javax.crypto.spec,javax.imageio,javax.imageio.event,javax.imageio.metadata,javax.imageio.plugins.bmp,javax.imageio.plugins.jpeg,javax.imageio.spi,javax.imageio.stream,javax.jws,javax.jws.soap,javax.lang.model,javax.lang.model.element,javax.lang.model.type,javax.lang.model.util,javax.management,javax.management.loading,javax.management.modelmbean,javax.management.monitor,javax.management.openmbean,javax.management.relation,javax.management.remote,javax.management.remote.rmi,javax.management.timer,javax.naming,javax.naming.directory,javax.naming.event,javax.naming.ldap,javax.naming.spi,javax.net,javax.net.ssl,javax.print,javax.print.attribute,javax.print.attribute.standard,javax.print.event,javax.rmi,javax.rmi.CORBA,javax.rmi.ssl,javax.script,javax.security.auth,javax.security.auth.callback,javax.security.auth.kerberos,javax.security.auth.login,javax.security.auth.spi,javax.security.auth.x500,javax.security.cert,javax.security.sasl,javax.sound.midi,javax.sound.midi.spi,javax.sound.sampled,javax.sound.sampled.spi,javax.sql,javax.sql.rowset,javax.sql.rowset.serial,javax.sql.rowset.spi,javax.swing,javax.swing.border,javax.swing.colorchooser,javax.swing.event,javax.swing.filechooser,javax.swing.plaf,javax.swing.plaf.basic,javax.swing.plaf.metal,javax.swing.plaf.multi,javax.swing.plaf.synth,javax.swing.table,javax.swing.text,javax.swing.text.html,javax.swing.text.html.parser,javax.swing.text.rtf,javax.swing.tree,javax.swing.undo,javax.tools,javax.transaction,javax.transaction.xa,javax.xml,javax.xml.bind,javax.xml.bind.annotation,javax.xml.bind.annotation.adapters,javax.xml.bind.attachment,javax.xml.bind.helpers,javax.xml.bind.util,javax.xml.crypto,javax.xml.crypto.dom,javax.xml.crypto.dsig,javax.xml.crypto.dsig.dom,javax.xml.crypto.dsig.keyinfo,javax.xml.crypto.dsig.spec,javax.xml.datatype,javax.xml.namespace,javax.xml.parsers,javax.xml.soap,javax.xml.stream,javax.xml.stream.events,javax.xml.stream.util,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.sax,javax.xml.transform.stax,javax.xml.transform.stream,javax.xml.validation,javax.xml.ws,javax.xml.ws.handler,javax.xml.ws.handler.soap,javax.xml.ws.http,javax.xml.ws.soap,javax.xml.ws.spi,javax.xml.ws.wsaddressing,javax.xml.xpath,org.ietf.jgss,org.omg.CORBA,org.omg.CORBA_2_3,org.omg.CORBA_2_3.portable,org.omg.CORBA.DynAnyPackage,org.omg.CORBA.ORBPackage,org.omg.CORBA.portable,org.omg.CORBA.TypeCodePackage,org.omg.CosNaming,org.omg.CosNaming.NamingContextExtPackage,org.omg.CosNaming.NamingContextPackage,org.omg.Dynamic,org.omg.DynamicAny,org.omg.DynamicAny.DynAnyFactoryPackage,org.omg.DynamicAny.DynAnyPackage,org.omg.IOP,org.omg.IOP.CodecFactoryPackage,org.omg.IOP.CodecPackage,org.omg.Messaging,org.omg.PortableInterceptor,org.omg.PortableInterceptor.ORBInitInfoPackage,org.omg.PortableServer,org.omg.PortableServer.CurrentPackage,org.omg.PortableServer.POAManagerPackage,org.omg.PortableServer.POAPackage,org.omg.PortableServer.portable,org.omg.PortableServer.ServantLocatorPackage,org.omg.SendingContext,org.omg.stub.java.rmi,org.w3c.dom,org.w3c.dom.bootstrap,org.w3c.dom.css,org.w3c.dom.events,org.w3c.dom.html,org.w3c.dom.ls,org.w3c.dom.ranges,org.w3c.dom.stylesheets,org.w3c.dom.traversal,org.w3c.dom.views,org.w3c.dom.xpath,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers" />
+    <property name="awt.nativeDoubleBuffering" value="true" />
+    <property name="eclipse.launcher" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS/eclipse" />
+    <property name="eclipse.launcher.name" value="Eclipse" />
+    <property name="equinox.use.ds" value="true" />
+    <property name="org.osgi.framework.language" value="en" />
+    <property name="eclipse.pde.launch" value="true" />
+    <property name="user.language" value="en" />
+    <property name="org.osgi.framework.processor" value="x86-64" />
+    <property name="osgi.syspath" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins" />
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries" />
+    <property name="osgi.manifest.cache" value="/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/org.eclipse.osgi/manifests" />
+    <property name="org.osgi.framework.system.capabilities" value="osgi.ee; osgi.ee=&quot;OSGi/Minimum&quot;; version:List&lt;Version&gt;=&quot;1.0, 1.1, 1.2&quot;,osgi.ee; osgi.ee=&quot;JavaSE&quot;; version:List&lt;Version&gt;=&quot;1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6&quot;" />
+    <property name="ant.project.default-target" value="run_tests" />
+    <property name="ant.project.name" value="1RefactoringProject" />
+    <property name="java.version" value="1.6.0_37" />
+    <property name="org.osgi.framework.os.name" value="MacOSX" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="osgi.bundles" value="reference:file:/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins/org.eclipse.equinox.simpleconfigurator_1.0.200.v20110815-1438.jar@1:start" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed" />
+    <property name="osgi.tracefile" value="/Users/gustavoas/workspaces/runtime-EclipseApplication/.metadata/trace.log" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="MacRoman" />
+    <property name="eclipse.application" value="org.eclipse.ui.ide.workbench" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="org.osgi.framework.vendor" value="Eclipse" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="osgi.checkConfiguration" value="true" />
+    <property name="java.class.version" value="50.0" />
+    <property name="user.country" value="US" />
+    <property name="org.eclipse.equinox.launcher.splash.location" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins/org.eclipse.platform_3.7.2.v201202080800/splash.bmp" />
+    <property name="binClasspath" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/project19" />
+    <property name="osgi.configuration.cascaded" value="false" />
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home" />
+    <property name="osgi.os" value="macosx" />
+    <property name="libClasspath" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/project19" />
+    <property name="eclipse.commands" value="-launcher
+/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS/eclipse
+-name
+Eclipse
+-showsplash
+600
+-product
+org.eclipse.platform.ide
+-data
+/Users/gustavoas/workspaces/ncstate/../runtime-EclipseApplication
+-configuration
+file:/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/
+-dev
+file:/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/dev.properties
+-os
+macosx
+-ws
+cocoa
+-arch
+x86_64
+-nl
+en_US
+-consoleLog
+" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="osgi.splashLocation" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins/org.eclipse.platform_3.7.2.v201202080800/splash.bmp" />
+    <property name="os.version" value="10.8.2" />
+    <property name="osgi.arch" value="x86_64" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="20.12-b01-434" />
+    <property name="org.osgi.supports.framework.fragment" value="true" />
+    <property name="report.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@7a2b6ed5/tests/tests/target" />
+    <property name="osgi.framework.shape" value="jar" />
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob" />
+    <property name="osgi.instance.area.default" value="file:/Users/gustavoas/Documents/workspace/" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="extra.jars" value="/Users/gustavoas/workspaces/ncstate/continousrefactoring/lib/saferefactor-beta.jar" />
+    <property name="org.osgi.framework.version" value="1.6.0" />
+    <property name="awt.toolkit" value="apple.awt.CToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="osgi.install.area" value="file:/Users/gustavoas/Downloads/eclipse-indigo-rpc/" />
+    <property name="osgi.dev" value="file:/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/dev.properties" />
+    <property name="osgi.framework" value="file:/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins/org.eclipse.osgi_3.7.2.v20120110-1415.jar" />
+    <property name="user.home" value="/Users/gustavoas" />
+    <property name="org.eclipse.equinox.simpleconfigurator.configUrl" value="file:/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/org.eclipse.equinox.simpleconfigurator/bundles.info" />
+    <property name="osgi.splashPath" value="file:/Users/gustavoas/Downloads/eclipse-indigo-rpc/plugins/org.eclipse.platform_3.7.2.v201202080800" />
+    <property name="osgi.bundlestore" value="/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/org.eclipse.osgi/bundles" />
+    <property name="eclipse.consoleLog" value="true" />
+    <property name="ant.file.type.1RefactoringProject" value="url" />
+    <property name="java.specification.vendor" value="Sun Microsystems Inc." />
+    <property name="osgi.nl" value="en_US" />
+    <property name="java.vendor.url" value="http://www.apple.com/" />
+    <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="eclipse.p2.data.area" value="@config.dir/.p2" />
+    <property name="org.osgi.framework.os.version" value="10.8.2" />
+    <property name="eclipse.startTime" value="1356016779976" />
+    <property name="java.vm.vendor" value="Apple Inc." />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="ant.version" value="Apache Ant version 1.8.1 compiled on April 30 2010" />
+    <property name="java.class.path" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/project19:/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@7a2b6ed5/tests/tests/bin_source:/Users/gustavoas/workspaces/ncstate/continousrefactoring/lib/saferefactor-beta.jar" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest0 filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@7a2b6ed5/tests/tests/target/TEST-RandoopTest0.xml crashfile=/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS/junitvmwatcher3785189347497194655.properties propsfile=/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS/junit7048250405939402278.properties" />
+    <property name="osgi.requiredJavaVersion" value="1.5" />
+    <property name="org.eclipse.update.reconcile" value="false" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.1RefactoringProject" value="bundleresource://370.fwk1505888432:1/build_run.xml" />
+    <property name="java.vm.specification.version" value="1.0" />
+    <property name="org.eclipse.swt.internal.carbon.smallFonts" value="" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="java.io.tmpdir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/" />
+    <property name="eclipse.product" value="org.eclipse.platform.ide" />
+    <property name="eclipse.home.location" value="file:/Users/gustavoas/Downloads/eclipse-indigo-rpc/" />
+    <property name="mrj.build" value="11M3909" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment" />
+    <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext" />
+    <property name="tests.dir" value="/var/folders/lz/fqpp9_zj21zb0nvgds8xfx_w0000gp/T/saferefactor.core.SafeRefactorImp@7a2b6ed5/tests/tests/bin_source" />
+    <property name="mrj.version" value="1070.1.6.0_37-434" />
+    <property name="user.dir" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS" />
+    <property name="org.osgi.supports.framework.requirebundle" value="true" />
+    <property name="line.separator" value="
+" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="org.apache.commons.logging.Log" value="org.apache.commons.logging.impl.NoOpLog" />
+    <property name="basedir" value="/Users/gustavoas/Downloads/eclipse-indigo-rpc/Eclipse.app/Contents/MacOS" />
+    <property name="ant.java.version" value="1.6" />
+    <property name="file.encoding" value="MacRoman" />
+    <property name="osgi.framework.version" value="3.7.2.v20120110-1415" />
+    <property name="eclipse.buildId" value="M20120208-0800" />
+    <property name="java.specification.version" value="1.6" />
+    <property name="org.osgi.framework.executionenvironment" value="OSGi/Minimum-1.0,OSGi/Minimum-1.1,OSGi/Minimum-1.2,JRE-1.1,J2SE-1.2,J2SE-1.3,J2SE-1.4,J2SE-1.5,JavaSE-1.6" />
+    <property name="osgi.configuration.area" value="file:/Users/gustavoas/workspaces/ncstate/.metadata/.plugins/org.eclipse.pde.core/Eclipse Application/" />
+    <property name="osgi.logfile" value="/Users/gustavoas/workspaces/runtime-EclipseApplication/.metadata/.log" />
+  </properties>
+  <testcase classname="RandoopTest0" name="test1" time="0.0030" />
+  <testcase classname="RandoopTest0" name="test2" time="0.0020" />
+  <testcase classname="RandoopTest0" name="test3" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test4" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test5" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test6" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test7" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test8" time="0.0" />
+  <testcase classname="RandoopTest0" name="test9" time="0.0" />
+  <testcase classname="RandoopTest0" name="test10" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test11" time="0.0020" />
+  <testcase classname="RandoopTest0" name="test12" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test13" time="0.0" />
+  <testcase classname="RandoopTest0" name="test14" time="0.0" />
+  <testcase classname="RandoopTest0" name="test15" time="0.0" />
+  <testcase classname="RandoopTest0" name="test16" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test17" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test18" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test19" time="0.0" />
+  <testcase classname="RandoopTest0" name="test20" time="0.0" />
+  <testcase classname="RandoopTest0" name="test21" time="0.0" />
+  <testcase classname="RandoopTest0" name="test22" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test23" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test24" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test25" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test26" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test27" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test28" time="0.0" />
+  <testcase classname="RandoopTest0" name="test29" time="0.0" />
+  <testcase classname="RandoopTest0" name="test30" time="0.0" />
+  <testcase classname="RandoopTest0" name="test31" time="0.0" />
+  <testcase classname="RandoopTest0" name="test32" time="0.0" />
+  <testcase classname="RandoopTest0" name="test33" time="0.0" />
+  <testcase classname="RandoopTest0" name="test34" time="0.0" />
+  <testcase classname="RandoopTest0" name="test35" time="0.0" />
+  <testcase classname="RandoopTest0" name="test36" time="0.0" />
+  <testcase classname="RandoopTest0" name="test37" time="0.0" />
+  <testcase classname="RandoopTest0" name="test38" time="0.0" />
+  <testcase classname="RandoopTest0" name="test39" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test40" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test41" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test42" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test43" time="0.0" />
+  <testcase classname="RandoopTest0" name="test44" time="0.0020" />
+  <testcase classname="RandoopTest0" name="test45" time="0.0" />
+  <testcase classname="RandoopTest0" name="test46" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test47" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test48" time="0.0090" />
+  <testcase classname="RandoopTest0" name="test49" time="0.0" />
+  <testcase classname="RandoopTest0" name="test50" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test51" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test52" time="0.0070" />
+  <testcase classname="RandoopTest0" name="test53" time="0.0" />
+  <testcase classname="RandoopTest0" name="test54" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test55" time="0.0" />
+  <testcase classname="RandoopTest0" name="test56" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test57" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test58" time="0.0050" />
+  <testcase classname="RandoopTest0" name="test59" time="0.0" />
+  <testcase classname="RandoopTest0" name="test60" time="0.0" />
+  <testcase classname="RandoopTest0" name="test61" time="0.0040" />
+  <testcase classname="RandoopTest0" name="test62" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test63" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test64" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test65" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test66" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test67" time="0.0" />
+  <testcase classname="RandoopTest0" name="test68" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test69" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test70" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test71" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test72" time="0.0" />
+  <testcase classname="RandoopTest0" name="test73" time="0.0" />
+  <testcase classname="RandoopTest0" name="test74" time="0.0070">
+    <failure message="null" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: null
+	at RandoopTest0.test74(RandoopTest0.java:2315)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test75" time="0.0010" />
+  <testcase classname="RandoopTest0" name="test76" time="0.0" />
+  <testcase classname="RandoopTest0" name="test77" time="0.0" />
+  <system-out><![CDATA[teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+teste20
+teste20
+teste40
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

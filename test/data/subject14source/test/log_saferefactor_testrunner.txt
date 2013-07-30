@@ -1,0 +1,7 @@
+
+init:
+
+clean:
+
+run_tests:
+     [echo] Running JUnit to test on C:\Users\Jeanderson\workspace\eclipse\csaferefactor\test\data\subject14source\bin
