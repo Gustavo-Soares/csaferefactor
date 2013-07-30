@@ -15,18 +15,18 @@ public class AntJunitRunnerTest {
 
 	@Test
 	public void test() throws FileNotFoundException {
-		Project project= new Project();
-		project.setProjectFolder(new File("test/data/subject14source"));
-		project.setBuildFolder(new File("test/data/subject14source/bin"));
-		project.setSrcFolder(new File("test/data/subject14source/src"));
-		
-		String reportPath = "test/data/subject14source/report";
-		String tests = "test/data/subject14source/test";
-		TestExecutor testExecutor = new AntJunitRunner(project,tests);
+		Project project = new Project();
+		project.setProjectFolder(new File("./test_data/subject14source"));
+		project.setBuildFolder(new File("./test_data/subject14source/bin"));
+		project.setSrcFolder(new File("./test_data/subject14source/src"));
+
+		String reportPath = "./test_data/subject14source/report";
+		String tests = "./test_data/subject14source/test";
+		TestExecutor testExecutor = new AntJunitRunner(project, tests);
 		testExecutor.setReportPath(reportPath);
 		testExecutor.executeTests(tests);
-		
-		File report = new File(reportPath,"TEST-RandoopTest0.xml");
+
+		File report = new File(reportPath, "TEST-RandoopTest0.xml");
 		assertTrue(report.exists());
 	}
 
