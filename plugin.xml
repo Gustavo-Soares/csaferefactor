@@ -53,7 +53,7 @@
 <extension
       point="org.eclipse.ui.ide.markerResolution">
    <markerResolutionGenerator
-         class="csaferefactor.MarkerResolutionGenerator"
+         class="csaferefactor.util.MarkerResolutionGenerator"
          markerType="csaferefactor.saferefactorproblem">
    </markerResolutionGenerator>
 </extension>

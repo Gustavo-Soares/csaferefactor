@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,19 +9,21 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import csaferefactor.util.OSPathHack;
+
 /**
- * Tests for {@link PathManager}
+ * Tests for {@link OSPathHack}
  * 
- * @author <a href="mailto:jeandersonbc@gmail.com">Jeanderson Candido</a>
+ * @author Jeanderson Candido - <a href="mailto:jeandersonbc@gmail.com"
+ *         target="new">jeandersonbc@gmail.com</a>
  * 
  */
-public class PathManagerTest {
-
+public class PathHackTest {
 
 	@Test
-	public void testWindowsPaths() throws FileNotFoundException {
+	public void testWindowsPath() throws FileNotFoundException {
 		Scanner in = new Scanner(new BufferedReader(new FileReader(
-				"./test_input/WinPathTransf.txt")));
+				"./test_data/WinPathTransf.txt")));
 
 		// Conversion to a friendly DOS 8.3 name
 		String[] expectedResults = { "C:/Users/Neo/Documents/My~1/workspace/",
@@ -31,7 +33,7 @@ public class PathManagerTest {
 
 		for (int i = 0; in.hasNext() && i < expectedResults.length; i++) {
 			String path = in.nextLine();
-			String result = PathManager.adapt(path);
+			String result = OSPathHack.adapt(path);
 			Assert.assertEquals(expectedResults[i], result);
 		}
 		in.close();

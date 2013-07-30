@@ -20,6 +20,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import csaferefactor.util.OSPathHack;
 import saferefactor.rmi.common.RemoteExecutor;
 
 /**
@@ -129,7 +130,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 				e.printStackTrace();
 			}
 			String path = url.getPath();
-			cachedPluginFolder = PathManager.adapt(path);
+			cachedPluginFolder = OSPathHack.adapt(path);
 		}
 		return cachedPluginFolder;
 	}

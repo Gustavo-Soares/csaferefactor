@@ -1,23 +1,16 @@
-package csaferefactor;
-
-import csaferefactor.runnable.VMInitializerRunnable;
-
+package csaferefactor.util;
 
 /**
- * Manages all paths to be used for communication.
- * <p>
- * <b>Important: All RMI configurations are performed by
- * {@link SafeRefactorActivator#configureRMI()} and
- * {@link VMInitializerRunnable}.</b>
- * </p>
+ * Hacks a given path for Java
  * 
- * @author <a href="mailto:jeandersonbc@gmail.com">Jeanderson Candido</a>
+ * @author Jeanderson Candido - <a href="mailto:jeandersonbc@gmail.com"
+ *         target="new">jeandersonbc@gmail.com</a>
  * 
  */
-public class PathManager {
+public class OSPathHack {
 
-	// by the moment, PathManager should be only static
-	private PathManager() {
+	// by the moment, this shouldn't be instantiated
+	private OSPathHack() {
 	}
 
 	/**
@@ -28,6 +21,9 @@ public class PathManager {
 	 * @return The adapted path
 	 */
 	public static String adapt(String path) {
+		// nothing to be done if it doesn't have blank space
+		if (!path.contains(" "))
+			return path;
 		String operatingSystemID = System.getProperty("os.name");
 		if (operatingSystemID.toLowerCase().contains("windows")) {
 			return getWindowsFriendlyPath(path);
@@ -63,8 +59,6 @@ public class PathManager {
 		 * 
 		 * The right conversion would be "C:\Program~2\The~1\" since "Program~1"
 		 * refers to Path 1.
-		 * 
-		 * TODO Identify the right ID to be assigned (1, 2, 3...)
 		 */
 		return path.replaceAll("\\s[\\w\\s]*/", "~1/");
 	}
