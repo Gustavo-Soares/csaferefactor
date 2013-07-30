@@ -7,3 +7,6 @@ clean:
 
 run_target:
      [echo] Running JUnit to test the "target"
+    [junit] Running RandoopTest
+    [junit] Tests run: 136, Failures: 134, Errors: 0, Time elapsed: 0.562 sec
+    [junit] Test RandoopTest FAILED

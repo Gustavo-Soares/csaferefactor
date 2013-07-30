@@ -16,10 +16,10 @@ public class CoverageMeterTest {
 	@Test
 	public void testCheckCoverage() throws FileNotFoundException {
 		Project project = new Project();
-		project.setProjectFolder(new File("test/data/subject14target"));
-		project.setBuildFolder(new File("test/data/subject14target/bin"));
-		project.setSrcFolder(new File("test/data/subject14target/src"));
-		String tests = "test/data/subject14source/test";
+		project.setProjectFolder(new File("./test_data/subject14target"));
+		project.setBuildFolder(new File("./test_data/subject14target/bin"));
+		project.setSrcFolder(new File("./test_data/subject14target/src"));
+		String tests = "./test_data/subject14source/test";
 
 		CoverageMeter meter = new CoverageMeter(project, tests);
 		meter.checkTestCoverage();
