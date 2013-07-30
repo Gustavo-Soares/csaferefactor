@@ -1,9 +1,8 @@
 package saferefactor.core.test.analysis.naive.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.Test;
@@ -22,14 +21,14 @@ public class NaiveAnalyzerTest {
 	public void testAnalyze() throws Exception {
 
 		Project source = new Project();
-		source.setProjectFolder(new File("test/data/subject14source"));
-		source.setBuildFolder(new File("test/data/subject14source/bin"));
-		source.setSrcFolder(new File("test/data/subject14source/src"));
+		source.setProjectFolder(new File("./test_data/subject14source"));
+		source.setBuildFolder(new File("./test_data/subject14source/bin"));
+		source.setSrcFolder(new File("./test_data/subject14source/src"));
 
 		Project target = new Project();
-		target.setProjectFolder(new File("test/data/subject14target"));
-		target.setBuildFolder(new File("test/data/subject14target/bin"));
-		target.setSrcFolder(new File("test/data/subject14target/src"));
+		target.setProjectFolder(new File("./test_data/subject14target"));
+		target.setBuildFolder(new File("./test_data/subject14target/bin"));
+		target.setSrcFolder(new File("./test_data/subject14target/src"));
 
 		String tmpFolder = System
 				.getProperty("java.io.tmpdir");
@@ -48,14 +47,14 @@ public class NaiveAnalyzerTest {
 	public void testAsmBasedAnalyze() throws Exception {
 
 		Project source = new Project();
-		source.setProjectFolder(new File("test/data/subject14source"));
-		source.setBuildFolder(new File("test/data/subject14source/bin"));
-		source.setSrcFolder(new File("test/data/subject14source/src"));
+		source.setProjectFolder(new File("./test_data/subject14source"));
+		source.setBuildFolder(new File("./test_data/subject14source/bin"));
+		source.setSrcFolder(new File("./test_data/subject14source/src"));
 
 		Project target = new Project();
-		target.setProjectFolder(new File("test/data/subject14target"));
-		target.setBuildFolder(new File("test/data/subject14target/bin"));
-		target.setSrcFolder(new File("test/data/subject14target/src"));
+		target.setProjectFolder(new File("./test_data/subject14target"));
+		target.setBuildFolder(new File("./test_data/subject14target/bin"));
+		target.setSrcFolder(new File("./test_data/subject14target/src"));
 
 		String tmpFolder = System
 				.getProperty("java.io.tmpdir");
@@ -76,14 +75,14 @@ public class NaiveAnalyzerTest {
 	public void testAnalyzeProjectNotFound() throws Exception {
 
 		Project source = new Project();
-		source.setProjectFolder(new File("test/data/subject14source"));
+		source.setProjectFolder(new File("./test_data/subject14source"));
 		source.setBuildFolder(new File("data/subject14source/bin"));
 		source.setSrcFolder(new File("data/subject14source/src"));
 
 		Project target = new Project();
-		target.setProjectFolder(new File("test/data/subject14target"));
-		target.setBuildFolder(new File("test/data/subject14target/bin"));
-		target.setSrcFolder(new File("test/data/subject14target/src"));
+		target.setProjectFolder(new File("./test_data/subject14target"));
+		target.setBuildFolder(new File("./test_data/subject14target/bin"));
+		target.setSrcFolder(new File("./test_data/subject14target/src"));
 
 		String tmpFolder = System
 				.getProperty("java.io.tmpdir");

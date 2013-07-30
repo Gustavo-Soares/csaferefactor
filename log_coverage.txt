@@ -1,14 +1,14 @@
 
 init:
-    [mkdir] Created dir: C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source\coverage
+    [mkdir] Created dir: C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source\coverage
 
 emma:
-    [mkdir] Created dir: C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source\outinstr
+    [mkdir] Created dir: C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source\outinstr
 
 clean:
 
 run_target:
      [echo] Running JUnit to test the "target"
     [junit] Running RandoopTest
-    [junit] Tests run: 235, Failures: 119, Errors: 114, Time elapsed: 0.934 sec
+    [junit] Tests run: 188, Failures: 87, Errors: 100, Time elapsed: 0.771 sec
     [junit] Test RandoopTest FAILED

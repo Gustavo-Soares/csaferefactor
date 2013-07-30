@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="114" failures="119" hostname="blackhawk" name="RandoopTest" tests="235" time="0.934" timestamp="2013-07-30T22:23:21">
+<testsuite errors="100" failures="87" hostname="blackhawk" name="RandoopTest" tests="188" time="0.771" timestamp="2013-07-30T22:29:52">
   <properties>
     <property name="java.vendor" value="Oracle Corporation" />
     <property name="sun.java.launcher" value="SUN_STANDARD" />
@@ -8,7 +8,7 @@
     <property name="lib" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14target\bin" />
     <property name="os.name" value="Windows 8" />
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jre7\lib\resources.jar;C:\Program Files\Java\jre7\lib\rt.jar;C:\Program Files\Java\jre7\lib\sunrsasign.jar;C:\Program Files\Java\jre7\lib\jsse.jar;C:\Program Files\Java\jre7\lib\jce.jar;C:\Program Files\Java\jre7\lib\charsets.jar;C:\Program Files\Java\jre7\lib\jfr.jar;C:\Program Files\Java\jre7\classes" />
-    <property name="out.instr.dir" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source/outinstr" />
+    <property name="out.instr.dir" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source/outinstr" />
     <property name="sun.desktop" value="windows" />
     <property name="java.vm.specification.vendor" value="Oracle Corporation" />
     <property name="java.runtime.version" value="1.7.0_11-b21" />
@@ -20,7 +20,7 @@
     <property name="java.version" value="1.7.0_11" />
     <property name="user.timezone" value="" />
     <property name="sun.arch.data.model" value="64" />
-    <property name="emma.coverage.out.file" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source/coverage/coverage.emma" />
+    <property name="emma.coverage.out.file" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source/coverage/coverage.emma" />
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jre7\lib\endorsed" />
     <property name="sun.cpu.isalist" value="amd64" />
     <property name="sun.jnu.encoding" value="Cp1252" />
@@ -39,7 +39,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
     <property name="user.script" value="" />
-    <property name="coverage.dir" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source/coverage" />
+    <property name="coverage.dir" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source/coverage" />
     <property name="user.home" value="C:\Users\Jeanderson" />
     <property name="target" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14target" />
     <property name="java.specification.vendor" value="Oracle Corporation" />
@@ -47,9 +47,9 @@
     <property name="java.vendor.url" value="http://java.oracle.com/" />
     <property name="java.vm.vendor" value="Oracle Corporation" />
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Jeanderson\workspace\eclipse\csaferefactor\TEST-RandoopTest.xml crashfile=C:\Users\Jeanderson\workspace\eclipse\csaferefactor\junitvmwatcher4063620011277947555.properties propsfile=C:\Users\Jeanderson\workspace\eclipse\csaferefactor\junit1461996367523834199.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner RandoopTest filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\Jeanderson\workspace\eclipse\csaferefactor\TEST-RandoopTest.xml crashfile=C:\Users\Jeanderson\workspace\eclipse\csaferefactor\junitvmwatcher8661114361478934853.properties propsfile=C:\Users\Jeanderson\workspace\eclipse\csaferefactor\junit7238632900755092021.properties" />
     <property name="ant.file.RefactoringProject" value="jar:file:/C:/Users/Jeanderson/workspace/eclipse/csaferefactor/lib/saferefactor-beta.jar!/build_coverage.xml" />
-    <property name="java.class.path" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source\outinstr;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\test_data\subject14target\bin;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui_3.105.0.v20130522-1122.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.swt_3.102.0.v20130605-1539.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.swt.win32.win32.x86_64_3.102.0.v20130605-1544.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jface_3.9.0.v20130521-1714.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.commands_3.6.100.v20130515-1857.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.workbench_3.105.0.v20130529-1406.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.e4.ui.workbench3_0.12.0.v20130515-1857.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.runtime_3.9.0.v20130326-1255.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.osgi_3.9.0.v20130529-1710.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.common_3.6.200.v20130402-1505.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.jobs_3.5.300.v20130429-1813.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.runtime.compatibility.registry_3.5.200.v20130514-1256\runtime_registry_compatibility.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.registry_3.5.300.v20130327-1442.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.preferences_3.5.100.v20130422-1538.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.contenttype_3.4.200.v20130326-1255.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.app_1.3.100.v20130327-1442.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jface.text_3.8.100.v20130515-1957.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.text_3.5.300.v20130515-1451.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.workbench.texteditor_3.8.100.v20130514-1533.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.resources_3.8.100.v20130521-2026.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.console_3.5.200.v20130514-0954.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.editors_3.8.100.v20130513-1637.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.filebuffers_3.5.300.v20130225-1821.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.core_3.9.0.v20130604-1421.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.compiler.apt_1.0.600.v20130530-1010.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.compiler.tool_1.0.200.v20130530-1010.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.ui_3.9.0.v20130605-1748.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.compare_3.5.400.v20130514-1224.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.compare.core_3.5.300.v20130514-1224.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.ide_3.9.0.v20130517-0139.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.views_3.6.100.v20130326-1250.jar;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\bin;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\lib;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\lib\saferefactor-beta.jar;C:\Users\Jeanderson\Dev\eclipse\configuration\org.eclipse.osgi\bundles\206\1\.cp;C:\Users\Jeanderson\Dev\eclipse\configuration\org.eclipse.osgi\bundles\205\1\.cp;C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source" />
+    <property name="java.class.path" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source\outinstr;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\test_data\subject14target\bin;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui_3.105.0.v20130522-1122.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.swt_3.102.0.v20130605-1539.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.swt.win32.win32.x86_64_3.102.0.v20130605-1544.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jface_3.9.0.v20130521-1714.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.commands_3.6.100.v20130515-1857.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.workbench_3.105.0.v20130529-1406.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.e4.ui.workbench3_0.12.0.v20130515-1857.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.runtime_3.9.0.v20130326-1255.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.osgi_3.9.0.v20130529-1710.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.common_3.6.200.v20130402-1505.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.jobs_3.5.300.v20130429-1813.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.runtime.compatibility.registry_3.5.200.v20130514-1256\runtime_registry_compatibility.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.registry_3.5.300.v20130327-1442.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.preferences_3.5.100.v20130422-1538.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.contenttype_3.4.200.v20130326-1255.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.equinox.app_1.3.100.v20130327-1442.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jface.text_3.8.100.v20130515-1957.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.text_3.5.300.v20130515-1451.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.workbench.texteditor_3.8.100.v20130514-1533.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.resources_3.8.100.v20130521-2026.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.console_3.5.200.v20130514-0954.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.editors_3.8.100.v20130513-1637.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.core.filebuffers_3.5.300.v20130225-1821.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.core_3.9.0.v20130604-1421.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.compiler.apt_1.0.600.v20130530-1010.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.compiler.tool_1.0.200.v20130530-1010.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.jdt.ui_3.9.0.v20130605-1748.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.compare_3.5.400.v20130514-1224.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.compare.core_3.5.300.v20130514-1224.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.ide_3.9.0.v20130517-0139.jar;C:\Users\Jeanderson\Dev\eclipse\plugins\org.eclipse.ui.views_3.6.100.v20130326-1250.jar;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\bin;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\lib;C:\Users\Jeanderson\workspace\eclipse\csaferefactor\lib\saferefactor-beta.jar;C:\Users\Jeanderson\Dev\eclipse\configuration\org.eclipse.osgi\bundles\206\1\.cp;C:\Users\Jeanderson\Dev\eclipse\configuration\org.eclipse.osgi\bundles\205\1\.cp;C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source" />
     <property name="ant.version" value="Apache Ant version 1.8.1 compiled on April 30 2010" />
     <property name="targetBin" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14target\bin" />
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
@@ -71,1178 +71,947 @@
     <property name="basedir" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor" />
     <property name="ant.java.version" value="1.6" />
     <property name="ant.core.lib" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\lib\saferefactor-beta.jar" />
-    <property name="tests.folder" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@5dfafd0f\tests\tests\bin_source" />
+    <property name="tests.folder" value="C:\Users\JEANDE~1\AppData\Local\Temp\saferefactor.core.SafeRefactorImp@6dcd2623\tests\tests\bin_source" />
     <property name="emma.enabled" value="true" />
     <property name="file.encoding" value="Cp1252" />
     <property name="java.specification.version" value="1.7" />
     <property name="src.dir" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14target\src" />
     <property name="out.dir" value="C:\Users\Jeanderson\workspace\eclipse\csaferefactor\.\test_data\subject14target\bin" />
   </properties>
-  <testcase classname="RandoopTest0" name="test62" time="0.061">
+  <testcase classname="RandoopTest0" name="test108" time="0.084">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test62(RandoopTest0.java:3072)
+	at RandoopTest0.test108(RandoopTest0.java:5347)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test63" time="0.002">
+  <testcase classname="RandoopTest0" name="test98" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test98(RandoopTest0.java:4845)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test97" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test97(RandoopTest0.java:4805)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test106" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test63(RandoopTest0.java:3121)
+	at RandoopTest0.test106(RandoopTest0.java:5267)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test60" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test60(RandoopTest0.java:3003)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test61" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test61(RandoopTest0.java:3043)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test30" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test30(RandoopTest0.java:1394)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test12" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test12(RandoopTest0.java:523)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test18" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test18(RandoopTest0.java:777)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test16" time="0.0" />
-  <testcase classname="RandoopTest0" name="test25" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test25(RandoopTest0.java:1112)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test26" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test26(RandoopTest0.java:1158)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test32" time="0.001">
+  <testcase classname="RandoopTest0" name="test110" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test32(RandoopTest0.java:1506)
+	at RandoopTest0.test110(RandoopTest0.java:5453)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test5" time="0.001">
+  <testcase classname="RandoopTest0" name="test100" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test5(RandoopTest0.java:174)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test10" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test10(RandoopTest0.java:407)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test33" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test33(RandoopTest0.java:1570)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test31" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test31(RandoopTest0.java:1441)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test2" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test2(RandoopTest0.java:62)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test29" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test29(RandoopTest0.java:1327)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test27" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test27(RandoopTest0.java:1205)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test3" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test3(RandoopTest0.java:104)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test13" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test13(RandoopTest0.java:554)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test20" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test20(RandoopTest0.java:884)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test28" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test28(RandoopTest0.java:1280)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test4" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test4(RandoopTest0.java:130)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test9" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test9(RandoopTest0.java:364)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test19" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test19(RandoopTest0.java:823)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test21" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test21(RandoopTest0.java:930)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test1" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test1(RandoopTest0.java:23)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test24" time="0.046">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test24(RandoopTest0.java:1071)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test17" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test17(RandoopTest0.java:726)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test14" time="0.003">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test14(RandoopTest0.java:613)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test22" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test22(RandoopTest0.java:963)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test7" time="0.003">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test7(RandoopTest0.java:277)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test8" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test8(RandoopTest0.java:305)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test15" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test15(RandoopTest0.java:645)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test6" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test6(RandoopTest0.java:231)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test11" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test11(RandoopTest0.java:470)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test23" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test23(RandoopTest0.java:1015)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test34" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test34(RandoopTest0.java:1624)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test35" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test35(RandoopTest0.java:1677)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test36" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test36(RandoopTest0.java:1725)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test37" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test37(RandoopTest0.java:1775)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test38" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test38(RandoopTest0.java:1828)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test39" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test39(RandoopTest0.java:1881)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test46" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test46(RandoopTest0.java:2284)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test47" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test47(RandoopTest0.java:2337)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test50" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test50(RandoopTest0.java:2456)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test40" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test40(RandoopTest0.java:1922)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test49" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test49(RandoopTest0.java:2421)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test51" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test51(RandoopTest0.java:2517)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test53" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test53(RandoopTest0.java:2602)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test45" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test45(RandoopTest0.java:2215)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test41" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test41(RandoopTest0.java:1975)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test42" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test42(RandoopTest0.java:2052)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test48" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test48(RandoopTest0.java:2385)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test44" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test44(RandoopTest0.java:2146)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test52" time="0.027">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test52(RandoopTest0.java:2557)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test54" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test54(RandoopTest0.java:2666)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test55" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test55(RandoopTest0.java:2712)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test56" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test56(RandoopTest0.java:2758)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test57" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test57(RandoopTest0.java:2835)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test58" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test58(RandoopTest0.java:2883)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test59" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test59(RandoopTest0.java:2944)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test43" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test43(RandoopTest0.java:2093)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test64" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test64(RandoopTest0.java:3161)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test65" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test65(RandoopTest0.java:3218)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test66" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test66(RandoopTest0.java:3256)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test104" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test104(RandoopTest0.java:5177)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test117" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test117(RandoopTest0.java:5881)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test92" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test92(RandoopTest0.java:4585)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test81" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test81(RandoopTest0.java:4077)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test103" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test103(RandoopTest0.java:5115)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test109" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test109(RandoopTest0.java:5469)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test118" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test118(RandoopTest0.java:5927)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test119" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test119(RandoopTest0.java:5977)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test121" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test121(RandoopTest0.java:6094)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test112" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test112(RandoopTest0.java:5593)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test108" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test108(RandoopTest0.java:5398)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test90" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test90(RandoopTest0.java:4479)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test67" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test67(RandoopTest0.java:3323)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test115" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test115(RandoopTest0.java:5756)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test120" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test120(RandoopTest0.java:6030)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test122" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test122(RandoopTest0.java:6125)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test123" time="0.071">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test123(RandoopTest0.java:6145)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test124" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test124(RandoopTest0.java:6201)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test72" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test72(RandoopTest0.java:3593)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test86" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test86(RandoopTest0.java:4303)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test84" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test84(RandoopTest0.java:4213)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test69" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test69(RandoopTest0.java:3423)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test73" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test73(RandoopTest0.java:3631)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test77" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test77(RandoopTest0.java:3835)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test96" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test96(RandoopTest0.java:4794)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test105" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test105(RandoopTest0.java:5236)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test88" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test88(RandoopTest0.java:4382)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test99" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test99(RandoopTest0.java:4912)
+	at RandoopTest0.test100(RandoopTest0.java:4945)
 </error>
   </testcase>
   <testcase classname="RandoopTest0" name="test102" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test102(RandoopTest0.java:5069)
+	at RandoopTest0.test102(RandoopTest0.java:5076)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test80" time="0.0">
+  <testcase classname="RandoopTest0" name="test105" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test80(RandoopTest0.java:4029)
+	at RandoopTest0.test105(RandoopTest0.java:5230)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test85" time="0.001">
+  <testcase classname="RandoopTest0" name="test109" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test85(RandoopTest0.java:4246)
+	at RandoopTest0.test109(RandoopTest0.java:5402)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test95" time="0.0">
+  <testcase classname="RandoopTest0" name="test103" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test95(RandoopTest0.java:4713)
+	at RandoopTest0.test103(RandoopTest0.java:5094)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test106" time="0.0">
+  <testcase classname="RandoopTest0" name="test111" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test106(RandoopTest0.java:5268)
+	at RandoopTest0.test111(RandoopTest0.java:5530)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test126" time="0.001">
+  <testcase classname="RandoopTest0" name="test107" time="0.003">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test126(RandoopTest0.java:6322)
+	at RandoopTest0.test107(RandoopTest0.java:5314)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test68" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test68(RandoopTest0.java:3373)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test127" time="0.001">
+  <testcase classname="RandoopTest0" name="test99" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test127(RandoopTest0.java:6357)
+	at RandoopTest0.test99(RandoopTest0.java:4886)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test128" time="0.0">
+  <testcase classname="RandoopTest0" name="test112" time="0.0" />
+  <testcase classname="RandoopTest0" name="test101" time="0.004">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test128(RandoopTest0.java:6425)
+	at RandoopTest0.test101(RandoopTest0.java:4996)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test113" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test113(RandoopTest0.java:5649)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test82" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test82(RandoopTest0.java:4124)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test87" time="0.0">
+  <testcase classname="RandoopTest0" name="test104" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test87(RandoopTest0.java:4345)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test76" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test76(RandoopTest0.java:3803)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test125" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test125(RandoopTest0.java:6271)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test129" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test129(RandoopTest0.java:6470)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test89" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test89(RandoopTest0.java:4415)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test83" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test83(RandoopTest0.java:4176)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test70" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test70(RandoopTest0.java:3479)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test93" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test93(RandoopTest0.java:4635)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test94" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test94(RandoopTest0.java:4679)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test74" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test74(RandoopTest0.java:3679)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test97" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test97(RandoopTest0.java:4854)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test98" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test98(RandoopTest0.java:4880)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test100" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test100(RandoopTest0.java:4973)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test79" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test79(RandoopTest0.java:3968)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test71" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test71(RandoopTest0.java:3532)
+	at RandoopTest0.test104(RandoopTest0.java:5174)
 </error>
   </testcase>
   <testcase classname="RandoopTest0" name="test91" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test91(RandoopTest0.java:4539)
+	at RandoopTest0.test91(RandoopTest0.java:4512)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test78" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test78(RandoopTest0.java:3928)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test101" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test101(RandoopTest0.java:5022)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test107" time="0.002">
+  <testcase classname="RandoopTest0" name="test78" time="0.0">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test107(RandoopTest0.java:5341)
+	at RandoopTest0.test78(RandoopTest0.java:3749)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test110" time="0.001">
+  <testcase classname="RandoopTest0" name="test79" time="0.0">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test110(RandoopTest0.java:5512)
+	at RandoopTest0.test79(RandoopTest0.java:3840)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test75" time="0.001">
+  <testcase classname="RandoopTest0" name="test81" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test75(RandoopTest0.java:3721)
+	at RandoopTest0.test81(RandoopTest0.java:3935)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test114" time="0.001">
+  <testcase classname="RandoopTest0" name="test82" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test114(RandoopTest0.java:5695)
+	at RandoopTest0.test82(RandoopTest0.java:3993)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test111" time="0.0">
+  <testcase classname="RandoopTest0" name="test83" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test111(RandoopTest0.java:5553)
+	at RandoopTest0.test83(RandoopTest0.java:4064)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test116" time="0.001">
+  <testcase classname="RandoopTest0" name="test84" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test116(RandoopTest0.java:5811)
+	at RandoopTest0.test84(RandoopTest0.java:4122)
 </failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test85" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test85(RandoopTest0.java:4152)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test88" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test88(RandoopTest0.java:4342)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test89" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test89(RandoopTest0.java:4409)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test92" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test92(RandoopTest0.java:4586)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test80" time="0.006">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test80(RandoopTest0.java:3898)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test90" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test90(RandoopTest0.java:4460)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test93" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test93(RandoopTest0.java:4628)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test94" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test94(RandoopTest0.java:4672)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test95" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test95(RandoopTest0.java:4712)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test96" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test96(RandoopTest0.java:4751)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test76" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test76(RandoopTest0.java:3650)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test77" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test77(RandoopTest0.java:3700)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test86" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test86(RandoopTest0.java:4232)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test87" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test87(RandoopTest0.java:4274)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test113" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test113(RandoopTest0.java:5714)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test17" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test17(RandoopTest0.java:732)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test42" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test42(RandoopTest0.java:1882)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test43" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test43(RandoopTest0.java:1919)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test24" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test24(RandoopTest0.java:1038)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test23" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test23(RandoopTest0.java:978)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test27" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test27(RandoopTest0.java:1162)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test32" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test32(RandoopTest0.java:1445)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test7" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test7(RandoopTest0.java:254)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test14" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test14(RandoopTest0.java:593)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test30" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test30(RandoopTest0.java:1341)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test35" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test35(RandoopTest0.java:1566)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test37" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test37(RandoopTest0.java:1680)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test18" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test18(RandoopTest0.java:766)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test3" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test3(RandoopTest0.java:95)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test20" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test20(RandoopTest0.java:843)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test6" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test6(RandoopTest0.java:233)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test21" time="0.074">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test21(RandoopTest0.java:896)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test34" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test34(RandoopTest0.java:1505)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test38" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test38(RandoopTest0.java:1712)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test19" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test19(RandoopTest0.java:813)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test8" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test8(RandoopTest0.java:306)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test2" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test2(RandoopTest0.java:72)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test11" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test11(RandoopTest0.java:426)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test13" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test13(RandoopTest0.java:543)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test15" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test15(RandoopTest0.java:650)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test29" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test29(RandoopTest0.java:1287)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test36" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test36(RandoopTest0.java:1627)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test39" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test39(RandoopTest0.java:1749)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test41" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test41(RandoopTest0.java:1843)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test1" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test1(RandoopTest0.java:22)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test10" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test10(RandoopTest0.java:365)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test16" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test16(RandoopTest0.java:693)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test22" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test22(RandoopTest0.java:951)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test31" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test31(RandoopTest0.java:1386)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test4" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test4(RandoopTest0.java:119)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test9" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test9(RandoopTest0.java:341)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test12" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test12(RandoopTest0.java:463)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test26" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test26(RandoopTest0.java:1117)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test28" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test28(RandoopTest0.java:1234)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test33" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test33(RandoopTest0.java:1471)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test40" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test40(RandoopTest0.java:1809)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test5" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test5(RandoopTest0.java:202)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test25" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test25(RandoopTest0.java:1069)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test46" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test46(RandoopTest0.java:2067)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test47" time="0.06">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test47(RandoopTest0.java:2106)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test49" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test49(RandoopTest0.java:2224)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test55" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test55(RandoopTest0.java:2478)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test45" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test45(RandoopTest0.java:2009)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test57" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test57(RandoopTest0.java:2575)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test62" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test62(RandoopTest0.java:2813)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test52" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test52(RandoopTest0.java:2349)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test63" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test63(RandoopTest0.java:2872)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test44" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test44(RandoopTest0.java:1960)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test59" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test59(RandoopTest0.java:2676)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test54" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test54(RandoopTest0.java:2429)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test64" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test64(RandoopTest0.java:2916)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test65" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test65(RandoopTest0.java:2995)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test68" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test68(RandoopTest0.java:3163)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test69" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test69(RandoopTest0.java:3225)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test70" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test70(RandoopTest0.java:3263)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test71" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test71(RandoopTest0.java:3314)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test53" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test53(RandoopTest0.java:2376)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test72" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test72(RandoopTest0.java:3393)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test61" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test61(RandoopTest0.java:2771)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test51" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test51(RandoopTest0.java:2310)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test74" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test74(RandoopTest0.java:3521)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test75" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test75(RandoopTest0.java:3593)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test73" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test73(RandoopTest0.java:3461)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test56" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test56(RandoopTest0.java:2535)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test50" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test50(RandoopTest0.java:2276)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test58" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test58(RandoopTest0.java:2605)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test60" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test60(RandoopTest0.java:2733)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test48" time="0.069">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test48(RandoopTest0.java:2174)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test66" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test66(RandoopTest0.java:3061)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test67" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test67(RandoopTest0.java:3136)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test121" time="0.002">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test121(RandoopTest0.java:6158)
+</error>
   </testcase>
   <testcase classname="RandoopTest0" name="test170" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test170(RandoopTest0.java:8552)
+	at RandoopTest0.test170(RandoopTest0.java:8983)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test177" time="0.0">
+  <testcase classname="RandoopTest0" name="test169" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test177(RandoopTest0.java:8911)
+	at RandoopTest0.test169(RandoopTest0.java:8936)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test189" time="0.001">
+  <testcase classname="RandoopTest0" name="test119" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test119(RandoopTest0.java:6039)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test171" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test189(RandoopTest0.java:9590)
+	at RandoopTest0.test171(RandoopTest0.java:9023)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test190" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test190(RandoopTest0.java:9632)
-</error>
+  <testcase classname="RandoopTest0" name="test125" time="0.002">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test125(RandoopTest0.java:6364)
+</failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test192" time="0.001">
+  <testcase classname="RandoopTest0" name="test117" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test192(RandoopTest0.java:9741)
+	at RandoopTest0.test117(RandoopTest0.java:5937)
 </error>
   </testcase>
   <testcase classname="RandoopTest0" name="test139" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test139(RandoopTest0.java:6981)
+	at RandoopTest0.test139(RandoopTest0.java:7135)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test191" time="0.0">
+  <testcase classname="RandoopTest0" name="test143" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test191(RandoopTest0.java:9695)
+	at RandoopTest0.test143(RandoopTest0.java:7357)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test158" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test158(RandoopTest0.java:7977)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test160" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test160(RandoopTest0.java:8055)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test185" time="0.001">
+  <testcase classname="RandoopTest0" name="test153" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test185(RandoopTest0.java:9386)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test179" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test179(RandoopTest0.java:9037)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test142" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test142(RandoopTest0.java:7143)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test163" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test163(RandoopTest0.java:8207)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test193" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test193(RandoopTest0.java:9816)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test156" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test156(RandoopTest0.java:7861)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test140" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test140(RandoopTest0.java:7045)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test184" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test184(RandoopTest0.java:9340)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test136" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test136(RandoopTest0.java:6814)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test144" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test144(RandoopTest0.java:7238)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test145" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test145(RandoopTest0.java:7306)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test159" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test159(RandoopTest0.java:8016)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test141" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test141(RandoopTest0.java:7091)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test131" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test131(RandoopTest0.java:6572)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test165" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test165(RandoopTest0.java:8285)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test149" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test149(RandoopTest0.java:7498)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test167" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test167(RandoopTest0.java:8408)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test138" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test138(RandoopTest0.java:6937)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test168" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test168(RandoopTest0.java:8454)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test172" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test172(RandoopTest0.java:8637)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test151" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test151(RandoopTest0.java:7626)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test146" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test146(RandoopTest0.java:7363)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test173" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test173(RandoopTest0.java:8702)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test130" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test130(RandoopTest0.java:6511)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test134" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test134(RandoopTest0.java:6710)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test143" time="0.053">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test143(RandoopTest0.java:7187)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test148" time="0.002">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test148(RandoopTest0.java:7446)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test153" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test153(RandoopTest0.java:7731)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test157" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test157(RandoopTest0.java:7907)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test171" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test171(RandoopTest0.java:8600)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test176" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test176(RandoopTest0.java:8867)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test178" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test178(RandoopTest0.java:8999)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test180" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test180(RandoopTest0.java:9106)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test182" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test182(RandoopTest0.java:9203)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test181" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test181(RandoopTest0.java:9160)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test186" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test186(RandoopTest0.java:9442)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test187" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test187(RandoopTest0.java:9492)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test174" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test174(RandoopTest0.java:8764)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test132" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test132(RandoopTest0.java:6609)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test133" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test133(RandoopTest0.java:6656)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test147" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test147(RandoopTest0.java:7402)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test188" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test188(RandoopTest0.java:9541)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test135" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test135(RandoopTest0.java:6761)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test137" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test137(RandoopTest0.java:6883)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test152" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test152(RandoopTest0.java:7669)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test166" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test166(RandoopTest0.java:8350)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test164" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test164(RandoopTest0.java:8241)
+	at RandoopTest0.test153(RandoopTest0.java:7985)
 </error>
   </testcase>
   <testcase classname="RandoopTest0" name="test155" time="0.0">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test155(RandoopTest0.java:7818)
+	at RandoopTest0.test155(RandoopTest0.java:8112)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test150" time="0.001">
+  <testcase classname="RandoopTest0" name="test126" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test126(RandoopTest0.java:6423)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test114" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test114(RandoopTest0.java:5774)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test151" time="0.0">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test150(RandoopTest0.java:7544)
+	at RandoopTest0.test151(RandoopTest0.java:7826)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test150" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test150(RandoopTest0.java:7764)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test144" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test144(RandoopTest0.java:7419)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test157" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test157(RandoopTest0.java:8234)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test156" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test156(RandoopTest0.java:8163)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test158" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test158(RandoopTest0.java:8303)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test164" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test164(RandoopTest0.java:8664)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test168" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test168(RandoopTest0.java:8890)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test172" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test172(RandoopTest0.java:9086)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test163" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test163(RandoopTest0.java:8604)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test174" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test174(RandoopTest0.java:9215)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test175" time="0.046">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test175(RandoopTest0.java:9242)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test177" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test177(RandoopTest0.java:9394)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test116" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test116(RandoopTest0.java:5881)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test127" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test127(RandoopTest0.java:6490)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test124" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test124(RandoopTest0.java:6319)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test173" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test173(RandoopTest0.java:9152)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test115" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test115(RandoopTest0.java:5825)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test122" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test122(RandoopTest0.java:6226)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test141" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test141(RandoopTest0.java:7228)
 </error>
   </testcase>
   <testcase classname="RandoopTest0" name="test162" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test162(RandoopTest0.java:8131)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test169" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test169(RandoopTest0.java:8502)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test175" time="0.0">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test175(RandoopTest0.java:8816)
+	at RandoopTest0.test162(RandoopTest0.java:8542)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test161" time="0.036">
+  <testcase classname="RandoopTest0" name="test118" time="0.0">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test161(RandoopTest0.java:8106)
+	at RandoopTest0.test118(RandoopTest0.java:5983)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test133" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test133(RandoopTest0.java:6813)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test134" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test134(RandoopTest0.java:6866)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test138" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test138(RandoopTest0.java:7101)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test165" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test165(RandoopTest0.java:8705)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test167" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test167(RandoopTest0.java:8818)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test149" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test149(RandoopTest0.java:7704)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test152" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test152(RandoopTest0.java:7930)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test176" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test176(RandoopTest0.java:9330)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test128" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test128(RandoopTest0.java:6551)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test136" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test136(RandoopTest0.java:7000)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test129" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test129(RandoopTest0.java:6599)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test130" time="0.0">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test130(RandoopTest0.java:6641)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test120" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test120(RandoopTest0.java:6101)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test135" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test135(RandoopTest0.java:6921)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test123" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test123(RandoopTest0.java:6272)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test131" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test131(RandoopTest0.java:6706)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test132" time="0.074">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test132(RandoopTest0.java:6772)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test137" time="0.002">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test137(RandoopTest0.java:7057)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test142" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test142(RandoopTest0.java:7294)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test140" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test140(RandoopTest0.java:7178)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test145" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test145(RandoopTest0.java:7458)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test146" time="0.002">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test146(RandoopTest0.java:7528)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test147" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test147(RandoopTest0.java:7584)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test148" time="0.001">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test148(RandoopTest0.java:7649)
 </failure>
   </testcase>
   <testcase classname="RandoopTest0" name="test154" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test154(RandoopTest0.java:7788)
+	at RandoopTest0.test154(RandoopTest0.java:8044)
 </failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test159" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test159(RandoopTest0.java:8332)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test160" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test160(RandoopTest0.java:8383)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test161" time="0.002">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test161(RandoopTest0.java:8440)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test166" time="0.002">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test166(RandoopTest0.java:8761)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test178" time="0.002">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test178(RandoopTest0.java:9433)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test180" time="0.002">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test180(RandoopTest0.java:9537)
+</error>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test188" time="0.001">
+    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
+	at RandoopTest0.test188(RandoopTest0.java:9979)
+</error>
   </testcase>
   <testcase classname="RandoopTest0" name="test183" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test183(RandoopTest0.java:9279)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test203" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test203(RandoopTest0.java:10456)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test210" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test210(RandoopTest0.java:10808)
+	at RandoopTest0.test183(RandoopTest0.java:9722)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test232" time="0.001">
+  <testcase classname="RandoopTest0" name="test186" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test232(RandoopTest0.java:12018)
+	at RandoopTest0.test186(RandoopTest0.java:9861)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test205" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test205(RandoopTest0.java:10562)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test219" time="0.001">
+  <testcase classname="RandoopTest0" name="test179" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test219(RandoopTest0.java:11357)
+	at RandoopTest0.test179(RandoopTest0.java:9484)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test216" time="0.001">
+  <testcase classname="RandoopTest0" name="test181" time="0.002">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test216(RandoopTest0.java:11170)
+	at RandoopTest0.test181(RandoopTest0.java:9596)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test195" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test195(RandoopTest0.java:9943)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test224" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test224(RandoopTest0.java:11622)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test213" time="0.002">
+  <testcase classname="RandoopTest0" name="test182" time="0.0">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test213(RandoopTest0.java:10982)
+	at RandoopTest0.test182(RandoopTest0.java:9649)
 </error>
   </testcase>
-  <testcase classname="RandoopTest0" name="test234" time="0.0" />
-  <testcase classname="RandoopTest0" name="test199" time="0.001">
+  <testcase classname="RandoopTest0" name="test187" time="0.001">
     <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test199(RandoopTest0.java:10192)
+	at RandoopTest0.test187(RandoopTest0.java:9934)
 </failure>
   </testcase>
-  <testcase classname="RandoopTest0" name="test194" time="0.001">
+  <testcase classname="RandoopTest0" name="test185" time="0.0">
+    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
+	at RandoopTest0.test185(RandoopTest0.java:9831)
+</failure>
+  </testcase>
+  <testcase classname="RandoopTest0" name="test184" time="0.001">
     <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test194(RandoopTest0.java:9859)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test218" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test218(RandoopTest0.java:11307)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test230" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test230(RandoopTest0.java:11915)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test204" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test204(RandoopTest0.java:10494)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test215" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test215(RandoopTest0.java:11117)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test225" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test225(RandoopTest0.java:11662)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test231" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test231(RandoopTest0.java:11974)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test223" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test223(RandoopTest0.java:11541)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test212" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test212(RandoopTest0.java:10933)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test229" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test229(RandoopTest0.java:11878)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test228" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test228(RandoopTest0.java:11805)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test196" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test196(RandoopTest0.java:10002)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test202" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test202(RandoopTest0.java:10398)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test197" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test197(RandoopTest0.java:10076)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test200" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test200(RandoopTest0.java:10268)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test211" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test211(RandoopTest0.java:10875)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test217" time="0.002">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test217(RandoopTest0.java:11245)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test222" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test222(RandoopTest0.java:11503)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test207" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test207(RandoopTest0.java:10670)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test201" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test201(RandoopTest0.java:10331)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test208" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test208(RandoopTest0.java:10713)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test227" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test227(RandoopTest0.java:11771)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test233" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test233(RandoopTest0.java:12069)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test214" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test214(RandoopTest0.java:11024)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test226" time="0.0">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test226(RandoopTest0.java:11723)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test198" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test198(RandoopTest0.java:10119)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test206" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test206(RandoopTest0.java:10611)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test220" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test220(RandoopTest0.java:11410)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test235" time="0.0">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test235(RandoopTest0.java:12228)
-</error>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test221" time="0.001">
-    <failure type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError
-	at RandoopTest0.test221(RandoopTest0.java:11460)
-</failure>
-  </testcase>
-  <testcase classname="RandoopTest0" name="test209" time="0.001">
-    <error message="B.m()I" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: B.m()I
-	at RandoopTest0.test209(RandoopTest0.java:10774)
+	at RandoopTest0.test184(RandoopTest0.java:9771)
 </error>
   </testcase>
   <system-out><![CDATA[EMMA: collecting runtime coverage data ...
