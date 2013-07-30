@@ -28,9 +28,9 @@ public class RandoopAdapterTest {
 	public void testGenerateTestsForMethodList() throws FileNotFoundException {
 
 		Project projectToTest = new Project();
-		projectToTest.setProjectFolder(new File("test/data/subject14source"));
-		projectToTest.setBuildFolder(new File("test/data/subject14source/bin"));
-		projectToTest.setSrcFolder(new File("test/data/subject14source/src"));
+		projectToTest.setProjectFolder(new File("./test_data/subject14source"));
+		projectToTest.setBuildFolder(new File("./test_data/subject14source/bin"));
+		projectToTest.setSrcFolder(new File("./test_data/subject14source/src"));
 
 		int timelimit = 1;
 		String tmpFolder = System
