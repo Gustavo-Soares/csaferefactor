@@ -1,12 +1,9 @@
 package saferefactor.core.generation.test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,12 +11,10 @@ import java.util.List;
 import org.junit.Test;
 
 import saferefactor.core.generation.AbstractTestGeneratorAdapter;
-import saferefactor.core.generation.RandoopAdapter;
 import saferefactor.core.generation.RandoopAntAdapter;
-import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
-import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.ConstructorImp;
+import saferefactor.core.util.ast.Method;
 import saferefactor.core.util.ast.MethodImp;
 
 public class RandoopAdapterTest {

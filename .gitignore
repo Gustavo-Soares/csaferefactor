@@ -12,6 +12,7 @@ test_data/subject14source/test/coverage/*.html
 test_data/subject14source/test/coverage/*.txt
 test_data/subject14source/test/coverage/*.xml
 test_data/subject14source/test/coverage/_files
+test_data/subject14source/test/outinstr
 test_data/subject14source/test/*.txt
 
 # Others #
