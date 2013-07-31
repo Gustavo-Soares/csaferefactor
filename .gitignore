@@ -1,4 +1,18 @@
+# .class files #
+/bin
+
 # SafeRefactor generated files #
 filewriter
 log_coverage.txt
 TEST-RandoopTest.xml
+
+test_data/subject14source/report
+test_data/subject14source/*.txt
+test_data/subject14source/test/coverage/*.html
+test_data/subject14source/test/coverage/*.txt
+test_data/subject14source/test/coverage/*.xml
+test_data/subject14source/test/coverage/_files
+test_data/subject14source/test/*.txt
+
+# Others #
+*.swp
