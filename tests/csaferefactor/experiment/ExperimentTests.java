@@ -40,4 +40,22 @@ public class ExperimentTests {
 		assertEquals(false, report.isRefactoring());
 		assertTrue(report.getChanges().length() > 0);
 	}
+
+	/**
+	 * Subject 9: Renaming a class leads to undiagnosed shadowing
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testSubject9() throws Exception {
+		Project source = Util.createProjectFromPath("test_data/subject9source");
+		Project target = Util.createProjectFromPath("test_data/subject9target");
+
+		SafeRefactor saferefactor = new SafeRefactorImp(source, target);
+		saferefactor.checkTransformation();
+		Report report = saferefactor.getReport();
+		assertEquals(false, report.isRefactoring());
+		assertTrue(report.getChanges().length() > 0);
+	}
+
 }
