@@ -33,12 +33,7 @@ public class ExperimentTests {
 	public void testSubject8() throws Exception {
 		Project source = Util.createProjectFromPath("test_data/subject8source");
 		Project target = Util.createProjectFromPath("test_data/subject8target");
-
-		SafeRefactor saferefactor = new SafeRefactorImp(source, target);
-		saferefactor.checkTransformation();
-		Report report = saferefactor.getReport();
-		assertEquals(false, report.isRefactoring());
-		assertTrue(report.getChanges().length() > 0);
+		runSafeRefactor(source, target);
 	}
 
 	/**
@@ -50,7 +45,20 @@ public class ExperimentTests {
 	public void testSubject9() throws Exception {
 		Project source = Util.createProjectFromPath("test_data/subject9source");
 		Project target = Util.createProjectFromPath("test_data/subject9target");
+		runSafeRefactor(source, target);
+	}
 
+	/**
+	 * Runs {@link SafeRefactor}
+	 * 
+	 * @param source
+	 *            Base version of a project
+	 * @param target
+	 *            New version of a project
+	 * @throws Exception
+	 */
+	private void runSafeRefactor(Project source, Project target)
+			throws Exception {
 		SafeRefactor saferefactor = new SafeRefactorImp(source, target);
 		saferefactor.checkTransformation();
 		Report report = saferefactor.getReport();
