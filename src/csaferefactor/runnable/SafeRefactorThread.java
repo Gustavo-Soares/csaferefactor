@@ -528,7 +528,6 @@ public class SafeRefactorThread extends Thread {
 	private void updateBinariesForTheChangedAST(CompilationUnit astRoot,
 			String classpath) throws CompilationException,
 			PackageNotFoundException {
-		// 2. make a file in a tmp folder for the new AST
 		PackageDeclaration package1 = astRoot.getPackage();
 		if (package1 == null) {
 			throw new PackageNotFoundException();
@@ -545,23 +544,33 @@ public class SafeRefactorThread extends Thread {
 		String fileToRemove = pathToSaveTheFile.replaceAll("\\.java", ".class");
 		File oldVersion = new File(fileToRemove);
 		oldVersion.delete();
-
-		// System.out.println(astRoot.toString());
 		FileUtil.makeFile(pathToSaveTheFile, astRoot.toString());
-		// System.out.println(package1);
+		compileProject(classpath, pathToSaveTheFile);
+	}
 
-		// 3. compile it.
-		// TODO need to get the right classpath of the project to
-		// pass to the compiler
-		CompilationProgress progress = null; // instantiate your
-												// subclass
+	/**
+	 * @param classpath
+	 * @param pathToSaveTheFile
+	 * @throws CompilationException
+	 */
+	private void compileProject(String classpath, String pathToSaveTheFile)
+			throws CompilationException {
 
+		CompilationProgress progress = null;
 		Writer writer = new StringWriter();
 		PrintWriter errorPrintWriter = new PrintWriter(writer);
-		BatchCompiler.compile("-classpath " + classpath + " "
-				+ pathToSaveTheFile + " -d " + classpath, new PrintWriter(
-				System.out), errorPrintWriter, progress);
-		if (writer.toString().contains("error"))
+
+		StringBuffer parameters = new StringBuffer();
+		parameters.append("-1.7 -classpath ");
+		parameters.append(classpath).append(" ");
+		parameters.append(pathToSaveTheFile);
+		parameters.append(" -d").append(classpath);
+
+		boolean successfullyCompiled = BatchCompiler.compile(
+				parameters.toString(), new PrintWriter(System.out),
+				errorPrintWriter, progress);
+
+		if (!successfullyCompiled)
 			throw new CompilationException("compilation error "
 					+ writer.toString());
 	}
