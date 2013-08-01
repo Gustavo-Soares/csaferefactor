@@ -57,6 +57,7 @@ import csaferefactor.ProjectLogger;
 import csaferefactor.SafeRefactorActivator;
 import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
+import csaferefactor.exception.PackageNotFoundException;
 import csaferefactor.exception.ServerCreationException;
 
 public class SafeRefactorThread extends Thread {
@@ -98,8 +99,25 @@ public class SafeRefactorThread extends Thread {
 					return;
 				}
 
-				updateBinariesForTheChangedAST(astRoot, classpath);
+				try {
+					updateBinariesForTheChangedAST(astRoot, classpath);
 
+				} catch (PackageNotFoundException e) {
+					IResource res = astRoot.getJavaElement().getResource();
+					IMarker marker = res
+							.createMarker(SafeRefactorActivator.SAFEREFACTOR_MARKER);
+					marker.setAttribute("coolFactor", "ULTRA");
+					marker.setAttribute(IMarker.SEVERITY,
+							IMarker.SEVERITY_WARNING);
+
+					String warning = "Couldn't check this change due to the following problem: "
+							+ e.getMessage();
+
+					marker.setAttribute(IMarker.MESSAGE, warning);
+					int lineNumber = this.changeLine;
+					marker.setAttribute(IMarker.LINE_NUMBER, lineNumber + 1);
+
+				}
 				if (!isRunning()) {
 					deleteUnstableVersion();
 					return;
@@ -319,21 +337,20 @@ public class SafeRefactorThread extends Thread {
 		} else {
 
 			IMethod changedMethod = (IMethod) this.changedElement;
-//			 String targetSignature = generateIMethodSignature(changedMethod);
+			// String targetSignature = generateIMethodSignature(changedMethod);
 			String createMethodSignature = Signature.createMethodSignature(
 					changedMethod.getParameterTypes(),
 					changedMethod.getReturnType());
 
 			ClassNode declaringClass = designWizard.getClass(changedMethod
 					.getDeclaringType().getFullyQualifiedName());
-			String[] parameterTypes = Signature.getParameterTypes(createMethodSignature);
-			
+			String[] parameterTypes = Signature
+					.getParameterTypes(createMethodSignature);
 
-			MethodNode method = null; 
-			
-			method = getMethodFromDesignWizard(changedMethod, declaringClass, parameterTypes,
-					method);
-			
+			MethodNode method = null;
+
+			method = getMethodFromDesignWizard(changedMethod, declaringClass,
+					parameterTypes, method);
 
 			// add constructor dependences for the method
 			List<String> constructorDependence = generateConstructorDependences(method
@@ -392,9 +409,10 @@ public class SafeRefactorThread extends Thread {
 
 			boolean isMethod = true;
 			for (String parameterSignature : parameterTypes) {
-				boolean match = false; 
+				boolean match = false;
 				for (ClassNode classNode : parameters) {
-					if (classNode.getShortName().equals(Signature.toString(parameterSignature))) {
+					if (classNode.getShortName().equals(
+							Signature.toString(parameterSignature))) {
 						match = true;
 						break;
 					}
@@ -437,38 +455,6 @@ public class SafeRefactorThread extends Thread {
 		return designWizard;
 	}
 
-	// private String toRandoopSignaturePattern(String targetSignature)
-	// throws JavaModelException {
-	// StringBuffer result = new StringBuffer();
-	// if (changedMethod.isConstructor()) {
-	// result.append("cons : ");
-	// result.append(targetSignature);
-	// } else {
-	// result.append("method : ");
-	// result.append(targetSignature);
-	// result.append(" : ");
-	// result.append(changedMethod.getDeclaringType()
-	// .getFullyQualifiedName());
-	// }
-	// return result.toString();
-	// }
-
-	private String generateIMethodSignature(IMethod changedMethod)
-			throws JavaModelException {
-
-		String createMethodSignature = Signature.createMethodSignature(
-				changedMethod.getParameterTypes(),
-				changedMethod.getReturnType());
-
-		String string = Signature.toString(createMethodSignature,
-				changedMethod.getElementName(),
-				changedMethod.getParameterNames(), true, false);
-		String signature = changedMethod.getDeclaringType()
-				.getFullyQualifiedName() + "." + string;
-
-		return signature;
-	}
-
 	private String toRandoopSignaturePattern(MethodNode methodNode,
 			List<String> classesThatInheriteTheMethod) {
 		StringBuffer sb = new StringBuffer();
@@ -505,18 +491,6 @@ public class SafeRefactorThread extends Thread {
 			CompilationUnit compilationUnit, Integer testId, String testCase)
 			throws CoreException {
 
-		// trata o nome do método para remover o nome da classe
-		// String[] methodNameParts = method.split("\\.");
-		// int length = methodNameParts.length;
-
-		// String target = methodNameParts[length - 1];
-		// System.out.println("method changed: " + target);
-		// MethodVisitor methodVisitor = new MethodVisitor(target);
-		// compilationUnit.accept(methodVisitor);
-		// org.eclipse.jdt.core.dom.MethodDeclaration changedMethod =
-		// methodVisitor
-		// .getMethod();
-
 		IMarker marker = res
 				.createMarker(SafeRefactorActivator.SAFEREFACTOR_MARKER);
 
@@ -542,10 +516,23 @@ public class SafeRefactorThread extends Thread {
 
 	}
 
+	/**
+	 * @param astRoot
+	 * @param classpath
+	 *            The class path to the compilation unit
+	 * @throws CompilationException
+	 *             is thrown if it has compilation errors
+	 * @throws PackageNotFoundException
+	 *             if not able to get the package
+	 */
 	private void updateBinariesForTheChangedAST(CompilationUnit astRoot,
-			String classpath) throws CompilationException {
+			String classpath) throws CompilationException,
+			PackageNotFoundException {
 		// 2. make a file in a tmp folder for the new AST
 		PackageDeclaration package1 = astRoot.getPackage();
+		if (package1 == null) {
+			throw new PackageNotFoundException();
+		}
 		String packageName = package1.getName().getFullyQualifiedName();
 		String packageRelativeFolder = packageName.replace(".",
 				Constants.SEPARATOR);
