@@ -103,19 +103,7 @@ public class SafeRefactorThread extends Thread {
 					updateBinariesForTheChangedAST(astRoot, classpath);
 
 				} catch (PackageNotFoundException e) {
-					IResource res = astRoot.getJavaElement().getResource();
-					IMarker marker = res
-							.createMarker(SafeRefactorActivator.SAFEREFACTOR_MARKER);
-					marker.setAttribute("coolFactor", "ULTRA");
-					marker.setAttribute(IMarker.SEVERITY,
-							IMarker.SEVERITY_WARNING);
-
-					String warning = "Couldn't check this change due to the following problem: "
-							+ e.getMessage();
-
-					marker.setAttribute(IMarker.MESSAGE, warning);
-					int lineNumber = this.changeLine;
-					marker.setAttribute(IMarker.LINE_NUMBER, lineNumber + 1);
+					displayGeneralWarning(e.getMessage());
 
 				}
 				if (!isRunning()) {
@@ -169,11 +157,7 @@ public class SafeRefactorThread extends Thread {
 				SafeRefactorActivator.getDefault().log(stream.toString());
 				printStream.flush();
 			} catch (CompilationException e) {
-				// if thread is interrupted, delete this snapshot
-				// TODO when compilation error is found, how to show that to
-				// user
-				System.out.println("version does not compile: ");
-				System.out.println(e.getMessage());
+				displayGeneralWarning("Version does not compile");
 				deleteUnstableVersion();
 			} catch (InexistentEntityException e) {
 				OutputStream stream = new ByteArrayOutputStream();
@@ -205,6 +189,33 @@ public class SafeRefactorThread extends Thread {
 			}
 		}
 
+	}
+
+	/**
+	 * Displays a general warning to the user let him know that the tool stopped
+	 * working
+	 * 
+	 * @param message
+	 *            The cause of the interruption
+	 */
+	private void displayGeneralWarning(String message) {
+		IResource res = astRoot.getJavaElement().getResource();
+		try {
+			IMarker marker = res
+					.createMarker(SafeRefactorActivator.SAFEREFACTOR_MARKER);
+			marker.setAttribute("coolFactor", "ULTRA");
+			marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+
+			String warning = "Couldn't check this change due to the following problem: "
+					+ message;
+
+			marker.setAttribute(IMarker.MESSAGE, warning);
+			int lineNumber = this.changeLine;
+			marker.setAttribute(IMarker.LINE_NUMBER, lineNumber + 1);
+		} catch (CoreException e) {
+			e.printStackTrace();
+
+		}
 	}
 
 	private void deleteUnstableVersion() {
