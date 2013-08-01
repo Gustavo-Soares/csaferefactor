@@ -1,0 +1,3 @@
+cons : example.A.<init>()
+
+method : example.A.method() : example.A
