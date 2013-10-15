@@ -262,7 +262,7 @@ public class SafeRefactorThread extends Thread {
 		Project targetP = configureProject(targetPath);
 
 		System.out.println("Analyzing transformation: "
-				+ sourceP.getBuildFolder().getName() + "-> "
+				+ sourceP.getBuildFolder().getName() + " -> "
 				+ targetP.getBuildFolder().getName());
 
 		Report report = evaluate(sourceP, targetP, methodsToTest);
@@ -274,7 +274,7 @@ public class SafeRefactorThread extends Thread {
 
 	private void printResult(Project sourceP, Project targetP, Report report) {
 		String message = "Transformation: "
-				+ sourceP.getBuildFolder().getName() + "-> "
+				+ sourceP.getBuildFolder().getName() + " -> "
 				+ targetP.getBuildFolder().getName() + " is refactoring? "
 				+ report.isRefactoring();
 		// System.out.println(message);
@@ -575,7 +575,7 @@ public class SafeRefactorThread extends Thread {
 		parameters.append("-1.7 -classpath ");
 		parameters.append(classpath).append(" ");
 		parameters.append(pathToSaveTheFile);
-		parameters.append(" -d").append(classpath);
+		parameters.append(" -d ").append(classpath);
 
 		boolean successfullyCompiled = BatchCompiler.compile(
 				parameters.toString(), new PrintWriter(System.out),
