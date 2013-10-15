@@ -3,7 +3,7 @@
  */
 package csaferefactor.exception;
 
-import csaferefactor.runnable.SafeRefactorThread;
+import csaferefactor.core.SafeRefactorThread;
 
 /**
  * In case that a {@link SafeRefactorThread} attempts to check behavioral

@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.core;
 
 import java.util.concurrent.Future;
 

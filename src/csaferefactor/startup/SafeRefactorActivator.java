@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.startup;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import csaferefactor.core.Snapshot;
 import csaferefactor.util.OSPathHack;
+import csaferefactor.util.ProjectLogger;
 import saferefactor.rmi.common.RemoteExecutor;
 
 /**
@@ -126,11 +128,14 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 			URL url = getBundle().getEntry("/");
 			try {
 				url = FileLocator.toFileURL(url);
+				if (url == null)
+					throw new IOException("Couldn't find file");
+
+				String path = url.getPath();
+				cachedPluginFolder = OSPathHack.adapt(path);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			String path = url.getPath();
-			cachedPluginFolder = OSPathHack.adapt(path);
 		}
 		return cachedPluginFolder;
 	}

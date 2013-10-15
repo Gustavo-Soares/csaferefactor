@@ -1,4 +1,4 @@
-package csaferefactor.actions;
+package csaferefactor.startup;
 
 import java.io.IOException;
 
@@ -18,11 +18,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.ProjectLogger;
-import csaferefactor.SafeRefactorActivator;
-import csaferefactor.listener.BuildListener;
-import csaferefactor.listener.JavaElementChangedListener;
-import csaferefactor.listener.PartListener;
+import csaferefactor.eclipse.JavaElementChangedListener;
+import csaferefactor.eclipse.listener.BuildListener;
+import csaferefactor.eclipse.listener.PartListener;
+import csaferefactor.util.ProjectLogger;
 
 /**
  * Our sample action implements workbench action delegate. The action proxy will

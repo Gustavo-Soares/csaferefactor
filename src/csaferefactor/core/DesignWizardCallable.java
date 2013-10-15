@@ -1,4 +1,4 @@
-package csaferefactor.runnable;
+package csaferefactor.core;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;

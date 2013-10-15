@@ -1,4 +1,4 @@
-package csaferefactor.visitor;
+package csaferefactor.eclipse.visitor;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import csaferefactor.ProjectLogger;
-import csaferefactor.SafeRefactorActivator;
+import csaferefactor.startup.SafeRefactorActivator;
+import csaferefactor.util.ProjectLogger;
 
 public class ChangeVisitor implements IResourceDeltaVisitor {
 

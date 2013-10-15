@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.startup;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;

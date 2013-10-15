@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.eclipse;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 

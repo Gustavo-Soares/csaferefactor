@@ -1,4 +1,4 @@
-package csaferefactor;
+package csaferefactor.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,8 +25,10 @@ import org.eclipse.ui.PlatformUI;
 
 import saferefactor.core.util.FileUtil;
 import saferefactor.rmi.common.RemoteExecutor;
-import csaferefactor.runnable.DesignWizardCallable;
-import csaferefactor.runnable.VMInitializerRunnable;
+import csaferefactor.core.DesignWizardCallable;
+import csaferefactor.core.Snapshot;
+import csaferefactor.core.VMInitializerRunnable;
+import csaferefactor.startup.SafeRefactorActivator;
 
 public class ProjectLogger {
 

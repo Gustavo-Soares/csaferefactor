@@ -1,4 +1,4 @@
-package saferefactor.rmi.client;
+package csaferefactor.core;
 
 import java.io.Serializable;
 import java.rmi.AccessException;
@@ -19,6 +19,7 @@ import randoop.main.RandoopTextuiException;
 import saferefactor.core.Report;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.Project;
+import saferefactor.rmi.client.SequenceExecution;
 import saferefactor.rmi.common.RemoteExecutor;
 import saferefactor.rmi.common.Task;
 
@@ -74,8 +75,7 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 					"--timelimit=1",
 					"--log=" + sourceP.getProjectFolder() + Constants.SEPARATOR
 							+ "filewriter", "--output-nonexec=true",
-					"--dont-output-tests=true",
-					"--junit-output-dir=/Users/gustavoas" };
+					"--dont-output-tests=true" };
 
 			System.err.println(Arrays.toString(command));
 			generator.handle(command);

@@ -1,4 +1,4 @@
-package csaferefactor.listener;
+package csaferefactor.eclipse;
 
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -12,7 +12,7 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
-import csaferefactor.runnable.SafeRefactorThread;
+import csaferefactor.core.SafeRefactorThread;
 
 public class JavaElementChangedListener implements IElementChangedListener {
 

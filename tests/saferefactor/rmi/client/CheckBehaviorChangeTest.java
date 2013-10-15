@@ -15,6 +15,7 @@ import org.junit.Test;
 import saferefactor.core.Report;
 import saferefactor.core.util.Project;
 import saferefactor.rmi.common.Task;
+import csaferefactor.core.CheckBehaviorChange;
 import csaferefactor.experiment.Util;
 
 /**
@@ -28,7 +29,7 @@ public class CheckBehaviorChangeTest {
 
 	/**
 	 * Test method for
-	 * {@link saferefactor.rmi.client.CheckBehaviorChange#execute()}.
+	 * {@link csaferefactor.core.CheckBehaviorChange#execute()}.
 	 * 
 	 */
 	@Test

@@ -1,4 +1,4 @@
-package csaferefactor.runnable;
+package csaferefactor.core;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,14 +51,12 @@ import saferefactor.core.Report;
 import saferefactor.core.util.Constants;
 import saferefactor.core.util.FileUtil;
 import saferefactor.core.util.Project;
-import saferefactor.rmi.client.CheckBehaviorChange;
 import saferefactor.rmi.common.RemoteExecutor;
-import csaferefactor.ProjectLogger;
-import csaferefactor.SafeRefactorActivator;
-import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
 import csaferefactor.exception.PackageNotFoundException;
 import csaferefactor.exception.ServerCreationException;
+import csaferefactor.startup.SafeRefactorActivator;
+import csaferefactor.util.ProjectLogger;
 
 public class SafeRefactorThread extends Thread {
 

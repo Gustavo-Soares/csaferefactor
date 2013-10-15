@@ -1,4 +1,4 @@
-package csaferefactor.listener;
+package csaferefactor.eclipse.listener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,8 +17,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import csaferefactor.ProjectLogger;
-import csaferefactor.SafeRefactorActivator;
+import csaferefactor.eclipse.JavaElementChangedListener;
+import csaferefactor.startup.SafeRefactorActivator;
+import csaferefactor.util.ProjectLogger;
 
 public class PartListener implements IPartListener {
 

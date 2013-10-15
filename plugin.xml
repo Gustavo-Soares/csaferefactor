@@ -18,7 +18,7 @@
          <action
                label="Start"
                icon="icons/sample.gif"
-               class="csaferefactor.actions.SampleAction"
+               class="csaferefactor.startup.SampleAction"
                tooltip="Hello, Eclipse world"
                menubarPath="sampleMenu/sampleGroup"
                toolbarPath="sampleGroup"

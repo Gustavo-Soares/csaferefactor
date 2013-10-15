@@ -1,4 +1,4 @@
-package csaferefactor.runnable;
+package csaferefactor.core;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -13,7 +13,7 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.util.concurrent.Callable;
 
-import csaferefactor.SafeRefactorActivator;
+import csaferefactor.startup.SafeRefactorActivator;
 
 public class VMInitializerRunnable implements Callable<Boolean> {
 

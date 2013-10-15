@@ -1,4 +1,4 @@
-package csaferefactor.listener;
+package csaferefactor.eclipse.listener;
 
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -7,7 +7,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import csaferefactor.visitor.ChangeVisitor;
+import csaferefactor.eclipse.visitor.ChangeVisitor;
 
 public class BuildListener implements IResourceChangeListener,
 		IPropertyListener {
