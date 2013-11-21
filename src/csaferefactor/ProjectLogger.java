@@ -6,23 +6,16 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import javax.sql.rowset.spi.SyncResolver;
-
 import org.designwizard.main.DesignWizard;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.ui.JavaUI;
@@ -30,24 +23,25 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
+import saferefactor.core.util.FileUtil;
+import saferefactor.rmi.common.RemoteExecutor;
 import csaferefactor.runnable.DesignWizardCallable;
 import csaferefactor.runnable.VMInitializerRunnable;
 
-import saferefactor.core.util.FileUtil;
-import saferefactor.rmi.common.RemoteExecutor;
-
+/**
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class ProjectLogger {
 
-	private final String sourceFolder;
-	private int counter = 0;
-	private String projectPath;
-
 	private List<Snapshot> snapshotList = new LinkedList<Snapshot>();
-
-	private static ProjectLogger instance;
+	private final String sourceFolder;
+	private String projectPath;
+	private int counter = 0;
 
 	private ProjectLogger() {
-
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IWorkspaceRoot root = workspace.getRoot();
 		IPath location = root.getLocation();
@@ -64,19 +58,28 @@ public class ProjectLogger {
 		sourceFolder = str + projectPath + "/bin";
 	}
 
+	/**
+	 * Singleton for {@link ProjectLogger}.
+	 * 
+	 * @return The singleton instance of this class.
+	 */
 	public static ProjectLogger getInstance() {
-		if (instance == null)
-			instance = new ProjectLogger();
-		return instance;
+		return InstanceHolder.INSTANCE;
+	}
+
+	private static class InstanceHolder {
+		public static ProjectLogger INSTANCE = new ProjectLogger();
 	}
 
 	public Snapshot log() throws IOException {
 
 		Snapshot result = new Snapshot();
-		
-		DesignWizardCallable designWizardCallable = new DesignWizardCallable(ProjectLogger.getInstance().getSourceFolder());		
-		Future<DesignWizard> futureDesignWizard = SafeRefactorActivator.getDefault().getExecutor().submit(designWizardCallable);
-		
+
+		DesignWizardCallable designWizardCallable = new DesignWizardCallable(
+				ProjectLogger.getInstance().getSourceFolder());
+		Future<DesignWizard> futureDesignWizard = SafeRefactorActivator
+				.getDefault().getExecutor().submit(designWizardCallable);
+
 		result.setFutureDesignWizard(futureDesignWizard);
 
 		// copying binary files to temp folder
@@ -84,16 +87,16 @@ public class ProjectLogger {
 		result.setPath(generatedFolder.getAbsolutePath());
 		result.setServerName(generatedFolder.getName());
 
-		
 		// crate generator server
 		VMInitializerRunnable vmInitializer = new VMInitializerRunnable(
 				result.getServerName(), result.getPath());
 		SafeRefactorActivator.getDefault().log("logando...");
-		Future<Boolean> submit = SafeRefactorActivator.getDefault().getExecutor().submit(vmInitializer);		
+		Future<Boolean> submit = SafeRefactorActivator.getDefault()
+				.getExecutor().submit(vmInitializer);
 		result.setFutureIsServerLoaded(submit);
 
 		snapshotList.add(result);
-		
+
 		return result;
 	}
 
@@ -124,7 +127,7 @@ public class ProjectLogger {
 		}
 	}
 
-	private void removeSnapshot(Snapshot targetSnapshot,boolean deleteSnapshot) {
+	private void removeSnapshot(Snapshot targetSnapshot, boolean deleteSnapshot) {
 		// stop server
 
 		try {
@@ -143,22 +146,21 @@ public class ProjectLogger {
 
 		// remove from List
 		if (deleteSnapshot)
-		snapshotList.remove(targetSnapshot);
+			snapshotList.remove(targetSnapshot);
 		System.out.println("snapshot " + targetSnapshot.getServerName()
 				+ "deleted");
 	}
 
+	/**
+	 * Remove all cached snapshots.
+	 */
 	public void clean() {
-		int i = 0;
-
 		for (Iterator<Snapshot> iterator = this.snapshotList.iterator(); iterator
 				.hasNext();) {
 			Snapshot snapshot = iterator.next();
-			removeSnapshot(snapshot,false);
+			removeSnapshot(snapshot, false);
 			iterator.remove();
-			i++;
 		}
-
 		System.out.println("List was cleaned");
 
 	}

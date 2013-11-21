@@ -7,75 +7,43 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.IJobManager;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.ui.JavaUI;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IPartService;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
-import csaferefactor.listener.BuildListener;
-import csaferefactor.listener.JavaElementChangedListener;
-import csaferefactor.listener.PartListener;
 
 import saferefactor.rmi.common.RemoteExecutor;
 
 /**
  * The activator class controls the plug-in life cycle
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
  */
 public class SafeRefactorActivator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "test"; //$NON-NLS-1$
+	public final static String PLUGIN_ID = "br.edu.ufcg.dsc.spg.csaferefactor"; //$NON-NLS-1$
+
+	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
+
+	private ExecutorService executor = Executors.newCachedThreadPool();
 
 	// The shared instance
 	private static SafeRefactorActivator plugin;
 
 	private Registry registry = null;
-
-	private ExecutorService executor = Executors.newCachedThreadPool();
-
-	private boolean initComplete;
-
-	public static final String SAFEREFACTOR_MARKER = "csaferefactor.saferefactorproblem";
 
 	/**
 	 * The constructor
@@ -156,12 +124,12 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * @return The File Location of this plugin
+	 * @return The File Location of this plug-in.
 	 */
 	public String getPluginFolder() {
 		URL url = getBundle().getEntry("/");
 		try {
-			url = Platform.asLocalURL(url);
+			url = FileLocator.toFileURL(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -207,8 +175,6 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 		this.executor = executor;
 	}
 
-	
-
 	public void setRegistry(Registry registry) {
 		this.registry = registry;
 	}
@@ -218,7 +184,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 	}
 
 	public void log(String msg, Exception e) {
-		getLog().log(new Status(Status.INFO, this.PLUGIN_ID, Status.OK, msg, e));
+		getLog().log(new Status(Status.INFO, PLUGIN_ID, Status.OK, msg, e));
 	}
 
 	public void configureRMI() throws RemoteException {
@@ -233,7 +199,7 @@ public class SafeRefactorActivator extends AbstractUIPlugin {
 				.getPluginFolder() + "/bin/");
 		if (!binFile.exists())
 			binFile = new File(SafeRefactorActivator.getDefault()
-				.getPluginFolder());
+					.getPluginFolder());
 		classpath.append("file:/");
 		classpath.append(binFile.getAbsolutePath());
 		classpath.append("/");

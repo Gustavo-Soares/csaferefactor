@@ -1,25 +1,22 @@
 package csaferefactor;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.designwizard.main.DesignWizard;
 
-import csaferefactor.runnable.DesignWizardCallable;
-
+/**
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class Snapshot {
-	
-	
-	private Future<Boolean> futureIsServerLoaded;
-	private String path;
-	
+
 	private Future<DesignWizard> futureDesignWizard;
-	
-	
+	private Future<Boolean> futureIsServerLoaded;
 	private String serverName;
-	
-//	private ExecutorService executor = Executors.newSingleThreadExecutor();
+	private String path;
 
 	public String getPath() {
 		return path;
@@ -36,16 +33,6 @@ public class Snapshot {
 	public void setServerName(String threadName) {
 		this.serverName = threadName;
 	}
-
-//	public ExecutorService getExecutor() {
-//		return executor;
-//	}
-//
-//	public void setExecutor(ExecutorService executor) {
-//		this.executor = executor;
-//	}
-
-	
 
 	public Future<Boolean> getFutureIsServerLoaded() {
 		return futureIsServerLoaded;

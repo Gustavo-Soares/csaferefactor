@@ -12,6 +12,13 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
 
+/**
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class ChangeVisitor implements IResourceDeltaVisitor {
 
 	private IEditorPart editorPart;
@@ -32,7 +39,8 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 			int flags = delta.getFlags();
 
 			// if a java file was saved
-			if (res != null && res.getFileExtension() != null && res.getFileExtension().equals("java")
+			if (res != null && res.getFileExtension() != null
+					&& res.getFileExtension().equals("java")
 					&& (flags & IResourceDelta.CONTENT) != 0) {
 
 				ITextEditor editor = (ITextEditor) editorPart
@@ -41,7 +49,8 @@ public class ChangeVisitor implements IResourceDeltaVisitor {
 				if (editor != null && !editor.isDirty()) {
 					// remove markers
 					try {
-						SafeRefactorActivator.getDefault().removeExistingPluginmarkers(res);
+						SafeRefactorActivator.getDefault()
+								.removeExistingPluginmarkers(res);
 						ProjectLogger.getInstance().clean();
 						ProjectLogger.getInstance().log();
 					} catch (CoreException e) {

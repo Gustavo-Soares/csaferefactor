@@ -3,7 +3,6 @@ package csaferefactor.runnable;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,10 +14,14 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.util.concurrent.Callable;
 
-import saferefactor.core.util.Constants;
-
 import csaferefactor.SafeRefactorActivator;
 
+/**
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class VMInitializerRunnable implements Callable<Boolean> {
 
 	private String serverName;
@@ -52,7 +55,8 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 			codeBase.append("-Djava.rmi.server.codebase=file:/");
 			File binFile = new File(binPath);
 			if (!binFile.exists())
-				binFile = new File(SafeRefactorActivator.getDefault().getPluginFolder());
+				binFile = new File(SafeRefactorActivator.getDefault()
+						.getPluginFolder());
 			codeBase.append(binFile.getAbsolutePath());
 			codeBase.append("/");
 			codeBase.append(" file:");

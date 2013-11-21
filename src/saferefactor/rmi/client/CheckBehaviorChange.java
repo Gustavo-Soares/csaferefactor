@@ -10,32 +10,26 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
-
-import org.apache.bcel.util.ClassPath;
 
 import randoop.ExecutableSequence;
 import randoop.main.GenTests;
 import randoop.main.RandoopTextuiException;
 import saferefactor.core.Report;
-import saferefactor.core.analysis.TransformationAnalyzer;
-import saferefactor.core.analysis.naive.ASMBasedAnalyzer;
 import saferefactor.core.util.Constants;
-import saferefactor.core.util.FileUtil;
 import saferefactor.core.util.Project;
-import saferefactor.core.util.ast.ConstructorImp;
-import saferefactor.core.util.ast.Method;
-import saferefactor.core.util.ast.MethodImp;
 import saferefactor.rmi.common.RemoteExecutor;
 import saferefactor.rmi.common.Task;
-import saferefactor.rmi.common.VMInitializer;
 
+/**
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class CheckBehaviorChange implements Task<Report>, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1977315047044202868L;
 
 	private Project targetP;
@@ -97,16 +91,17 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 
 			int fail = 0;
 			System.out.println("comparando resultados");
-//			StringBuffer results = new StringBuffer();
+			// StringBuffer results = new StringBuffer();
 			for (int i = 0; i < sequences.size(); i++) {
 				if (!sequences.get(i).toCodeString()
 						.equals(comparedSequences.get(i).toCodeString())) {
-//					results.append("Test");
+					// results.append("Test");
 					int testId = i + 1;
-					result.getFailedTests().put(testId, sequences.get(i).toCodeString());
-//					results.append(testId);
-//					results.append(" passes before this change but has a different result after the change.");
-//					results.append(";");
+					result.getFailedTests().put(testId,
+							sequences.get(i).toCodeString());
+					// results.append(testId);
+					// results.append(" passes before this change but has a different result after the change.");
+					// results.append(";");
 					fail++;
 
 					ExecutableSequence sequence = sequences.get(i);
@@ -120,9 +115,9 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 			}
 			System.out.println("tests: " + sequences.size());
 			System.out.println("different: " + fail);
-			
+
 			result.setRefactoring(!changeBehavior);
-//			result.setChanges(results.toString());
+			// result.setChanges(results.toString());
 			ArrayList<String> changeMethodsList = new ArrayList<String>();
 			changeMethodsList.addAll(changedMethods);
 			result.setChangedMethods2(changeMethodsList);
@@ -146,34 +141,6 @@ public class CheckBehaviorChange implements Task<Report>, Serializable {
 		} catch (NotBoundException e) {
 			return getServer(registry);
 		}
-	}
-
-	private String generateMethodListFile(List<Method> methods) {
-
-		Random random = new Random();
-		int choice = random.nextInt(2);
-		System.out.println(choice);
-		StringBuffer lines = new StringBuffer();
-		if (choice == 0) {
-			for (Method method : methods) {
-				lines.append(method + "\n");
-			}
-		} else {
-			for (Method method : methods) {
-				if (method instanceof ConstructorImp)
-					lines.append(method + "\n");
-			}
-			for (Method method : methods) {
-				if (method instanceof MethodImp)
-					lines.append(method + "\n");
-			}
-
-		}
-
-		String fileName = Constants.SAFEREFACTOR_DIR + Constants.SEPARATOR
-				+ "methodsToTest.txt";
-		FileUtil.makeFile(fileName, lines.toString());
-		return fileName;
 	}
 
 }

@@ -13,15 +13,20 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jdt.core.ElementChangedEvent;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
-import csaferefactor.SafeRefactorActivator;
 import csaferefactor.ProjectLogger;
+import csaferefactor.SafeRefactorActivator;
 
+/**
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class PartListener implements IPartListener {
 
 	private List<String> listeners = new ArrayList<String>();
@@ -47,14 +52,15 @@ public class PartListener implements IPartListener {
 		// set listener
 		JavaElementChangedListener javaElementChangedListener = new JavaElementChangedListener(
 				page.getActiveEditor());
-		
+
 		if (!listeners.contains(page.getActiveEditor().getTitle())) {
 			listeners.add(page.getActiveEditor().getTitle());
-//			System.out.println("listerner ativado na classe: " + page.getActiveEditor().getTitle());
-//			System.out.println(listeners);
+			// System.out.println("listerner ativado na classe: " +
+			// page.getActiveEditor().getTitle());
+			// System.out.println(listeners);
 			JavaCore.addElementChangedListener(javaElementChangedListener,
 					ElementChangedEvent.POST_RECONCILE);
-			
+
 			IResourceChangeListener listener = new BuildListener(
 					page.getActiveEditor());
 			ResourcesPlugin.getWorkspace().addResourceChangeListener(listener,

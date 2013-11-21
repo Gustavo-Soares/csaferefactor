@@ -1,4 +1,5 @@
 package csaferefactor;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -13,6 +14,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class CompareInput extends CompareEditorInput {
 	public CompareInput() {
 		super(new CompareConfiguration());
@@ -53,7 +60,7 @@ public class CompareInput extends CompareEditorInput {
 		}
 
 		public String getType() {
-			return ITypedElement.TEXT_TYPE; 
+			return ITypedElement.TEXT_TYPE;
 		}
 
 		@Override

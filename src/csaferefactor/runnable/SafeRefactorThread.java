@@ -1,6 +1,5 @@
 package csaferefactor.runnable;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URISyntaxException;
-import java.nio.BufferOverflowException;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RMISecurityManager;
@@ -45,7 +43,6 @@ import org.eclipse.jdt.core.compiler.CompilationProgress;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.batch.BatchCompiler;
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
@@ -62,6 +59,13 @@ import csaferefactor.Snapshot;
 import csaferefactor.exception.CompilationException;
 import csaferefactor.exception.ServerCreationException;
 
+/**
+ * 
+ * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
+ *         target="_blank">Software Productivity Group</a>
+ * @author Gustavo Soares
+ * @author Jeanderson Candido
+ */
 public class SafeRefactorThread extends Thread {
 
 	private IJavaElement compilationUnit;
@@ -322,21 +326,20 @@ public class SafeRefactorThread extends Thread {
 		} else {
 
 			IMethod changedMethod = (IMethod) this.changedElement;
-//			 String targetSignature = generateIMethodSignature(changedMethod);
+			// String targetSignature = generateIMethodSignature(changedMethod);
 			String createMethodSignature = Signature.createMethodSignature(
 					changedMethod.getParameterTypes(),
 					changedMethod.getReturnType());
 
 			ClassNode declaringClass = designWizard.getClass(changedMethod
 					.getDeclaringType().getFullyQualifiedName());
-			String[] parameterTypes = Signature.getParameterTypes(createMethodSignature);
-			
+			String[] parameterTypes = Signature
+					.getParameterTypes(createMethodSignature);
 
-			MethodNode method = null; 
-			
-			method = getMethodFromDesignWizard(changedMethod, declaringClass, parameterTypes,
-					method);
-			
+			MethodNode method = null;
+
+			method = getMethodFromDesignWizard(changedMethod, declaringClass,
+					parameterTypes, method);
 
 			// add constructor dependences for the method
 			List<String> constructorDependence = generateConstructorDependences(method
@@ -395,9 +398,10 @@ public class SafeRefactorThread extends Thread {
 
 			boolean isMethod = true;
 			for (String parameterSignature : parameterTypes) {
-				boolean match = false; 
+				boolean match = false;
 				for (ClassNode classNode : parameters) {
-					if (classNode.getShortName().equals(Signature.toString(parameterSignature))) {
+					if (classNode.getShortName().equals(
+							Signature.toString(parameterSignature))) {
 						match = true;
 						break;
 					}
@@ -438,38 +442,6 @@ public class SafeRefactorThread extends Thread {
 		DesignWizard designWizard = futureDesignWizard.get();
 
 		return designWizard;
-	}
-
-	// private String toRandoopSignaturePattern(String targetSignature)
-	// throws JavaModelException {
-	// StringBuffer result = new StringBuffer();
-	// if (changedMethod.isConstructor()) {
-	// result.append("cons : ");
-	// result.append(targetSignature);
-	// } else {
-	// result.append("method : ");
-	// result.append(targetSignature);
-	// result.append(" : ");
-	// result.append(changedMethod.getDeclaringType()
-	// .getFullyQualifiedName());
-	// }
-	// return result.toString();
-	// }
-
-	private String generateIMethodSignature(IMethod changedMethod)
-			throws JavaModelException {
-
-		String createMethodSignature = Signature.createMethodSignature(
-				changedMethod.getParameterTypes(),
-				changedMethod.getReturnType());
-
-		String string = Signature.toString(createMethodSignature,
-				changedMethod.getElementName(),
-				changedMethod.getParameterNames(), true, false);
-		String signature = changedMethod.getDeclaringType()
-				.getFullyQualifiedName() + "." + string;
-
-		return signature;
 	}
 
 	private String toRandoopSignaturePattern(MethodNode methodNode,
