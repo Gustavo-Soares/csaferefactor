@@ -3,7 +3,6 @@ package csaferefactor.runnable;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,6 +16,8 @@ import java.util.concurrent.Callable;
 import csaferefactor.SafeRefactorActivator;
 
 /**
+ * Creates a JVM to be executed separately.
+ * 
  * @author SPG - <a href="http://www.dsc.ufcg.edu.br/~spg"
  *         target="_blank">Software Productivity Group</a>
  * @author Gustavo Soares
@@ -24,97 +25,48 @@ import csaferefactor.SafeRefactorActivator;
  */
 public class VMInitializerRunnable implements Callable<Boolean> {
 
+	private String securityPolicyPath;
+	private String saferefactorJar;
+	private ProcessBuilder builder;
+	private StringBuffer codeBase;
 	private String serverName;
 	private String classpath;
+	private String binPath;
+
+	/**
+	 * If true, the separated JVM will print its outputs in the current standard
+	 * stream
+	 */
+	private boolean verbose;
 
 	public VMInitializerRunnable(String name, String classpath) {
-		this.serverName = name;
-		this.classpath = classpath.replaceAll("\\\\", "/");
+		this(name, classpath, false);
 	}
 
+	public VMInitializerRunnable(String name, String classpath, boolean verbose) {
+		this.serverName = name;
+		this.classpath = classpath.replaceAll("\\\\", "/");
+		this.verbose = verbose;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.concurrent.Callable#call()
+	 */
 	@Override
 	public Boolean call() {
-		SafeRefactorActivator.getDefault().log("Thread para criar server...");
+		SafeRefactorActivator.getDefault().log("Created thread for server...");
 		try {
-			SafeRefactorActivator.getDefault().log(
-					"Inicializando secury manneger...");
-			System.setSecurityManager(new RMISecurityManager());
+			setSecurityManager();
+			setJVMparameters();
+			setJVMprocess();
 
-			SafeRefactorActivator.getDefault().log("Atribuindo variaveis...");
-			String saferefactorJar = SafeRefactorActivator.getDefault()
-					.getSafeRefactorJarPath();
-			String binPath = SafeRefactorActivator.getDefault().getBinPath();
-
-			String securityPolicyPath = SafeRefactorActivator.getDefault()
-					.getSecurityPolicyPath();
-
-			// String codebaseCommand = "-Djava.rmi.server.codebase=file:"
-			// + binPath + " file:" + saferefactorJar + " file:"
-			// + classpath + "/";
-			StringBuffer codeBase = new StringBuffer();
-			codeBase.append("-Djava.rmi.server.codebase=file:/");
-			File binFile = new File(binPath);
-			if (!binFile.exists())
-				binFile = new File(SafeRefactorActivator.getDefault()
-						.getPluginFolder());
-			codeBase.append(binFile.getAbsolutePath());
-			codeBase.append("/");
-			codeBase.append(" file:");
-			codeBase.append(saferefactorJar);
-			codeBase.append(" file:/");
-			codeBase.append(classpath);
-			codeBase.append("/");
-
-			SafeRefactorActivator.getDefault().log("Configurando builder...");
-			ProcessBuilder builder = new ProcessBuilder(new String[] { "java",
-					"-cp", saferefactorJar + ";/" + classpath,
-					codeBase.toString(), "-Djava.awt.headless=true",
-					"-Djava.security.policy=file:" + securityPolicyPath,
-					"saferefactor.rmi.server.RemoteExecutorImpl", serverName });
-
-			builder.redirectErrorStream(true);
 			SafeRefactorActivator.getDefault().log("starting Server...");
 			Process p = builder.start();
 			SafeRefactorActivator.getDefault().log("Process submitted");
-
-			// System.out.println("Server " + serverName
-			// + " generated with classpath: " + classpath + "!");
-
-			InputStream inputStream = p.getInputStream();
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					inputStream));
-			//
-			// BufferedReader stdError = new BufferedReader(new
-			// InputStreamReader(
-			// p.getErrorStream()));
-			//
-			File outputFile = new File(classpath, "log.txt");
-
-			// FileOutputStream fos = new FileOutputStream(outputFile);
-			FileWriter fw = new FileWriter(outputFile);
-			// // read the output from the command
-			// System.out.println("Here is the standard output of the command:\n");
-			String line;
-			while ((line = stdInput.readLine()) != null) {
-				// fos.write(line.getBytes());
-				fw.write(line);
-				fw.write("\n");
-
-				// server was loaded correctly
-				// if (line.equals("Server " + serverName + " loaded!")) {
-				// return true;
-				// }
-
-			}
-			stdInput.close();
-			fw.close();
-			//
-			// // read any errors from the attempted command
-			// System.out
-			// .println("Here is the standard error of the command (if any):\n");
-			// while ((s = stdError.readLine()) != null) {
-			// System.out.println(s);
-			// }
+			if (verbose)
+				readProcessInputStream(p);
 
 		} catch (RemoteException e) {
 			OutputStream stream = new ByteArrayOutputStream();
@@ -137,6 +89,79 @@ public class VMInitializerRunnable implements Callable<Boolean> {
 		}
 		return true;
 
+	}
+
+	/**
+	 * Prints the input stream of the given process
+	 * 
+	 * @param process
+	 *            The process with a input stream to be read
+	 * @throws IOException
+	 */
+	private void readProcessInputStream(Process process) throws IOException {
+		InputStream inputStream = process.getInputStream();
+		BufferedReader stdInput = new BufferedReader(new InputStreamReader(
+				inputStream));
+
+		String line = null;
+		while ((line = stdInput.readLine()) != null) {
+			System.out.println(line);
+		}
+		stdInput.close();
+	}
+
+	/**
+	 * Sets a process builder to create a separated JVM.
+	 */
+	private void setJVMprocess() {
+		SafeRefactorActivator.getDefault().log("Setting process...");
+		this.builder = new ProcessBuilder(new String[] { "java", "-cp",
+				saferefactorJar + ";/" + classpath, codeBase.toString(),
+				"-Djava.awt.headless=true",
+				"-Djava.security.policy=file:" + securityPolicyPath,
+				"saferefactor.rmi.server.RemoteExecutorImpl", serverName });
+
+		builder.redirectErrorStream(true);
+	}
+
+	/**
+	 * Sets the execution parameters for the remote JVM.
+	 * 
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	private void setJVMparameters() throws URISyntaxException, IOException {
+		SafeRefactorActivator.getDefault().log("Assigning variables...");
+		this.saferefactorJar = SafeRefactorActivator.getDefault()
+				.getSafeRefactorJarPath();
+
+		this.binPath = SafeRefactorActivator.getDefault().getBinPath();
+		this.securityPolicyPath = SafeRefactorActivator.getDefault()
+				.getSecurityPolicyPath();
+
+		this.codeBase = new StringBuffer();
+		codeBase.append("-Djava.rmi.server.codebase=file:/");
+		File binFile = new File(binPath);
+		if (!binFile.exists())
+			binFile = new File(SafeRefactorActivator.getDefault()
+					.getPluginFolder());
+
+		codeBase.append(binFile.getAbsolutePath());
+		codeBase.append("/");
+		codeBase.append(" file:");
+		codeBase.append(saferefactorJar);
+		codeBase.append(" file:/");
+		codeBase.append(classpath);
+		codeBase.append("/");
+	}
+
+	/**
+	 * Sets the security manager.
+	 */
+	private void setSecurityManager() {
+		SafeRefactorActivator.getDefault().log("Initializing secury manager...");
+		if (System.getSecurityManager() == null)
+			System.setSecurityManager(new RMISecurityManager());
 	}
 
 }
